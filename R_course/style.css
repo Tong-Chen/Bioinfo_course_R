@@ -1,0 +1,44 @@
+
+p.caption {
+  color: #777;
+  margin-top: 10px;
+  text-align: justify;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+body {
+  text-align: justify;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal table {
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal caption {
+  text-align: justify;
+  width:100%;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal table th {
+  font-size: 70%;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal table td {
+  font-size: 70%;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal ol {
+  padding: 0 0 0 1em;
+}
+

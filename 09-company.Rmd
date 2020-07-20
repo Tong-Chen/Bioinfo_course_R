@@ -1,0 +1,10 @@
+# 公司简介 {#company_intro}
+
+```{r company-html, echo=F, eval=html, out.width="99%"}
+knitr::include_graphics(c("ehbio/company_1.png", "ehbio/company_2.png"))
+```
+
+```{r company-pdf, echo=F, eval=latex, out.width="99%", out.height='0.99\\textheight', out.extra='keepaspectratio'}
+knitr::include_graphics(c("ehbio/company_1.png", "ehbio/company_2.png"))
+```
+

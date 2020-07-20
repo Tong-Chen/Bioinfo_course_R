@@ -1,0 +1,180 @@
+# 考题 {#questions}
+
+## 理论题 (50分)
+
+无特殊标注的题为1分，其它为标注的分数。选答题特殊标注，若无标注，则必答。必答题不答着，不合格。
+
+1. 简述`R`,`Rstudio`的区别?
+
+2. R中如何查看函数的帮助信息?
+
+3. R中变量名字命名有什么需要遵守的规则?
+
+4. R中怎么判断一个变量的类型是`数值型`?
+
+5. `scale`函数对数据做了什么？ (2分)
+
+6. R中如何把矩阵 (matrix)转换为数据框 (data frame)?
+
+7. 取出矩阵中所有值都为0的行? (2分)
+
+8. 写程序从矩阵和数据框中提取特定列?
+
+9. 简述`reshape2`中定义的`wide format`和`long format`矩阵的区别? ggplot2绘图接受的是那种格式? (3分)
+
+10. `ggplot2`绘制热图使用的是什么函数? (2分)
+
+11. `ggplot2`绘图时`fill`和`color`的区别是? (2分)
+
+12. `ggplot2`绘图时如何调整横轴标签的旋转角度?
+
+13. 因矩阵中数值相差很大导致绘制出的热图颜色区分不明显时有哪几种解决方式? (3分)
+
+14. ggplot2绘制热图时如何自定义行或列的顺序? (3分)
+
+15. 箱线图怎么理解？(2分)
+
+16. `ggplot2`绘图时如何调整`legend`的位置?
+
+17. 火山图横轴和纵轴分别表示什么?
+
+18. PCA图怎么理解? (2分)
+
+19. 生存分析图怎么理解? (2分)
+
+20. R中安装包的方式有几种? (2分)
+
+21. Cytoscape输入数据最少需要几列? (2分)
+
+22. Cytoscape中有哪几种常用的布局算法? (3分)
+
+23. Cytoscape怎么给边增加箭头? (2分)
+
+24. Cytoscape中怎么插入柱状图? (2分)
+
+25. 矢量图和标量图有什么区别? (2分)
+
+26. 什么是Adobe Illustrator (AI)的剪切蒙版？
+
+27. AI中选择工具和直接选择工具什么区别?
+
+28. AI中设置一组文字之间等距对齐使用哪个按钮?
+
+29. AI中怎么给一个组分赋予另一组分的属性，比如有1条线是`2 pt 红色`，如何快速的让其它线跟其属性一致?
+
+30. 请说出一起学习的3位小伙伴的名字。
+
+## 代码题 (70分)
+
+无特殊标注的题为3分，其它为标注的分数。选答题特殊标注，若无标注，则必答。必答题不答着，不合格。
+
+1. R中写代码获得如下向量
+
+```
+"Gene_1" "Gene_2" "Gene_3" "Gene_4" "Gene_5" "Gene_6" "Gene_7" "Gene_8"
+```
+
+2. R中运行`4+1:3`和`(4+1):3`得到的结果分别是什么? 为什么?
+
+3. 在R中运行以下代码得到的数据框的列名字是什么?
+
+```r
+text="ID;2 cell;4 cell;8 cell;embryo
+Pou5f1_1;2;3;4;5
+Nanog_1;2;3.2;4.3;5
+c-Myc_2;2;3;4;5
+Tet1_3;2;3;4;5"
+
+read.table(text=text,sep=";", header=T, row.names=1)
+```
+
+4. 题(3)中的矩阵转换为如下格式需要怎么操作? (5分)
+
+```
+    embryo variable value
+1       5  X2.cell   2.0
+2       5  X2.cell   2.0
+3       5  X2.cell   2.0
+4       5  X2.cell   2.0
+5       5  X4.cell   3.0
+6       5  X4.cell   3.2
+7       5  X4.cell   3.0
+8       5  X4.cell   3.0
+9       5  X8.cell   4.0
+10      5  X8.cell   4.3
+11      5  X8.cell   4.0
+12      5  X8.cell   4.0
+```
+
+5. R中写程序把题(3)中的矩阵按照每行数字变化幅度由大到小排序。
+
+6. 写代码利用题(3)的数据绘制热图。
+
+7. 写代码利用题(3)的数据绘制线图，展示基因在不同样品表达变化趋势。
+
+8. 写代码利用如下数据绘制3个集合的韦恩图。
+
+```{r}
+list1 = sample(letters,20)
+list2 = sample(letters,18)
+list3 = sample(letters,25)
+```
+
+9. 写代码绘制富集分析泡泡图 (最主要的是排序, 先按`ontology`排序，再按`log_odds_ratio`，再按`-log10(qvalue)`)。(5分)
+
+```
+Ontology	Term	Count	log_odds_ratio	qvalue
+biological_process	one-carbon metabolic process	34	1.012	0.001
+biological_process	single-organism process	5781	0.070	8.140
+biological_process	single-organism cellular process	4988	0.060	0.002
+biological_process	cell communication	2169	0.100	0.007
+biological_process	signal transduction	1955	0.107	0.006
+biological_process	signaling	2100	0.102	0.006
+biological_process	single organism signaling	2100	0.102	0.006
+biological_process	response to stimulus	3251	0.074	0.012
+molecular_function	protein binding	3299	0.101	3.321
+cellular_component	cytoplasm	4711	0.065	0.001
+cellular_component	Golgi apparatus	611	0.171	0.057
+cellular_component	endomembrane system	1521	0.146	0.000
+cellular_component	cytoplasmic part	3314	0.067	0.037
+cellular_component	cell periphery	2059	0.086	0.065
+```
+
+10. 写代码用题(3)的矩阵绘制堆积柱状图，展示样品中不同基因表达的相对高低。(5分)
+
+11. 如下数据绘制火山图，横轴为`logFoldChange`，纵轴为`-log10(qvalue)`。(5分)
+
+```{r}
+log2fc <- rnorm(5000, mean=0, sd=10)
+qvalue <- 10^(-1* abs(log2fc))
+data <- data.frame(log2fc=log2fc, qvalue=qvalue)
+```
+
+12. 描述Cytoscape网络数据和节点数据输入格式。
+
+13. Cytoscape中如何设置节点形状？
+
+14. Cytoscape中如何将节点数值性数据映射到节点的颜色？
+
+15. Cytoscape中如何设置边的线形？
+
+16. 描述Cytoscape绘制miRNA-gene调控网络过程?
+
+17. 描述Cytoscape使用Bingo进行功能富集分析的步骤?
+
+18. 描述Cytoscape使用KeggParser如何导入一个通路，并映射表达量? (5分)
+
+19. 如何使用最新的Cytoscape直接获得关注的基因的调控网络?
+
+20. 选择2种上面绘制的图利用Adobe Illustrator编辑。
+
+## 错误识别题 (选答)
+
+请辨识以下错误可能的原因是：
+
+1. `read.table`: Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec, : No 11 elements in the first line.
+
+2. `read.table`: duplicate 'row.name' are not allowed
+
+
+

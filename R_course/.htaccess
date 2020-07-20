@@ -1,0 +1,7 @@
+<If "%{HTTP_User_Agent} !~ /MicroMessenger/">
+AuthType Basic
+AuthName 'Please contact ct@ehbio.com for accssing.'
+AuthUserFile   /var/www/html/ehbio_doc/.htpasswd_ehbio_doc
+Require valid-user
+</If>   
+

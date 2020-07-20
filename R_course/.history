@@ -1,0 +1,13 @@
+[/MPATHB/training/R_course/R_course] 32735  [2017-12-01 09:11:46][ct][61.148.243.193]cd R_course
+[/MPATHB/training/R_course/R_course] 32736  [2017-12-01 09:12:05][ct][61.148.243.193]rm -f section-4.html section-5.html r.html -3.html references.html
+[/MPATHB/training/R_course/R_course] 32737  [2017-12-01 09:12:16][ct][61.148.243.193]rm -f section-4.html section-5.html r.html "-3.html" references.html
+[/MPATHB/training/R_course/R_course] 32738  [2017-12-01 09:12:20][ct][61.148.243.193]ls
+[/MPATHB/training/R_course/R_course] 32739  [2017-12-01 09:12:29][ct][61.148.243.193]rm -f -3.html 
+[/MPATHB/training/R_course/R_course] 32740  [2017-12-01 09:12:39][ct][61.148.243.193]rm -f -- "-3.html "
+[/MPATHB/training/R_course/R_course] 32741  [2017-12-01 09:12:40][ct][61.148.243.193]ls
+[/MPATHB/training/R_course/R_course] 32742  [2017-12-01 09:12:45][ct][61.148.243.193]rm -f -- "-3.html"
+[/MPATHB/training/R_course/R_course] 32743  [2017-12-01 09:12:47][ct][61.148.243.193]ls
+[/var/www/html/ehbio_doc/R_course/R_course]  8958  [2017-12-04 10:34:50][root][61.148.244.69]cd R_course
+[/var/www/html/ehbio_doc/R_course/R_course]  8959  [2017-12-04 10:34:51][root][61.148.244.69]ls
+[/var/www/html/ehbio_doc/R_course/R_course]  8960  [2017-12-04 10:34:58][root][61.148.244.69]less .htaccess 
+[/var/www/html/ehbio_doc/R_course/R_course]  8960  [2017-12-04 10:34:58][root][61.148.244.69]less .htaccess 

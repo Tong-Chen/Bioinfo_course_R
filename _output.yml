@@ -1,0 +1,21 @@
+bookdown::pdf_book:
+  template: ehbio/ehbio.latex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+  toc_unnumbered: no
+  toc_depth: 3
+bookdown::epub_book: default
+bookdown::gitbook:
+  css: style.css
+  config:
+    download: [pdf]
+    toc:
+      before: |
+          <li><a href="http://www.ehbio.com"><img src="http://www.ehbio.com/logos/ehbio_gitbook_logo.png" width="95%"></a></li>
+      after: |
+          <li><a href="mailto:ct@ehbio.com" target="blank">ct@ehbio.com</a></li>
+    sharing: 
+      github: no
+      facebook: no
+      twitter: no

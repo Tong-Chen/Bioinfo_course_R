@@ -1,0 +1,6 @@
+book_filename: "R_course"
+output_dir: "R_course"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: ""
