@@ -166,3 +166,7 @@
 * [这个R包自动注释单细胞数据的平均准确率为83％，使用后我的结果出现了点问题|附全代码](https://mp.weixin.qq.com/s/4715ApG-r_YtKwXslgPAQw)
 * [一个R包完成单细胞基因集富集分析 （全代码）](https://mp.weixin.qq.com/s/9Glw7s0uqL-4VB58cu53xg)
 
+![](http://www.ehbio.com/ehbio_resource/R_course.png)
+
+视频课程地址：<https://ke.qq.com/course/382233?tuin=20cd7788>
+
