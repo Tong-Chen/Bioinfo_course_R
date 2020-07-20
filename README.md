@@ -10,9 +10,7 @@
 
 通过大量的生信例子、关键的注释和浓缩的语句形成下面的一系列学习教程。每一篇内容都不多，可以当做小说阅读，也可以跟着去练，反复几遍，每读一次都会有不同的收获和体会。
 
-### Linux 全介绍
-
-统计和作图
+### R统计和作图
 
 * [文章用图的修改和排版 (1)](https://mp.weixin.qq.com/s/IJNyhinakY0lSXgCN7b9ug)
 * [文章用图的修改和排版 (2)](http://mp.weixin.qq.com/s/HTsufk71U3wf14OOWSKEeQ)
