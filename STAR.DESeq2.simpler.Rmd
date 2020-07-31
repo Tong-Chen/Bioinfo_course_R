@@ -1,0 +1,324 @@
+## 差异基因分析 （reads count）{#de_gene_simpler}
+
+```{r}
+#BiocManager::install("Tong-Chen/YSX", update=F)
+suppressMessages(library(DESeq2))
+suppressMessages(library("RColorBrewer"))
+suppressMessages(library("gplots"))
+suppressMessages(library("amap"))
+suppressMessages(library("ggplot2"))
+suppressMessages(library("BiocParallel"))
+suppressMessages(library("YSX"))
+suppressMessages(library(sva))
+suppressMessages(library(ggfortify))
+suppressMessages(library(patchwork))
+suppressMessages(library(ggbeeswarm))
+```
+
+
+## 差异分析过程不考虑批次因素
+
+### 初始化，定义输入、输出和参数
+
+```{r}
+# Prefix for all output file 
+output_prefix = "ehbio.simpler"
+
+# pipelineStar.sh生成的reads count 文件，行为基因，列为样品
+file = "ehbio_trans.Count_matrix.xls"
+# 分组信息表
+sampleFile = "sampleFile"
+# 分组信息所在列名字
+covariate = NULL
+# covariate = "batch"
+design="conditions"
+# 输入数据类型，salmon结果或reads count 矩阵
+type="readscount"
+# 差异基因参数
+padj=0.05
+log2FC=1
+```
+
+### 数据读入和标准化
+
+```{r}
+dds <- readscount2deseq(file, sampleFile, design=design, covariate = covariate)
+
+normexpr <- deseq2normalizedExpr(dds, output_prefix=output_prefix)
+```
+
+#### 检查数据标准化效果
+
+标准化后基因在样品的表达分布，不同样品越均一越好。
+
+```{r}
+# normalizedExpr2DistribBoxplot(normexpr, 
+#                               saveplot=paste(output_prefix, "DESeq2.normalizedExprDistrib.pdf", sep="."))
+normalizedExpr2DistribBoxplot(normexpr)
+```
+
+#### 样本聚类查看样品相似性
+
+```{r, fig.width="49%"}
+# clusterSampleHeatmap2(normexpr$rlog, 
+#                       cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."), 
+#                       saveplot=paste(output_prefix, "DESeq2.sampleCorrelation.pdf", sep="."))
+clusterSampleHeatmap2(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
+clusterSampleUpperTriPlot(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
+```
+
+#### 样本PCA查看相似性
+
+```{r}
+metadata = as.data.frame(colData(dds))
+sp_pca(normexpr$rlog[1:5000,], metadata, color_variable="conditions", shape_variable = "individual") + aes(size=1) + guides(size = F)
+```
+
+
+
+#### 差异基因鉴定和可视化
+
+结果见文件。
+
+```{r}
+multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
+```
+
+## 差异分析过程考虑批次因素
+
+### 初始化，定义输入、输出和参数
+
+```{r}
+# Prefix for all output file 
+output_prefix = "ehbio.simpler.batch"
+
+# pipelineStar.sh生成的reads count 文件，行为基因，列为样品
+file = "ehbio_trans.Count_matrix.xls"
+# 分组信息表
+sampleFile = "sampleFile"
+# 分组信息所在列名字
+# covariate = NULL
+covariate = "individual"
+design="conditions"
+# 输入数据类型，salmon结果或reads count 矩阵
+type="readscount"
+# 差异基因参数
+padj=0.05
+log2FC=1
+```
+
+### 数据读入和标准化
+
+```{r}
+dds <- readscount2deseq(file, sampleFile, design=design, covariate = covariate)
+
+normexpr <- deseq2normalizedExpr(dds, output_prefix=output_prefix)
+```
+
+#### 检查数据标准化效果
+
+标准化后基因在样品的表达分布，不同样品越均一越好。
+
+```{r}
+# normalizedExpr2DistribBoxplot(normexpr, 
+#                               saveplot=paste(output_prefix, "DESeq2.normalizedExprDistrib.pdf", sep="."))
+normalizedExpr2DistribBoxplot(normexpr)
+```
+
+#### 样本聚类查看样品相似性
+
+```{r, fig.width="49%"}
+# clusterSampleHeatmap2(normexpr$rlog, 
+#                       cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."), 
+#                       saveplot=paste(output_prefix, "DESeq2.sampleCorrelation.pdf", sep="."))
+clusterSampleHeatmap2(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
+clusterSampleUpperTriPlot(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
+```
+
+#### 样本PCA查看相似性
+
+```{r}
+metadata = as.data.frame(colData(dds))
+sp_pca(normexpr$rlog[1:5000,], metadata, color_variable="conditions", shape_variable = "individual") + aes(size=1) + guides(size = F)
+```
+
+
+#### 差异基因鉴定和可视化
+
+结果见文件。
+
+```{r}
+multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
+```
+
+## 批次校正前后差异基因比较
+
+```{r}
+de_before_batch = sp_readTable("ehbio.simpler.DESeq2.all.DE", header=F)
+de_before_batch$V2 = paste("Before_batch",de_before_batch$V2,sep="_")
+table(de_before_batch$V2)
+```
+
+
+```{r}
+de_after_batch = sp_readTable("ehbio.simpler.batch.DESeq2.all.DE", header=F)
+de_after_batch$V2 = paste("After_batch",de_after_batch$V2,sep="_")
+table(de_after_batch$V2)
+```
+
+```{r}
+all_de = rbind(de_before_batch, de_after_batch)
+# 随机查看6行，信息代表更全面
+all_de[sample(1:nrow(all_de),6),]
+sp_writeTable(all_de, file="Compare_de_gene_beofore_and_after_batch.txt", keep_rownames = F, col.names = F)
+```
+
+### 特定基因表达模式可视化展示
+
+
+```{r}
+ENSG00000163394 = data.frame(Expr=normexpr$rlog["ENSG00000163394",])
+p1 <- sp_boxplot(ENSG00000163394, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual", title="ENSG00000163394")
+
+ENSG00000221866 = data.frame(Expr=normexpr$rlog["ENSG00000221866",])
+p2 <- sp_boxplot(ENSG00000221866, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual", title="ENSG00000221866")
+
+p1 + p2 + plot_layout(guide = 'collect')
+```
+
+```{r}
+ENSG00000109689 = data.frame(Expr=normexpr$rlog["ENSG00000109689",])
+p1 <- sp_boxplot(ENSG00000109689, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual", title="ENSG00000109689")
+
+ENSG00000137124 = data.frame(Expr=normexpr$rlog["ENSG00000137124",])
+p2 <- sp_boxplot(ENSG00000137124, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual", title="ENSG00000137124")
+
+p1 + p2 + plot_layout(guide = 'collect')
+```
+
+
+
+
+### 自定义绘图
+
+```{r}
+res_output <- read.table(paste0(output_prefix, ".DESeq2.untrt._vs_.trt.results.xls"), 
+                         header=T, row.names=1)
+groupA = 'untrt'
+groupB = 'trt'
+res_output$level <- ifelse(res_output$padj<=padj,
+                             ifelse(res_output$log2FoldChange>=log2FC,
+                                    paste(groupA,"UP"),
+                             ifelse(res_output$log2FoldChange<=(-1)*(log2FC),
+                                    paste(groupB,"UP"), "NoDiff")) , "NoDiff")
+volcanoPlot(res_output, "log2FoldChange", "padj",
+              "level")
+
+rankPlot(res_output, label=10, width=20)
+```
+
+
+### 结果文件描述
+
+```
+# 具体的文件内容和图的样式见后面的分步法文档
+# 原始输入文件
+salmon.output
+sampleFile
+
+# 所有差异基因列表
+ehbio_trans.Count_matrix.xls.DESeq2.all.DE
+
+# PCA结果
+ehbio_trans.Count_matrix.xls.DESeq2.normalized.rlog.pca.pdf
+
+# 样品相关性层级聚类结果
+ehbio_trans.Count_matrix.xls.DESeq2.normalized.rlog.pearson.pdf
+
+# rlog转换后的标准化后的表达结果
+ehbio_trans.Count_matrix.xls.DESeq2.normalized.rlog.xls
+
+# 标准化后的表达结果
+ehbio_trans.Count_matrix.xls.DESeq2.normalized.xls
+
+# 运行脚本
+ehbio_trans.Count_matrix.xls.DESeq2.r
+
+# 差异基因结果
+ehbio_trans.Count_matrix.xls.DESeq2.untrt._higherThan_.trt.id.xls
+ehbio_trans.Count_matrix.xls.DESeq2.untrt._higherThan_.trt.xls
+ehbio_trans.Count_matrix.xls.DESeq2.untrt._lowerThan_.trt.id.xls
+ehbio_trans.Count_matrix.xls.DESeq2.untrt._lowerThan_.trt.xls
+
+# 火山图和火山图输入数据
+ehbio_trans.Count_matrix.xls.DESeq2.untrt._vs_.trt.results.xls
+ehbio_trans.Count_matrix.xls.DESeq2.untrt._vs_.trt.results.xls.volcano.pdf
+```
+
+### 转换基因表的ENSEMBL id为gene symbol (为GSEA准备)
+
+```{bash, eval=F}
+# awk 'BEGIN{OFS=FS="\t"}ARGIND==1{ensg2sym[$1]=$2;}ARGIND==2{if(FNR==1) print $0; else {a=ensg2sym[$1]; if(a!="") {$1=a; print $0;}}}' 13_salmon_deseq2/genome/GRCh38.idmap 13_salmon_deseq2/ehbio.simpler.DESeq2.normalized.xls  >15_enrichment/ehbio.simpler.DESeq2.normalized.symbol.txt
+
+# head 15_enrichment/ehbio.simpler.DESeq2.normalized.symbol.txt
+```
+
+```{r}
+library(dplyr)
+idmap <- read.table("13_salmon_deseq2/genome/GRCh38.idmap", sep="\t", header=T, row.names=NULL, quote="")
+
+all_normalized <- read.table("13_salmon_deseq2/ehbio.simpler.DESeq2.normalized.xls", sep="\t", header=T, row.names=NULL, quote="")
+
+normalized_symbol <- left_join(all_normalized, idmap[,1:2], by=c("id"="ENSG"))
+
+normalized_symbol$id <- normalized_symbol$Symbol
+normalized_symbol <- normalized_symbol[,1:ncol(all_normalized)]
+
+write.table(normalized_symbol, "15_enrichment/ehbio.simpler.DESeq2.normalized.symbol.txt", col.names = T, row.names = F, sep="\t", quote=F)
+```
+
+### 提取Log2FC值并转换为gene symbol (为GSEA准备)
+
+```{r}
+suppressMessages(library(data.table))
+
+vs_result <- read.table("13_salmon_deseq2/ehbio.simpler.DESeq2.untrt._vs_.trt.results.xls", header=T, sep="\t", quote="")
+
+vs_result <- subset(vs_result, select=c("ID","log2FoldChange"))
+
+vs_result <- data.table(vs_result, key="ID")
+
+idmap <- read.table("13_salmon_deseq2/genome/GRCh38.idmap", header=T, sep="\t", quote="")
+idmap <- data.table(idmap, key="ENSG")
+
+merge_result <- merge(vs_result, idmap, by.x="ID", by.y="ENSG", all.x=T)
+
+merge_result <- merge_result[order(merge_result$log2FoldChange, decreasing = T),]
+
+merge_result <- merge_result[merge_result$Symbol!="", c(3,2)]
+
+write.table(merge_result, "15_enrichment/ehbio.simpler.DESeq2.log2fc_ranked.symbol", col.names = T, row.names = F, sep="\t", quote=F)
+```
+
+### 转换所有差异基因的名字为gene symbol 或 entrez id (为GO富集分析准备)
+
+
+```{r}
+idmap <- read.table("13_salmon_deseq2/genome/GRCh38.idmap", sep="\t", header=T, row.names=NULL, quote="")
+
+all_DE <- read.table("13_salmon_deseq2/ehbio.simpler.DESeq2.all.DE", sep="\t", header=F, row.names=NULL, quote="")
+
+combine_de <- left_join(all_DE, idmap, by=c("V1"="ENSG"))
+
+all_entrez <- combine_de[,c(4,2)]
+write.table(all_entrez, file="15_enrichment/ehbio.DESeq2.all.DE.entrez", quote=F, sep="\t", row.names=F, col.names=F)
+
+all_symbol <- combine_de[,c(3,2)]
+write.table(all_symbol, file="15_enrichment/ehbio.DESeq2.all.DE.symbol", quote=F, sep="\t", row.names=F, col.names=F)
+```
+
+```{bash, eval=F}
+## GRCh38.idmap从ENSEMBL Biomart下载，三列文件，第一列为ensembl ID，第二列为gene symbol, 第三列为entrez id
+# awk 'BEGIN{OFS=FS="\t"}ARGIND==1{entrez[$1]=$3;}ARGIND==2{if(entrez[$1]!="") print entrez[$1],$2;}' 13_salmon_deseq2/genome/GRCh38.idmap 13_salmon_deseq2/ehbio.simpler.DESeq2.all.DE  >15_enrichment/ehbio.DESeq2.all.DE.entrez
+# awk 'BEGIN{OFS=FS="\t"}ARGIND==1{symbol[$1]=$2;}ARGIND==2{if(symbol[$1]!="") print symbol[$1],$2;}' 13_salmon_deseq2/genome/GRCh38.idmap  13_salmon_deseq2/ehbio.simpler.DESeq2.all.DE 	>15_enrichment/ehbio.DESeq2.all.DE.symbol
+```
