@@ -1,7 +1,90 @@
-## 差异基因分析 （reads count）{#de_gene_simpler}
+<meta charset="utf-8">
+
+**高通量数据中批次效应的鉴定和处理**
+
+# 高通量数据中批次效应的鉴定和处理
+
+## 什么是批次效应？
+
+批次效应表示样品在不同的批次处理和测量时引入的与生物状态不相关的系统性的技术偏差。很多因素都可能导致批次效应的产生，如不同实验条件、不同操作者、不同公司的试剂、不同批的试剂、实验开展的时间、检测设备、不同的测序批次等。
+
+## 批次效应会有什么影响？
+
+2014年生信领域的大牛`Michael P Snyder`在`PNAS`上发表了一篇文章*Comparison of the transcriptional landscapes between human and mouse tissues*，比较了人和小鼠不同组织和器官中表达谱的异同。研究发现不同物种之间组织特异表达的基因是一致的，但很多基因在同一物种不同组织的表达相似度大于它们在不同物种同一组织的表达相似度。“我”来引申下 （原文并没有这么直接说），大体可以理解为小鼠的脑与小鼠的肾脏的相似性大于小鼠的脑与人的脑的相似性。“我”得出的这个结论是有一些颠覆认知的，如果这样，用小鼠做为模式动物是否会对人的研究给出相似性的推导？
+
+这篇`PNAS`文章发出后，芝加哥大学的`Yoav Gilad`在`F1000`上发表了一篇文章*A reanalysis of mouse ENCODE comparative gene expression data*来讨论这个不同于以往认知的研究项目的设计和分析的合理性。
+
+首先作者从FASTQ数据的序列名字的ID中提取出对应测序数据来源的测序仪设备ID和测序通道信息，发现所有数据来源于5个批次，如下图所示，只有最后一个批次同时包含了人和小鼠的器官，其它批次都只包含了人的器官或小鼠的器官。
+
+![](https://f1000researchdata.s3.amazonaws.com/manuscripts/7019/9f5f4330-d81d-46b8-9a3f-d8cb7aaf577e_figure1.gif)
+
+重现者`Yoav Gilad`等通过对数据进行重分析，重现了类似于原文中的结果。不论是PCA还是Heatmap的结果，都展示出来源于同一物种的组织或器官倾向于聚类到一起。
+
+![](https://f1000researchdata.s3.amazonaws.com/manuscripts/7019/9f5f4330-d81d-46b8-9a3f-d8cb7aaf577e_figure2.gif)
+
+重现者`Yoav Gilad`等采用`ComBat`移除批次带来的影响，再次绘制PCA和Heatmap，结果显示表达谱按组织类型而非物种聚在了一起。
+
+![](https://f1000researchdata.s3.amazonaws.com/manuscripts/7019/9f5f4330-d81d-46b8-9a3f-d8cb7aaf577e_figure3.gif)
+
+大家有兴趣可以在**https://f1000research.com/articles/4-121**看看`Yoav Gilad`的具体操作和PNAS一作`Yoav Gilad`等人的讨论，通过学习双方在这段公案中辩论的出发点和落脚点，相信对数据分析也会有更多认识，这个我们后续也会涉及。
+
+
+## 怎么确认数据有无受到批次效应影响
+
+*[通过样品的层级聚类热图+样品属性信息的注释来展示样品聚类结果有无受批次效应的影响](https://mp.weixin.qq.com/s/ykp1q7CiyTL2PCK5PuNyzw)*。如下面右图中可见`WT_1`样品在聚类分支上与其它样品处于不同的分支，而从列注释图可以看到`WT_1`的`seqPlatform`和`batch`信息与其它样品不同，这是给我们的一个提示可能存在批次效应影响。
+
+![](images/batch15.jpg)
+
+通常我们在整合多套数据集进行展示时也会加上数据来源信息以展示自己的分析结果未受批次等因素影响。如下图每一列是一个样品，每一行是一个菌群；列注释中有一行为`Dataset`指示样品来源于 2 个数据集，并且聚类结果没有明显受到数据集来源的影响（四个大的聚类分支中样品来源分布没有明显偏好性）；
+
+![](images/metaphlan2.png)
+
+*通过[主成分分析PCA](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247489825&idx=1&sn=e56d490bec2bed4068cb2f294399e675&chksm=ec0ddcabdb7a55bd5ad91cc16c470250213d78c782da419e70039e851621525674203e47916f&scene=158#rd)查看有无批次效应的影响*。如下左图，样品在`PC1`和`PC2`组成的空间中按数据集而非样本类型聚在一起，表示数据来源对样本检测结果的影响超出了样本类型的影响，提示存在批次效应。如右图，批次效应移除后，在`PC1`轴上样品基本按`正常-癌旁-肿瘤`分布，表示当前样品差异的主要影响因素是样本类型。这时可以绘制样品在更多`PC`轴上的分布，如`PC1-PC3`、`PC1-PC4`等构成的空间中样品差异的主要因素是什么，也可以进一步判断批次效应移除的程度怎样。
+
+![](images/batch16.jpg)
+
+*通过样本整体表达分布查看有无批次影响*。不同来源的样本一般是各自进行标准化（尤其是芯片数据），合并在一起后，可以简单的从整体表达分布来查看是否存在明显的偏移。如下左图存在明显的偏移，则提示有批次效应的存在。校正后，如右图，看上去样本的整体表达分布均一了。但是否批次影响就被移除了，却很难据此下结论。
+
+![](images/batch17.jpg)
+
+*通过部分基因集的表达变化查看有无批次效应影响*。不同来源的数据一起标准化之后，如果标准化效果好的话，样品整体表达分布也会是均一的（如下面左数第二幅图）。但从中随机抽取数百基因却发现其表达收到了批次的影响（如下面左数第三幅图，只展示了数个基因），而且聚类结果也把两组正常样品分到了各自来源相对应的分支上。
+
+![](images/batch18.jpg)
+
+## 怎么避免批次效应呢？
+
+合理的实验设计和一致的实验操作是避免批次效应的最好方式。如下图所示如何通过合理的设计来避免检测批次带来的影响。
+
+1. 如左上角图示，若样本量数目不多，可在同一台设备（同一个芯片、同一个测序仪、同一个测序 lane）检测这是最好的方式，不存在检测批次。
+2. 如右上角图示，是最差的实验设计方式，不同组的样本分批检测。这种方式无法确定最终检测出的样品差异是生物差异还是设备差异还是二者共同带来的差异。这种检测方式会放大样品的差异，引入较多假阳性结果。如果只是看这种图，相信大家其实都不会这么设计。但换个角度来看，我们 `5` 月份采一批样去测序，`10` 月份采一批样去测序，在比较 `5` 月份样品与 `10` 月份样品差异时，我们实际的实验设计方式跟这个实验设计也没什么不同。或者做病例对照时，健康人样品好收集，一起测序；疾病样品一起搜集一起测序，也是类似的设计方式。[前文所述的](https://mp.weixin.qq.com/s/l11iWr-W-mRrMUSuyeJSIg)一段公案也类似这个设计。
+3. 如左下角所示，平衡设计则是最好的实验设计方式。假如实验中存在三个样品组，如`对照组`、`基因敲除组`、`基因过表达组`，每组 9 个重复，则每次检测时都同时包含每组的 3 个重复，这样获得的数据则可以放在一起校正后分析。或者至少对照组的样本在每次测序中都能有 `2-3` 个重复，最后在数据校正时通过调平对照组数据的检测结果来校正其它样品的检测结果。在[前文的留言](https://mp.weixin.qq.com/s/l11iWr-W-mRrMUSuyeJSIg)中，也确实有意识比较好的老师，做了类似设计，值得学习。
+4. 如右下角所示，也是芯片检测基因表达的一个常规方式，每个芯片检测一个样本。不论是生物重复还是不同生物条件之间都会受到检测芯片的影响，不同重复之间的批次影响可以评估，但不同条件下的批次影响则难以评估。芯片这么检测是可以的，但测序时每个测序批次会包含很多不同类型的样品，且测序检测影响因素更多，这一设计会引入较大技术偏差。
+
+![](images/batch20.jpg)
+
+上面也只是从检测方式的角度设计出一个合理的试验模式降低批次效应的影响，但除了检测方式，还会有很多不可控的因素也会影响到批次，如不同操作人、不同操作时间等客观因素，还有如配对设计实验中不同的个体自身也是批次的因素。
+
+所以需要有个方式去检测和尽量降低批次效应带来的数据偏差的影响。
+
+## 如何在差异基因鉴定过程中移除批次效应
+
+在我们之前的文章*[DESeq2差异基因分析和批次效应移除](https://mp.weixin.qq.com/s/Vmhx_TGxNkQzkekf93Xl4w)*中也提到了用如下方式构建设计矩阵，以便在差异基因分析过程中移除批次效应的影响。
+
+```
+ddsFullCountTable <- DESeqDataSetFromMatrix(countData = data,
+        colData = sample,  design= ~ batch + conditions)
+
+dds <- DESeq(ddsFullCountTable)
+```
+
+下面我们以一个具体例子实战（配对样品处理前后基因表达的变化）和检验下效果。为了演示批次效应的影响，大部分代码做了封装，我们只关心核心的地方。如果自己对封装的代码赶兴趣，可以自行查看函数源码。
+
+
+首先加载所有的包
 
 ```{r}
-#BiocManager::install("Tong-Chen/YSX", update=F)
+# 若缺少YSX包，则安装
+# BiocManager::install("Tong-Chen/YSX", update=F)
 suppressMessages(library(DESeq2))
 suppressMessages(library("RColorBrewer"))
 suppressMessages(library("gplots"))
@@ -15,16 +98,38 @@ suppressMessages(library(patchwork))
 suppressMessages(library(ggbeeswarm))
 ```
 
+输入文件1： `reads count`矩阵 (*ehbio_trans.Count_matrix.xls*)，格式如下：
 
-## 差异分析过程不考虑批次因素
+```
+ENSG	untrt_N61311	untrt_N052611	untrt_N080611	untrt_N061011	trt_N61311	trt_N052611	trt_N080611	trt_N061011
+ENSG00000223972	1	0	0	0	0	1	0	0
+ENSG00000227232	13	25	23	24	12	12	22	22
+ENSG00000278267	0	5	3	4	2	4	3	1
+```
 
-### 初始化，定义输入、输出和参数
+输入文件2： `实验设计信息`表 (*sampleFile*): `conditions`为处理条件（`untrt`是对照, `trt`是加药处理 ），`individual`标记样品的个体来源 (4个个体：N61311、N052611、N080611、N061011)。
+
+```
+Samp	conditions	individual
+untrt_N61311	untrt	N61311
+untrt_N052611	untrt	N052611
+untrt_N080611	untrt	N080611
+untrt_N061011	untrt	N061011
+trt_N61311	trt	N61311
+trt_N052611	trt	N052611
+trt_N080611	trt	N080611
+trt_N061011	trt	N061011
+```
+
+### 不考虑批次因素直接进行差异基因分析
+
+初始化，定义输入、输出和参数
 
 ```{r}
 # Prefix for all output file 
-output_prefix = "ehbio.simpler"
+output_prefix = "ehbio.simplier"
 
-# pipelineStar.sh生成的reads count 文件，行为基因，列为样品
+# pipelineStar.sh或其它方式生成的reads count 文件，行为基因，列为样品
 file = "ehbio_trans.Count_matrix.xls"
 # 分组信息表
 sampleFile = "sampleFile"
@@ -39,7 +144,7 @@ padj=0.05
 log2FC=1
 ```
 
-### 数据读入和标准化
+数据读入和标准化
 
 ```{r}
 dds <- readscount2deseq(file, sampleFile, design=design, covariate = covariate)
@@ -47,46 +152,73 @@ dds <- readscount2deseq(file, sampleFile, design=design, covariate = covariate)
 normexpr <- deseq2normalizedExpr(dds, output_prefix=output_prefix)
 ```
 
-#### 检查数据标准化效果
 
-标准化后基因在样品的表达分布，不同样品越均一越好。
+> [1] "Read in 32799 genes"
+>
+> [1] "23936 genes remained after filtering of genes with all counts less than 4 in all samples."
+>
+> [1] "Perform DESeq on given datasets."
+>
+> estimating size factors
+>
+> estimating dispersions
+>
+> gene-wise dispersion estimates
+>
+> mean-dispersion relationship
+>
+> final dispersion estimates
+>
+> fitting model and testing
+>
+> [1] "Output normalized counts"
+>
+> [1] "Output rlog transformed normalized counts"
+
+检查数据标准化效果: 标准化后基因在不同样品的表达分布越均一越好。从下图看不出存在批次效应的影响。
 
 ```{r}
 # normalizedExpr2DistribBoxplot(normexpr, 
-#                               saveplot=paste(output_prefix, "DESeq2.normalizedExprDistrib.pdf", sep="."))
+#   saveplot=paste(output_prefix, "DESeq2.normalizedExprDistrib.pdf", sep="."))
 normalizedExpr2DistribBoxplot(normexpr)
 ```
 
-#### 样本聚类查看样品相似性
+![](images/boxplot_before_batch.png)
 
-```{r, fig.width="49%"}
+
+[样本聚类](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI5MTcwNjA4NQ==&action=getalbum&album_id=1335864997100224512&subscene=38&scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzI5MTcwNjA4NQ%3D%3D%26mid%3D2247495133%26idx%3D2%26sn%3D37d1572211a755566b5de5f120e476cf%26chksm%3Dec0e2857db79a1411fab8405e9f6284f10644eb9965f2d5fdfa98f0ff44a581729f990fc9c14%26scene%3D38%26key%3Dbbd9db2a3d7572cd769c7f8e4e3317fec44d11168b996d9b03e0828fc8c61abdcf8565023bdb967b8005fb7f8f9d6e2f7cb5d24289c52229bae2b2791048ea213afbf98f447947495cde5742eae678a4%26ascene%3D7%26uin%3DOTY2MDEyMzgw%26devicetype%3DWindows%2B7%2Bx64%26version%3D62090529%26lang%3Dzh_CN%26exportkey%3DAa8iMQ%252BTtWiuSpqGzIiwmvk%253D%26pass_ticket%3DDAyFVADyPalxlkE8NUofnsSAhBBJHP7CYr46pHPxHfWOVdG1RLPhHzDUX%252BmMIHmH%26winzoom%3D1#wechat_redirect)查看样品相似性，trt组和untrt组区分明显 (*聚类采用的不同基因数目、聚类参数都可能影响聚类结果*)
+
+```{r}
 # clusterSampleHeatmap2(normexpr$rlog, 
 #                       cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."), 
 #                       saveplot=paste(output_prefix, "DESeq2.sampleCorrelation.pdf", sep="."))
+# 根据前5000个表达变化幅度最大的基因进行聚类分析
 clusterSampleHeatmap2(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
 clusterSampleUpperTriPlot(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
 ```
 
-#### 样本PCA查看相似性
+![](images/cluster1_before_batch.png)
+
+![](images/cluster2_before_batch.png)
+
+[主成分分析PCA](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247489825&idx=1&sn=e56d490bec2bed4068cb2f294399e675&chksm=ec0ddcabdb7a55bd5ad91cc16c470250213d78c782da419e70039e851621525674203e47916f&scene=158#rd)查看样品相似性，发现在`PC1`轴上，样品按**处理条件**区分开；在`PC2`轴上，样品按**个体**区分开，不同的个体是影响样品基因表达差异的一个重要因素。
 
 ```{r}
 metadata = as.data.frame(colData(dds))
 sp_pca(normexpr$rlog[1:5000,], metadata, color_variable="conditions", shape_variable = "individual") + aes(size=1) + guides(size = F)
 ```
 
+![](images/pca_before_batch.png)
 
-
-#### 差异基因鉴定和可视化
-
-结果见文件。
+先鉴定出差异基因，获得差异基因文件`ehbio.simpler.DESeq2.all.DE`和其它可视化图表（暂时忽略）。
 
 ```{r}
 multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
 ```
 
-## 差异分析过程考虑批次因素
+### 考虑已知的批次因素进行差异基因分析
 
-### 初始化，定义输入、输出和参数
+初始化，定义输入、输出和参数 （注意`covariate`变量使用`individual`列作为了批次信息）
 
 ```{r}
 # Prefix for all output file 
@@ -98,6 +230,7 @@ file = "ehbio_trans.Count_matrix.xls"
 sampleFile = "sampleFile"
 # 分组信息所在列名字
 # covariate = NULL
+# *********
 covariate = "individual"
 design="conditions"
 # 输入数据类型，salmon结果或reads count 矩阵
@@ -107,51 +240,47 @@ padj=0.05
 log2FC=1
 ```
 
-### 数据读入和标准化
+数据读入和标准化，并检查数据标准化效果: 标准化后基因在不同样品的表达分布越均一越好 （此图略过，与上面的表达分布图一致）。
 
 ```{r}
 dds <- readscount2deseq(file, sampleFile, design=design, covariate = covariate)
-
 normexpr <- deseq2normalizedExpr(dds, output_prefix=output_prefix)
-```
-
-#### 检查数据标准化效果
-
-标准化后基因在样品的表达分布，不同样品越均一越好。
-
-```{r}
-# normalizedExpr2DistribBoxplot(normexpr, 
-#                               saveplot=paste(output_prefix, "DESeq2.normalizedExprDistrib.pdf", sep="."))
 normalizedExpr2DistribBoxplot(normexpr)
 ```
 
-#### 样本聚类查看样品相似性
+样本聚类查看样品相似性，trt组和untrt组区分明显 (此部分结果略过，与上面的聚类结果一致)
 
-```{r, fig.width="49%"}
+```{r}
 # clusterSampleHeatmap2(normexpr$rlog, 
 #                       cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."), 
 #                       saveplot=paste(output_prefix, "DESeq2.sampleCorrelation.pdf", sep="."))
+# 根据前5000个表达变化幅度最大的基因进行聚类分析
 clusterSampleHeatmap2(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
 clusterSampleUpperTriPlot(normexpr$rlog[1:5000,], cor_file=paste(output_prefix, "DESeq2.sampleCorrelation.txt", sep="."))
 ```
 
-#### 样本PCA查看相似性
+
+主成分分析PCA查看样品相似性，发现在`PC1`轴上，样品按**处理条件**区分开；在`PC2`轴上，样品按**个体**区分开，表明不同的个体可能会对后续的差异基因分析造成影响。这个结果也与我们前面不考虑批次因素的结果是一样的。
+
 
 ```{r}
 metadata = as.data.frame(colData(dds))
 sp_pca(normexpr$rlog[1:5000,], metadata, color_variable="conditions", shape_variable = "individual") + aes(size=1) + guides(size = F)
 ```
 
+![](images/pca_after_batch.png)
 
-#### 差异基因鉴定和可视化
+是不是批次变量加错了呢，还是添加的批次变量未生效？可以说都不是，操作没问题，只是`DESeq2`处理时只在差异分析模型中考虑批次效应信息，而不会`直接校正表达矩阵`。那我们先看下加了批次后差异分析的结果怎样，后续我们再讲如何校正表达矩阵。
 
-结果见文件。
+鉴定出差异基因，获得差异基因文件`ehbio.simpler.batch.DESeq2.all.DE`和其它可视化图表（暂时忽略）。
 
 ```{r}
 multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
 ```
 
-## 批次校正前后差异基因比较
+### 比较批次校正前后差异基因变化
+
+校正后，差异基因数目变多了，上调多了*99*个，下调多了*61*个。不过数目变化，也说明不了太多问题。
 
 ```{r}
 de_before_batch = sp_readTable("ehbio.simpler.DESeq2.all.DE", header=F)
@@ -159,32 +288,62 @@ de_before_batch$V2 = paste("Before_batch",de_before_batch$V2,sep="_")
 table(de_before_batch$V2)
 ```
 
-
+```
+Before_batch_untrt._higherThan_.trt  Before_batch_untrt._lowerThan_.trt 
+                                398                                 466
+```
+								
 ```{r}
 de_after_batch = sp_readTable("ehbio.simpler.batch.DESeq2.all.DE", header=F)
 de_after_batch$V2 = paste("After_batch",de_after_batch$V2,sep="_")
 table(de_after_batch$V2)
 ```
 
-```{r}
+```
+After_batch_untrt._higherThan_.trt  After_batch_untrt._lowerThan_.trt 
+                               497                                527 
+```
+
+画个Venn图，看下哪些基因是新增的差异基因，哪些基因批次校正后没差异了。这里就不写代码了，采用在线工具<http://www.ehbio.com/test/venn/#/> 来做，准备在线工具所需的文件，一个两列格式的文件：第一列为基因名，第二列为基因的上下调状态。
+
+```
 all_de = rbind(de_before_batch, de_after_batch)
 # 随机查看6行，信息代表更全面
 all_de[sample(1:nrow(all_de),6),]
+# 结果存储到文件中
 sp_writeTable(all_de, file="Compare_de_gene_beofore_and_after_batch.txt", keep_rownames = F, col.names = F)
 ```
 
-### 特定基因表达模式可视化展示
+```
+ENSG00000114270	After_batch_untrt._lowerThan_.trt		
+ENSG00000102935	After_batch_untrt._higherThan_.trt		
+ENSG00000131370	Before_batch_untrt._higherThan_.trt		
+ENSG00000174944	After_batch_untrt._lowerThan_.trt		
+ENSG00000157510	After_batch_untrt._lowerThan_.trt		
+ENSG00000116711	After_batch_untrt._higherThan_.trt
+```
 
+拷贝文件数据到网站数据输入处：
+
+![](images/venn.gif)
+
+从Venn图可以看出，批次校正后既有新增的差异基因，又丢失了之前的一部分差异基因，那么哪个方式更合理呢？
+
+选择1个批次校正后检测为上调的基因和1个批次校正后检测为下调的基因，观察下其表达模式。从下图可以看出，这些基因具有明显的个体表达一致性。`ENSG00000163394`基因在每个个体来源的样本中处理后表达都上调了近4倍，但是其本底表达在不同个体中却差异较大。如其在`N080611`个体（蓝色线）中表达整体偏低，药物处理后表达虽然有上调但表达值却低于其在`N061011`个体（绿色线）处理前的表达。从这两个例子可以看出，考虑到每个个体的基准表达水平不同，最终获得的差异倍数会有较高的方差。批次校正后解决了样品个体来源基因本底表达差异的影响，获得的差异基因倍数方差会变小，所以检测出更多差异基因，理论上也是更可靠的方式。（这个在之前文章[典型医学设计实验GEO数据分析 (step-by-step) - Limma差异分析、火山图、功能富集](https://mp.weixin.qq.com/s/PswNqmQ8mDleVE4yHtCvAQ)也有阐述。）
 
 ```{r}
 ENSG00000163394 = data.frame(Expr=normexpr$rlog["ENSG00000163394",])
-p1 <- sp_boxplot(ENSG00000163394, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual", title="ENSG00000163394")
+p1 <- sp_boxplot(ENSG00000163394, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual")
 
 ENSG00000221866 = data.frame(Expr=normexpr$rlog["ENSG00000221866",])
-p2 <- sp_boxplot(ENSG00000221866, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual", title="ENSG00000221866")
+p2 <- sp_boxplot(ENSG00000221866, melted=T, metadata=metadata, xvariable = "conditions", yvariable = "Expr", jitter_bp = T, group_variable_for_line = "individual")
 
 p1 + p2 + plot_layout(guide = 'collect')
 ```
+
+![](images/pair_boxplot_for_gene_de_afterbatch.png)
+
+我们再选2个批次校正前鉴定为有差异、批次校正后鉴定为无差异的基因观察下其表达模式。这两个基因的表达模式没看出存在个体本底的一致变化差异。处理前后在不同个体中变化幅度不一，可能是被动变化。但这些基因一定是没有差异吗？我个人也下不出结论，后续得结合其功能再做判断了。
 
 ```{r}
 ENSG00000109689 = data.frame(Expr=normexpr$rlog["ENSG00000109689",])
@@ -195,6 +354,426 @@ p2 <- sp_boxplot(ENSG00000137124, melted=T, metadata=metadata, xvariable = "cond
 
 p1 + p2 + plot_layout(guide = 'collect')
 ```
+
+![](images/pair_boxplot_for_gene_de_beforebatch.png)
+
+`DESeq2`，`edgeR`和`limma`在考虑批次因素鉴定差异基因时基本操作是一致的，上面我们也完成和比较了已知批次的数据的差异基因鉴定。
+
+后续还有2个问题：
+
+1. DESeq2不校正表达矩阵自身的值，如果需要用到批次校正后的表达矩阵怎么做？
+2. 如果不知道数据是否来源于同一个个体或是否有其他批次因素的影响，怎么处理？
+
+
+## 批次效应未知时如何判断和在差异基因鉴定过程中移除批次效应
+
+前面文章讲述了批次信息已知时，在差异基因分析中考虑批次效应的影响可以移除部分基因在个体中不同本底表达水平差异的影响，获得的差异基因倍数方差会变小，可以检测出更多差异基因，理论上也是更可靠的方式。那么如果批次信息未知或记录不完善时怎么处理呢？
+
+这里我们就用到了另一个 R 包`sva`帮助从数据中预测可能存在的混杂因素包括但不限于批次效应的影响。下面我们实际看下这个包鉴定出的*混杂因素与批次效应变量*之间是否存在关联？利用预测出的混杂因素作为批次信息校正后结果会有什么变化？
+
+
+首先加载所有的包
+
+```{r}
+# 若缺少YSX包，则安装
+# BiocManager::install("Tong-Chen/YSX", update=F)
+suppressMessages(library(DESeq2))
+suppressMessages(library("RColorBrewer"))
+suppressMessages(library("gplots"))
+suppressMessages(library("amap"))
+suppressMessages(library("ggplot2"))
+suppressMessages(library("BiocParallel"))
+suppressMessages(library("YSX"))
+suppressMessages(library(sva))
+suppressMessages(library(ggfortify))
+suppressMessages(library(patchwork))
+suppressMessages(library(ggbeeswarm))
+# 比上面多了1个包
+suppressMessages(library(ggrepel))
+```
+
+输入文件1： `reads count`矩阵 (*ehbio_trans.Count_matrix.xls*)，格式如下：
+
+```
+ENSG	untrt_N61311	untrt_N052611	untrt_N080611	untrt_N061011	trt_N61311	trt_N052611	trt_N080611	trt_N061011
+ENSG00000223972	1	0	0	0	0	1	0	0
+ENSG00000227232	13	25	23	24	12	12	22	22
+ENSG00000278267	0	5	3	4	2	4	3	1
+```
+
+输入文件2： `实验设计信息`表 (*sampleFile*): `conditions`为处理条件（`untrt`是对照, `trt`是加药处理 ），`individual`标记样品的个体来源 (4个个体：N61311、N052611、N080611、N061011)。
+
+```
+Samp	conditions	individual
+untrt_N61311	untrt	N61311
+untrt_N052611	untrt	N052611
+untrt_N080611	untrt	N080611
+untrt_N061011	untrt	N061011
+trt_N61311	trt	N61311
+trt_N052611	trt	N052611
+trt_N080611	trt	N080611
+trt_N061011	trt	N061011
+```
+
+### 预测混杂因素(cofounding factors)并在差异基因分析中移除这些因素
+
+初始化，定义输入、输出和参数
+
+```{r}
+# Prefix for all output file 
+output_prefix = "ehbio.simpler.sva_batch"
+
+# pipelineStar.sh或其它方式生成的reads count 文件，行为基因，列为样品
+file = "ehbio_trans.Count_matrix.xls"
+# 分组信息表
+sampleFile = "sampleFile"
+# 分组信息所在列名字
+covariate = NULL
+# covariate = "batch"
+design="conditions"
+# 输入数据类型，salmon结果或reads count 矩阵
+type="readscount"
+# 差异基因参数
+padj=0.05
+log2FC=1
+```
+
+数据读入和标准化
+
+```{r}
+dds <- readscount2deseq(file, sampleFile, design=design, covariate = covariate)
+normexpr <- deseq2normalizedExpr(dds, output_prefix=output_prefix)
+```
+
+
+> [1] "Read in 32799 genes"
+>
+> [1] "23936 genes remained after filtering of genes with all counts less than 4 in all samples."
+>
+> [1] "Perform DESeq on given datasets."
+>
+> estimating size factors
+>
+> estimating dispersions
+>
+> gene-wise dispersion estimates
+>
+> mean-dispersion relationship
+>
+> final dispersion estimates
+>
+> fitting model and testing
+>
+> [1] "Output normalized counts"
+>
+> [1] "Output rlog transformed normalized counts"
+
+
+
+### 预测可能存在的混杂因素
+
+
+```{r}
+# 获取标准化后的表达矩阵并移除低表达基因
+dat  <- counts(dds, normalized = TRUE)
+idx  <- rowMeans(dat) > 1
+dat  <- dat[idx, ]
+# 根据关键生物表型构建设计矩阵
+mod  <- model.matrix(as.formula(paste0("~ ", design)), colData(dds))
+# 构建对照设计矩阵
+mod0 <- model.matrix(~ 1, colData(dds))
+# 指定混杂因素的数目为 2，也可以让 sva 自己预测
+svseq <- svaseq(dat, mod, mod0, n.sv = 2)
+
+# 每一行为一个样品，每一列为对应样品不同的混杂因素及其影响程度
+svseq$sv
+```
+
+```
+Number of significant surrogate variables is:  2 
+Iteration (out of 5 ):1  2  3  4  5             
+	  [,1]      [,2]
+[1,]  0.2678603 -0.52990953
+[2,]  0.1588371  0.17320301
+[3,] -0.5942965 -0.08320290
+[4,]  0.1930937  0.36401274
+[5,]  0.2529656 -0.56202177
+[6,]  0.1750282  0.27665277
+[7,] -0.6236673 -0.03396788
+[8,]  0.1701789  0.39523355
+```
+
+下面的方式也可以 (`svaseq` 是在 `sva` 的基础上对数据做了一个 `log` 转换；如果处理的是芯片数据，通常已经做过 log 换，直接使用 `sva` 即可)。
+
+```{r}
+# 获取标准化后的表达矩阵
+dat <- normexpr$rlog
+# 根据关键生物表型构建设计矩阵
+mod  <- model.matrix(as.formula(paste0("~ ", design)), colData(dds))
+# 构建对照设计矩阵
+mod0 <- model.matrix(~ 1, colData(dds))
+# 指定混杂因素的数目为 2，也可以让 sva 自己预测
+svseq2 <- sva(dat, mod, mod0, n.sv = 2)
+svseq2$sv
+```
+
+```
+Number of significant surrogate variables is:  2 
+Iteration (out of 5 ):1  2  3  4  5             
+      [,1]      [,2]
+[1,]  0.2500285 -0.52880173
+[2,]  0.1689412  0.21277897
+[3,] -0.5718486 -0.06104912
+[4,]  0.1763780  0.34073904
+[5,]  0.2397509 -0.58308079
+[6,]  0.1921676  0.26715457
+[7,] -0.6476571 -0.02618922
+[8,]  0.1922394  0.37844828
+```
+
+添加预测出的`Surrogate variable`属性到dds对象
+
+```{r}
+dds$SV1 <- svseq$sv[,1]
+dds$SV2 <- svseq$sv[,2]
+
+design(dds) <- as.formula(paste("~ SV1 + SV2 +", design))
+# 基于预测出的混杂因素再次进行分析
+dds <- DESeq(dds)
+```
+
+可视化展示预测出的`Surrogate variable`属性与已知的批次信息的关系
+
+```{r}
+plot_data <- as.data.frame(colData(dds))
+plot_data$Sample <- rownames(plot_data)
+head(plot_data)
+```
+
+```
+              conditions individual sizeFactor        SV1        SV2        Sample
+untrt_N61311       untrt     N61311  1.0211325  0.2678603 -0.5299095  untrt_N61311
+untrt_N052611      untrt    N052611  1.1803986  0.1588371  0.1732030 untrt_N052611
+untrt_N080611      untrt    N080611  1.1796083 -0.5942965 -0.0832029 untrt_N080611
+untrt_N061011      untrt    N061011  0.9232642  0.1930937  0.3640127 untrt_N061011
+trt_N61311           trt     N61311  0.8939275  0.2529656 -0.5620218    trt_N61311
+trt_N052611          trt    N052611  0.6709229  0.1750282  0.2766528   trt_N052611
+```
+
+从下图可以看出，预测出的混杂因素`SV1`, `SV2`与样品来源的个体信息 (`individual`)还是比较一致的 (N052611与N061011的区分不明显)。差异最大的是N080611，这与之前分析的PCA结果也是吻合的。
+
+```{r}
+ggplot(plot_data, aes(x=SV1, y=SV2, color=conditions, shape=individual)) + 
+	geom_point() + geom_text_repel(aes(label=Sample))
+```
+
+![](images/sva_batch1.png)
+
+基于预测出的混杂因素再次进行差异分析，获得差异基因文件`ehbio.simpler.sva_batch.DESeq2.all.DE`和其它可视化图表（暂时忽略）。
+
+```
+multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
+```
+
+### 比较批次校正前、已知批次校正后和预测的批次校正后差异基因变化
+
+根据已知批次信息校正后差异基因数目变多了，上调多了*99*个，下调多了*61*个。根据预测的混杂因素校正后，上调多了*52*个，下调少了*1*个。
+
+```
+de_before_batch = sp_readTable("ehbio.simpler.DESeq2.all.DE", header=F)
+de_before_batch$V2 = paste("Before_batch",de_before_batch$V2,sep="_")
+table(de_before_batch$V2)
+```
+
+```
+Before_batch_untrt._higherThan_.trt  Before_batch_untrt._lowerThan_.trt 
+                                398                                 466
+```
+								
+```{r}
+de_after_known_batch = sp_readTable("ehbio.simpler.batch.DESeq2.all.DE", header=F)
+de_after_known_batch$V2 = paste("After_known_batch",de_after_known_batch$V2,sep="_")
+table(de_after_known_batch$V2)
+```
+
+```
+After_known_batch_untrt._higherThan_.trt  After_known_batch_untrt._lowerThan_.trt 
+                                     497                                      527  
+```
+
+```{r}
+de_after_sva_batch = sp_readTable("ehbio.simpler.sva_batch.DESeq2.all.DE", header=F)
+de_after_sva_batch$V2 = paste("After_sva_batch",de_after_sva_batch$V2,sep="_")
+table(de_after_sva_batch$V2)
+```
+
+```
+After_sva_batch_untrt._higherThan_.trt  After_sva_batch_untrt._lowerThan_.trt 
+                                   450                                    465
+```
+
+									 
+画个Venn图，看下哪些基因是新增的差异基因，哪些基因批次校正后没差异了。
+
+
+
+```
+all_de = rbind(de_before_batch, de_after_batch)
+# 随机查看6行，信息代表更全面
+all_de[sample(1:nrow(all_de),6),]
+# 结果存储到文件中
+sp_writeTable(all_de, file="Compare_de_gene_beofore_and_after_batch.txt", keep_rownames = F, col.names = F)
+```
+
+```
+ENSG00000260455	After_known_batch_untrt._higherThan_.trt		
+ENSG00000163803	Before_batch_untrt._lowerThan_.trt		
+ENSG00000168811	After_sva_batch_untrt._higherThan_.trt		
+ENSG00000149218	After_known_batch_untrt._lowerThan_.trt		
+ENSG00000168811	After_known_batch_untrt._higherThan_.trt		
+ENSG00000118689	After_known_batch_untrt._lowerThan_.trt
+```
+
+一个方式是采用代码，直接出图
+
+```{r}
+suppressMessages(library(VennDiagram))
+suppressMessages(library(grid))
+sp_vennDiagram(all_de, label1="Before_batch_untrt._higherThan_.trt",
+               label2="After_known_batch_untrt._higherThan_.trt",
+               label3="After_sva_batch_untrt._higherThan_.trt")
+```
+
+这里还是采用在线工具<http://www.ehbio.com/test/venn/#/> 来做，能直接获得每个子集的基因，准备在线工具所需的文件，一个两列格式的文件：第一列为基因名，第二列为基因的上下调状态。
+
+拷贝文件数据到网站数据输入处 （操作就不演示了看上一篇文章）：
+
+![](images/batch3_untrt_higher_venn.png)
+
+从untrt上调基因Venn图可以看出，校正已知批次信息后既有新增的untrt上调差异基因，又丢失了之前的一部分untrt上调差异基因；校正预测的混杂因素后，大部分新增差异基因都与已知批次信息校正后的结果一致，但新增untrt上调差异基因少。
+
+![](images/batch3_untrt_lower_venn.png)
+
+从untrt下调基因Venn图可以看出，校正预测的混杂因素后，新增39个差异基因；批次校正前鉴定为存在差异的40个基因在校正后被认为是非差异显著基因。
+
+下面还是从这些基因的表达模式上看是否可以找到一些线索？
+
+下图比对绘出了**7**种不同类型untrt上调的差异基因中随机选取1个绘制的表达模式比较图。
+
+```{r}
+untrt_up_genes <- "Name;Type
+ENSG00000143850;SVA_batch_specific
+ENSG00000065809;SVA_batch_uncorrect_common
+ENSG00000109689;Uncorrect_specific
+ENSG00000124762;Known_batch_uncorrect_common
+ENSG00000172061;Known_batch_specific
+ENSG00000163394;Known_batch_SVA_batch_common
+ENSG00000178695;All_common"
+
+untrt_up_genes <- read.table(text=untrt_up_genes, sep=";", header=T, row.names=NULL)
+
+untrt_up_genes_expr <- merge(untrt_up_genes, normexpr$rlog, by.x="Name", by.y=0, all.x=T)
+
+untrt_up_genes_expr_long <- reshape2::melt(untrt_up_genes_expr, id_vars=c("Name","Type"), 
+                                 variable.name="Sample", value.name = "Expr")
+
+head(untrt_up_genes_expr_long)
+
+metadata$Sample = rownames(metadata)
+
+sp_boxplot(untrt_up_genes_expr_long, melted=T, metadata=metadata, 
+           xvariable = "conditions", yvariable = "Expr", jitter_bp = T, 
+           group_variable_for_line = "individual", 
+           facet = "Type", scales="free_y", legend.position = c(0.5,0.1), 
+           x_label="",manual_color_vector = "Set2") + 
+  theme(legend.direction = "horizontal")
+```
+
+`All_common`代表了差异倍数特别大的基因，不论是否校正都可以检测出差异；不同类型批次信息校正后被检测视为差异的基因都有表达的本底差异；`Uncorrect_specific`的基因本底表达无固定模式。
+
+![](images/untrt_higher_representative_gene.png)
+
+下图比对绘出了**7**种不同类型untrt下调的差异基因表达分布，基本结论与上图类似。
+
+```{r}
+untrt_down_genes <- "Name;Type
+ENSG00000144649;SVA_batch_specific
+ENSG00000187134;SVA_batch_uncorrect_common
+ENSG00000137124;Uncorrect_specific
+ENSG00000151690;Known_batch_uncorrect_common
+ENSG00000180914;Known_batch_specific
+ENSG00000221866;Known_batch_SVA_batch_common
+ENSG00000152583;All_common"
+
+untrt_down_genes <- read.table(text=untrt_down_genes, sep=";", header=T, row.names=NULL)
+
+untrt_down_genes_expr <- merge(untrt_down_genes, normexpr$rlog, by.x="Name", by.y=0, all.x=T)
+
+untrt_down_genes_expr_long <- reshape2::melt(untrt_down_genes_expr, id_vars=c("Name","Type"), 
+                                 variable.name="Sample", value.name = "Expr")
+
+head(untrt_down_genes_expr_long)
+
+metadata$Sample = rownames(metadata)
+
+sp_boxplot(untrt_down_genes_expr_long, melted=T, metadata=metadata, 
+           xvariable = "conditions", yvariable = "Expr", jitter_bp = T, 
+           group_variable_for_line = "individual", 
+           facet = "Type", scales="free_y", legend.position = c(0.5,0.1), 
+           x_label="",manual_color_vector = "Set2") + 
+  theme(legend.direction = "horizontal")
+```
+
+额外的一个信息是`SVA_batch_speific`中红色和绿色个体本地表达区分不明显。这可能是基于SVA预测的混杂因素与已知的批次因素校正后结果有差异的一个原因 (这两个个体的SV值很接近)。
+
+![](images/untrt_lower_representative_gene.png)
+
+另外一个导致SVA预测的批次与已知的批次效应校正后结果不同的原因也可能是我们只让`SVA`预测了2个混杂因素。留下2个去探索的问题，欢迎留言或投稿讨论：
+
+1. 如果不设置只返回两个混杂因素，实际SVA会判断出存在3个混杂因素，全部混杂因素都考虑进去结果会有什么变化呢？
+2. 上面是取了单个基因查看其表达模式，还可以进一步比较不同子集的基因表达水平、差异倍数、FDR、差异倍数方差的整体分布，分析受影响的主要是哪些类型的基因？
+
+
+
+后续还有2个问题：
+
+1. DESeq2不校正表达矩阵自身的值，如果需要用到批次校正后的表达矩阵怎么做？
+2. 如果不知道数据是否来源于同一个个体或是否有其他批次因素的影响，怎么处理？
+
+
+https://github.com/Tong-Chen/Bioinfo_course_R
+
+![](images/batch19.jpg)
+
+
+### 怎么从FASTQ数据中获得测序设备和批次相关信息
+ 
+```
+# 原始FASTQ序列名字行有如下的对应关系 (跟CASAVA版本有关)
+@<machine_id>:<run number>:<flowcell ID>:<lane>:<tile>:<x-pos>:<y-pos> <read>:<is filtered>:<control number>:<index sequence>
+
+@D4LHBFN1:276:C2HKJACXX:4:1101:3448:12374 1:N:0:AGTTCC
+```
+
+关于FASTQ，见[NGS基础 - FASTQ格式解释和质量评估](http://mp.weixin.qq.com/s/tDMih7ISLJcL4F4sWBq3Vw)。
+
+### 如何合并人的表达数据和小鼠的表达数据？
+
+基于同源基因合并。
+
+### 质控中的GC含量和Overrepresented sequences
+
+### 样品是否在某种属性中存在偏好性
+
+### 为什么聚类结果不可靠
+
+### sampleFile文件的生成
+
+
+
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js" charset="utf-8"></script><script src="https://casual-effects.com/markdeep/
+latest/markdeep.min.js" charset="utf-8"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
+
 
 
 
