@@ -1,0 +1,600 @@
+# 易生信-数据可视化(1)
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  tidy = TRUE,
+  tidy.opts = list(width.cutoff = 120),
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+## 加载需要的包
+
+```{r}
+library(dplyr)
+library(ggpubr)
+library(tidyr)
+library(ggplot2)
+library(pheatmap)
+library(ggstatsplot)
+library(Hmisc)
+```
+
+## 读入数据
+
+### Duplicate row names
+
+```{r, eval=F}
+expr <- read.table("ehbio.simplier.DESeq2.normalized.symbol.txt", 
+                   row.names=1, header=T, sep="\t")
+```
+
+### 行名唯一化处理
+
+这里使用`make.names`转换行名为唯一，实际需要先弄清楚为什么会有重复名字。
+
+```{r}
+expr <- read.table("ehbio.simplier.DESeq2.normalized.symbol.txt", 
+                   row.names=NULL, header=T, sep="\t")
+head(expr)
+```
+
+有哪些基因名是重复出现的？
+
+```{r}
+expr$id[duplicated(expr$id)]
+```
+
+名字唯一化处理
+
+```{r}
+make.names(c('a','a','b','b','b'), unique=T)
+```
+
+```{r}
+expr_names <- make.names(expr$id, unique = T)
+rownames(expr) <- expr_names
+expr <- expr[,-1]
+head(expr)
+```
+
+## 热图绘制
+
+```{r}
+library(pheatmap)
+top6 <- head(expr)
+pheatmap(top6)
+```
+### 提取差异基因绘制热图
+
+读入差异基因列表
+
+```{r}
+de_gene <- read.table("ehbio.DESeq2.all.DE.symbol", row.names=NULL, header=F, sep="\t")
+head(de_gene)
+```
+
+提取Top3 差异的基因
+
+```{r}
+top6_de_gene <- de_gene %>% group_by(V2) %>% slice(1:3)
+top6 <- expr[which(rownames(expr) %in% top6_de_gene$V1),]
+head(top6)
+```
+
+```{r}
+metadata <- read.table("sampleFile", header=T, row.names=1)
+pheatmap(top6, annotation_col = metadata)
+```
+
+按行标准化
+
+
+```{r}
+pheatmap(top6, annotation_col = metadata, scale="row", cluster_cols = F)
+```
+
+## 箱线图和统计比较
+
+```{r}
+head(top6)
+```
+
+
+矩阵转置
+
+```{r}
+top6_t <- as.data.frame(t(top6)) 
+top6_t
+```
+
+与样本属性信息合并
+
+```{r}
+top6_t_with_group <- merge(metadata, top6_t,by=0) 
+head(top6_t_with_group)
+```
+
+```{r}
+colnames(top6_t_with_group)[1] = "Sample"
+head(top6_t_with_group)
+```
+
+### 单基因箱线图
+
+```{r}
+library(ggpubr)
+
+ggboxplot(top6_t_with_group, x = "conditions", y = "KCTD12",
+          title = "KCTD12", ylab = "Expression",
+          color = "conditions", palette = "jco")
+# palette
+# npg, lancet, 
+```
+
+### 多基因箱线图 (combine)
+
+```{r}
+ggboxplot(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA","PER1","SLC6A9"),
+          ylab = "Expression", combine=T,
+          color = "conditions", palette = "jco")
+```
+
+### 多基因箱线图 (merge)
+
+```{r}
+ggboxplot(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA","PER1","SLC6A9"),
+          ylab = "Expression", merge="flip",
+          color = "conditions", palette = "nature")
+```
+
+### 数据对数转换后绘制箱线图
+
+```{r}
+top6_t_with_group_log =  top6_t_with_group %>%
+  purrr::map_if(is.numeric, log1p) %>%
+  as.data.frame
+head(top6_t_with_group_log)
+```
+
+```{r}
+ggboxplot(top6_t_with_group_log, x = "conditions", y = c("KCTD12","MAOA","PER1","SLC6A9"),
+          ylab = "Expression", merge="flip",
+          fill = "conditions", palette = "Set3")
+```
+
+### 用ggplot2实现ggpubr
+
+```{r}
+head(top6_t_with_group)
+```
+
+```{r}
+top6_t_with_group_melt <- gather(top6_t_with_group, key="Gene", 
+                                 value="Expr", -conditions, -Sample)
+top6_t_with_group_melt
+```
+
+```{r}
+library(ggplot2)
+ggplot(top6_t_with_group_melt, aes(x=Gene, y=Expr)) + 
+  geom_boxplot(aes(color=conditions)) + theme_classic() 
+```
+
+### 配色
+
+序列型颜色板适用于从低到高排序明显的数据，浅色数字小，深色数字大。
+
+```{r}
+library(RColorBrewer)
+display.brewer.all(type = "seq")
+```
+
+离散型颜色板适合带“正、负”的，对极值和中间值比较注重的数据。
+
+```{r}
+display.brewer.all(type = "div")
+```
+
+
+分类型颜色板比较适合区分分类型的数据。
+
+```{r}
+display.brewer.all(type = "qual")
+```
+
+### 箱线图加统计分析
+
+```{r}
+my_comparisons <- list(c("trt", "untrt"))
+ggboxplot(top6_t_with_group, x = "conditions", y = "PER1",
+          title = "PER1", ylab = "Expression",
+          add = "jitter",                               # Add jittered points
+          #add = "dotplot",
+          fill = "conditions", palette = "Paired") +
+  stat_compare_means(comparisons = my_comparisons)
+```
+
+标记点来源的样本
+
+```{r}
+my_comparisons <- list(c("trt", "untrt"))
+ggboxplot(top6_t_with_group, x = "conditions", y = "PER1",
+          title = "PER1", ylab = "Expression",
+          add = "jitter",                               # Add jittered points
+          add.params = list(size = 0.1, jitter = 0.2),  # Point size and the amount of jittering
+          label = "Sample",                # column containing point labels
+          label.select = list(top.up = 2, top.down = 2),# Select some labels to display
+          font.label = list(size = 9, face = "italic"), # label font
+          repel = TRUE,                                 # Avoid label text overplotting
+          fill = "conditions", palette = "Paired") +
+  stat_compare_means(comparisons = my_comparisons)
+```
+
+修改统计检验方法
+
+```{r}
+my_comparisons <- list(c("trt", "untrt"))
+ggboxplot(top6_t_with_group_log, x = "conditions", y = "PER1",
+          title = "PER1", ylab = "Expression",
+          add = "jitter",                               # Add jittered points
+          add.params = list(size = 0.1, jitter = 0.2),  # Point size and the amount of jittering
+          label = "Sample",                # column containing point labels
+          label.select = list(top.up = 2, top.down = 2),# Select some labels to display
+          font.label = list(size = 9, face = "italic"), # label font
+          repel = TRUE,                                 # Avoid label text overplotting
+          fill = "conditions", palette = "Paired") +
+  stat_compare_means(comparisons = my_comparisons, method = "t.test", paired = T)
+```
+
+小提琴图
+
+```{r}
+ggviolin(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA"),
+          ylab = "Expression", merge="flip",
+          color = "conditions", palette = "jco", 
+          add = "boxplot"
+          # add = "median_iqr"
+         )
+```
+
+点带图（适合数据比较多）
+
+```{r}
+ggstripchart(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA"),
+          ylab = "Expression", combine=T,
+          color = "conditions", palette = "jco", 
+          size = 0.1, jitter = 0.2,
+          add.params = list(color = "gray"),
+          # add = "boxplot"
+          add = "median_iqr")
+```
+
+## 通路内基因的比较
+
+```{r}
+pathway <- read.table("h.all.v6.2.symbols.gmt.forGO", sep="\t", row.names=NULL, header=T)
+head(pathway)
+```
+
+通路提取
+
+```{r}
+# HALLMARK_HYPOXIA, HALLMARK_DNA_REPAIR, HALLMARK_P53_PATHWAY
+
+target_pathway <- pathway[pathway$ont %in% c("HALLMARK_HYPOXIA", 
+                                             "HALLMARK_DNA_REPAIR", "HALLMARK_P53_PATHWAY"),]
+
+target_pathway <- droplevels.data.frame(target_pathway)
+
+summary(target_pathway)
+
+head(target_pathway)
+```
+
+表达矩阵提取
+
+```{r}
+expr_with_gene <- expr
+expr_with_gene$gene <- rownames(expr_with_gene)
+target_pathway_with_expr <- left_join(target_pathway, expr_with_gene)
+summary(target_pathway_with_expr)
+```
+
+移除通路中未检测到表达的基因
+
+```{r}
+target_pathway_with_expr <- na.omit(target_pathway_with_expr)
+summary(target_pathway_with_expr)
+
+head(target_pathway_with_expr)
+```
+
+转换宽矩阵为长矩阵
+
+```{r}
+target_pathway_with_expr_long <- target_pathway_with_expr %>% 
+  gather(key="Sample", value="Expr", -ont, -gene)
+
+head(target_pathway_with_expr_long)
+```
+
+合并样本信息
+
+```{r}
+metadata$Sample <- rownames(metadata)
+target_pathway_with_expr_conditions_long <- target_pathway_with_expr_long %>% left_join(metadata, by="Sample")
+
+head(target_pathway_with_expr_conditions_long)
+```
+
+再次画点带图
+
+```{r}
+ggstripchart(target_pathway_with_expr_conditions_long, x = "ont", y = "Expr",
+          ylab = "Expression", combine=T,
+          color = "conditions", palette = "jco", 
+          size = 0.1, jitter = 0.2,
+          add.params = list(color = "gray"),
+          # add = "boxplot"
+          add = "median_iqr")
+```
+
+表达数据log转换
+
+```{r}
+target_pathway_with_expr_conditions_long$logExpr <- log2(target_pathway_with_expr_conditions_long$Expr + 1)
+ggstripchart(target_pathway_with_expr_conditions_long, x = "ont", y = "logExpr",
+          ylab = "Expression", combine=T,
+          color = "conditions", palette = "jco", 
+          size = 0.1, jitter = 0.2,
+          add.params = list(color = "gray"),
+          # add = "boxplot"
+          add = "median_iqr")
+```
+
+
+```{r}
+head(target_pathway_with_expr_conditions_long)
+```
+
+提取P53通路进行后续分析
+
+```{r}
+HALLMARK_P53_PATHWAY = target_pathway_with_expr_conditions_long[target_pathway_with_expr_conditions_long$ont=="HALLMARK_P53_PATHWAY",]
+ggstripchart(HALLMARK_P53_PATHWAY, x = "conditions", y = "logExpr",
+             title = "HALLMARK_P53_PATHWAY",
+          ylab = "Expression",
+          color = "conditions", palette = "jco", 
+          size = 0.1, jitter = 0.2,
+          add.params = list(color = "gray"),
+          # add = "boxplot"
+          add = "median_iqr")
+```
+
+
+```{r}
+ggdotplot(HALLMARK_P53_PATHWAY, x = "conditions", y = "logExpr",
+             title = "HALLMARK_P53_PATHWAY",
+          ylab = "Expression",
+          color = "conditions", palette = "jco", 
+          fill = "white",
+          binwidth = 0.1,
+          add.params = list(size = 0.9),
+          # add = "boxplot"
+          add = "median_iqr")
+```
+
+### 密度图
+
+```{r}
+ggdensity(HALLMARK_P53_PATHWAY,
+       x="logExpr",
+       y = "..density..",
+       combine = TRUE,                  # Combine the 3 plots
+       xlab = "Expression", 
+       add = "median",                  # Add median line. 
+       rug = TRUE,                      # Add marginal rug
+       color = "conditions", 
+       fill = "conditions",
+       palette = "jco"
+)
+```
+
+```{r}
+head(top6_t_with_group)
+```
+
+```{r}
+top6_t_with_group_long = top6_t_with_group %>% 
+  gather(key="Gene", value="Expr", -conditions, -Sample)
+
+head(top6_t_with_group_long)
+```
+
+## ggstatsplot绘图和统计分析
+
+箱线图
+
+```{r}
+
+library(ggstatsplot)
+ggstatsplot::ggwithinstats(
+  data = top6_t_with_group,
+  x = conditions,
+  y = PER1,
+  sort = "descending", # ordering groups along the x-axis based on
+  sort.fun = median, # values of `y` variable
+  pairwise.comparisons = TRUE,
+  pairwise.display = "s",
+  pairwise.annotation = "p",
+  title = "PER1",
+  caption = "PER1 compare",
+  ggstatsplot.layer = FALSE,
+  messages = FALSE
+)
+```
+
+
+```{r}
+head(target_pathway_with_expr_conditions_long)
+```
+
+
+```{r}
+head(HALLMARK_P53_PATHWAY)
+```
+
+```{r}
+
+library(ggstatsplot)
+ggstatsplot::ggwithinstats(
+  data = HALLMARK_P53_PATHWAY,
+  x = conditions,
+  y = logExpr,
+  sort = "descending", # ordering groups along the x-axis based on
+  sort.fun = median, # values of `y` variable
+  pairwise.comparisons = TRUE,
+  pairwise.display = "s",
+  pairwise.annotation = "p",
+  title = "HALLMARK_P53_PATHWAY",
+  path.point = F,
+  ggtheme = ggthemes::theme_fivethirtyeight(),
+  ggstatsplot.layer = FALSE,
+  messages = FALSE
+)
+```
+
+```{r, fig.width=10, fig.height=10}
+
+library(ggstatsplot)
+
+ggstatsplot::grouped_ggwithinstats(
+  data = target_pathway_with_expr_conditions_long,
+  x = conditions,
+  y = logExpr,
+  grouping.var = ont,
+  xlab = "Condition",
+  ylab = "CEMIP expression",
+  path.point = F,
+  palette = "Set1", # R color brewer
+  ggstatsplot.layer = FALSE,
+  messages = FALSE
+)
+```
+
+```{r, , fig.width=10, fig.height=10}
+ggstatsplot::grouped_ggwithinstats(
+  data = top6_t_with_group_long,
+  x = conditions,
+  y = Expr,
+  xlab = "Condition",
+  ylab = "CEMIP expression",
+  grouping.var = Gene,
+  ggstatsplot.layer = FALSE,
+  messages = FALSE
+)
+```
+
+```{r}
+head(expr)
+```
+
+### 散点图
+
+```{r}
+ggstatsplot::ggscatterstats(
+  data = expr,
+  x = untrt_N61311,
+  y = untrt_N052611,
+  xlab = "untrt_N61311",
+  ylab = "untrt_N052611",
+  title = "Sample correlation",
+  messages = FALSE
+)
+```
+
+
+```{r}
+ggstatsplot::ggscatterstats(
+  data = log2(expr+1),
+  x = untrt_N61311,
+  y = trt_N61311,
+  xlab = "untrt_N61311",
+  ylab = "trt_N61311",
+  title = "Sample correlation",
+  #marginal.type = "density", # type of marginal distribution to be displayed
+  messages = FALSE
+)
+```
+
+### 相关性图
+
+#### 基因共表达
+
+```{r}
+gene_cor <- cor(t(top6))
+
+head(gene_cor)
+```
+
+```{r}
+pheatmap(gene_cor)
+```
+
+
+```{r}
+Hmisc::rcorr(as.matrix(top6_t))
+```
+
+
+```{r}
+head(top6_t)
+```
+
+```{r, fig.width=8, fig.height=8}
+ggstatsplot::ggcorrmat(
+  data = top6_t,
+  corr.method = "robust", # correlation method
+  sig.level = 0.0001, # threshold of significance
+  p.adjust.method = "holm", # p-value adjustment method for multiple comparisons
+  # cor.vars = c(sleep_rem, awake:bodywt), # a range of variables can be selected
+  # cor.vars.names = c(
+  #   "REM sleep", # variable names
+  #   "time awake",
+  #   "brain weight",
+  #   "body weight"
+  # ),
+  matrix.type = "upper", # type of visualization matrix
+  palette = "Set2",
+  #colors = c("#B2182B", "white", "#4D4D4D"),
+  title = "Correlalogram for mammals sleep dataset",
+  subtitle = "sleep units: hours; weight units: kilograms"
+)
+```
+
+#### 样品相关性
+
+```{r, fig.width=8, fig.height=8}
+top100 <- head(expr,100)
+ggstatsplot::ggcorrmat(
+  data = top100,
+  corr.method = "robust", # correlation method
+  sig.level = 0.05, # threshold of significance
+  p.adjust.method = "holm", # p-value adjustment method for multiple comparisons
+  # cor.vars = c(sleep_rem, awake:bodywt), # a range of variables can be selected
+  # cor.vars.names = c(
+  #   "REM sleep", # variable names
+  #   "time awake",
+  #   "brain weight",
+  #   "body weight"
+  # ),
+  matrix.type = "upper", # type of visualization matrix
+  palette = "Set2"
+  #colors = c("#B2182B", "white", "#4D4D4D"),
+
+)
+```
+

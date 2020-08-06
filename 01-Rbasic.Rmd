@@ -16,10 +16,10 @@ R语言是比较常用的统计分析和绘图语言，拥有强大的统计库�
 # configure是收集系统信息，生成Makefile的过程
 # --enable-R-shlib 需要设置，使得其他程序包括Rstudio可以使用R的动态库
 # --prefix指定软件安装目录，需使用绝对路径
-./configure --prefix=/home/ehbio/R/3.4.0 --enable-R-shlib
+./configure --prefix=/home/ehbio/R/4.0.2 --enable-R-shlib
 
 # 也可以使用这个命令，共享系统的blas库，提高运输速度
-#./configure --prefix=/home/ehbio/R/3.4.0 --enable-R-shlib --with-blas --with-lapack
+#./configure --prefix=/home/ehbio/R/4.0.2 --enable-R-shlib --with-blas --with-lapack
 
 # make是编译的过程
 make
@@ -57,8 +57,9 @@ knitr::include_graphics("images/Rstudio_version.png")
 安装参考 <https://www.rstudio.com/products/rstudio/download-server/>
   
 ```
-wget https://download2.rstudio.org/rstudio-server-rhel-1.0.136-x86_64.rpm
-sudo yum install --nogpgcheck rstudio-server-rhel-1.0.136-x86_64.rpm
+# 自己根据自己安装时间自己去获取最新软件的下载地址
+wget https://download2.rstudio.org/rstudio-server-rhel-1.2.5001-x86_64.rpm
+sudo yum install --nogpgcheck rstudio-server-rhel-1.2.5001-x86_64.rpm
 ```
 
 安装完之后的检测、启动和配置
@@ -98,12 +99,12 @@ session-timeout-minutes=0
 
 **Windows下安装桌面版**
 
-下载之后 (<https://www.rstudio.com/products/rstudio/download2/>)双击安装，需要使用**管理员权限**，其它无需要注意的。
+下载之后 (<https://www.rstudio.com/products/rstudio/download2/>)双击安装 (若windows登录名为中文，需要使用**管理员权限**)，其它无需要注意的。
 
 
 ### Rstudio 使用
 
-Windows下桌面版直接双击打开即可使用，Linux服务器版访问地址为<服务器IP:8787>，用户名和密码为Linux用户的用户名和密码。
+Windows下桌面版直接双击打开即可使用，Linux服务器版访问地址为**服务器IP:8787**，用户名和密码为Linux用户的用户名和密码。
 
 #### Rstudio 界面
 
@@ -121,6 +122,10 @@ knitr::include_graphics("images/Rstudio.gif")
 ```
 
 ## R基本语法
+
+```{r}
+knitr::include_graphics("images/R_basic.jpg")
+```
 
 ### 获取帮助文档，查看命令或函数的使用方法、事例或适用范围
 
@@ -581,9 +586,9 @@ install.packages("package_name")
 install.packages("package_name", repo="http://cran.us.r-project.org")
 
 # 安装Bioconductor的包
-source('https://bioconductor.org/biocLite.R')
-biocLite('BiocInstaller')
-biocLite(c("RUVSeq","pcaMethods"))
+if (!requireNamespace("BiocManager", quietly = TRUE))
+      install.packages("BiocManager", update = F)
+BiocManager::install(c("RUVSeq","pcaMethods"))
 
 # 安装Github的R包
 install.packages("devtools")
@@ -602,7 +607,7 @@ library()
 installed.packages()[c("ggplot2"), c("Package", "Version")]
 
 #  Package  Version 
-# "DESeq2" "1.14.1" 
+# "ggplot2" "3.3.2" 
 
 # 查看默认安装包的位置
 .libPaths()
@@ -618,12 +623,478 @@ library(package_name)
 
 ```r
 usePackage <- function(p) {
-	if (!is.element(p, installed.packages()[,1])) {
-		install.packages(p, dep = TRUE)
-	}
+	if (!requireNamespace(p, quietly = TRUE))
+      BiocManager::install(p, update = F)
 	require(p, character.only = TRUE)
 }
 ```
+
+## ggplot2绘图
+
+```{r, echo=T}
+data <- "Gene;Sample;Group;Abundance
+Gene1;KO1;KO;1.2
+Gene2;KO1;KO;1.4
+Gene3;KO1;KO;16
+Gene4;KO1;KO;10
+Gene5;KO1;KO;25
+Gene6;KO1;KO;30
+Gene7;KO1;KO;2
+Gene8;KO1;KO;3
+Gene1;KO2;KO;1.2
+Gene2;KO2;KO;1.4
+Gene3;KO2;KO;16
+Gene4;KO2;KO;10
+Gene5;KO2;KO;25
+Gene6;KO2;KO;30
+Gene7;KO2;KO;2
+Gene8;KO2;KO;3
+Gene1;KO3;KO;1.2
+Gene2;KO3;KO;1.4
+Gene3;KO3;KO;16
+Gene4;KO3;KO;10
+Gene5;KO3;KO;25
+Gene6;KO3;KO;30
+Gene7;KO3;KO;2
+Gene8;KO3;KO;3
+Gene8;WT1;WT;1.2
+Gene7;WT1;WT;1.4
+Gene6;WT1;WT;16
+Gene5;WT1;WT;10
+Gene4;WT1;WT;25
+Gene3;WT1;WT;30
+Gene2;WT1;WT;2
+Gene1;WT1;WT;3
+Gene8;WT2;WT;1.2
+Gene7;WT2;WT;1.4
+Gene6;WT2;WT;16
+Gene5;WT2;WT;10
+Gene4;WT2;WT;25
+Gene3;WT2;WT;30
+Gene2;WT2;WT;2
+Gene1;WT2;WT;3
+Gene8;WT3;WT;1.2
+Gene7;WT3;WT;1.4
+Gene6;WT3;WT;16
+Gene5;WT3;WT;10
+Gene4;WT3;WT;25
+Gene3;WT3;WT;30
+Gene2;WT3;WT;2
+Gene1;WT3;WT;3"
+
+data <- read.table(text=data, header=T, row.names=NULL, sep=";")
+
+data[sample(1:nrow(data),6),]
+```
+
+```{r, echo=T}
+# 加载包
+library(ggplot2)
+```
+
+初始化ggplot，建立坐标系
+
+```{r, echo=T}
+p <- ggplot(data, aes(x=Sample, y=Gene))
+p
+```
+绘制几何属性
+
+```{r, echo=T}
+p + geom_point()
+```
+映射数据到几何形状的属性，如颜色
+
+```{r, echo=T}
+p + geom_point(aes(color=Abundance))
+```
+
+映射数据到几何形状的属性，如大小
+
+```{r, echo=T}
+p + geom_point(aes(size=Abundance))
+```
+
+自定义颜色
+
+```{r, echo=T}
+p + geom_point(aes(color=Abundance)) + scale_color_continuous(low="green", high="red")
+```
+
+设置主题属性
+
+```{r, echo=T}
+p + geom_point(aes(color=Abundance)) + scale_color_continuous(low="green", high="red") + theme_classic()
+```
+
+放大点，并添加文字作为label
+
+```{r, echo=T}
+p + geom_point(aes(color=Abundance), size=10) + 
+                 scale_color_continuous(low="green", high="red") + 
+                 geom_text(aes(label=Abundance)) +
+                 theme_classic()
+```
+
+自定义注释
+
+```{r, echo=T}
+p + geom_point(aes(color=Abundance), size=10) + 
+  scale_color_continuous(low="green", high="red") + 
+  geom_text(aes(label=Abundance)) +
+  annotate("rect",xmin=0.5, xmax=3.5, ymin=5.5,ymax=6.5,alpha=0.2) + 
+  theme_classic()
+```
+
+绘制热图
+
+```{r, echo=T}
+p + geom_tile(aes(fill=Abundance)) + 
+  scale_fill_continuous(low="green", high="red") + 
+  geom_text(aes(label=Abundance)) +
+  theme_classic()
+```
+
+转换坐标系
+
+```{r, echo=T}
+p + geom_tile(aes(fill=Abundance)) + 
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  geom_text(aes(label=Abundance)) +
+  coord_polar(theta="x") + 
+  theme(panel.background=element_blank(),
+           axis.title=element_blank(),
+           panel.grid=element_blank(),
+           axis.ticks=element_blank(),
+           axis.text.y=element_text(size=5))
+```
+
+
+
+更改横轴的顺序
+
+```{r, echo=T}
+# paste0(rep(c("WT","KO"),each=3), rep(1:3))
+data$Sample <- factor(data$Sample,levels=c("WT1","WT2","WT3","KO1","KO2","KO3"), ordered=T)
+p <- ggplot(data, aes(x=Sample, y=Gene)) + 
+  geom_tile(aes(fill=Abundance)) + 
+  scale_fill_continuous(low="green", high="red") + 
+  geom_text(aes(label=Abundance)) +
+  theme_classic()
+p
+```
+
+箱线图展示
+
+```{r, echo=T}
+p <- ggplot(data, aes(x=Sample, y=Abundance)) + 
+  geom_boxplot(aes(fill=Group))
+p
+```
+
+
+
+小提琴图加点的连线
+
+```{r, echo=T}
+# geom_line把同一个Gene的数据作为一组
+p <- ggplot(data, aes(x=Group, y=Abundance)) + 
+  geom_violin(aes(fill=Group), alpha=0.5) +
+  geom_line(aes(group=Gene), alpha=0.5)
+p
+```
+
+```{r}
+library(ggpubr)
+ggviolin(data, x="Group", y="Abundance", fill="Group", palette = "npg", add=c("jitter")) + stat_compare_means(comparisons = list(c("KO", "WT")))
+```
+
+
+
+### 数据格式转换和字符串处理
+
+假如我们的数据如下形式，如何完成上面的图的绘制？
+
+```
+KO1;KO2;KO3;WT1;WT2;WT3
+Gene1;1.2;1.2;1.2;3.0;3.0;3.0
+Gene2;1.4;1.4;1.4;2.0;2.0;2.0
+Gene3;16.0;16.0;16.0;30.0;30.0;30.0
+Gene4;10.0;10.0;10.0;25.0;25.0;25.0
+Gene5;25.0;25.0;25.0;10.0;10.0;10.0
+Gene6;30.0;30.0;30.0;16.0;16.0;16.0
+Gene7;2.0;2.0;2.0;1.4;1.4;1.4
+Gene8;3.0;3.0;3.0;1.2;1.2;1.2
+```
+
+读入数据，查看数据格式 (注意：`read.table`中参数与之前的不同地方在哪？为什么？)
+
+```{r, echo=T}
+data_matrix = "KO1;KO2;KO3;WT1;WT2;WT3
+Gene1;1.3;1.2;1.4;3.1;3.2;3.3
+Gene2;1.1;1.9;1.6;2.3;2.2;2.1
+Gene3;16.8;17.0;18.0;33.0;30.0;35.0
+Gene4;11.0;13.0;12.0;25.0;26.0;28.0
+Gene5;20.0;25.0;23.0;9.0;10.0;13.0
+Gene6;33.0;30.0;35.0;16.0;17.0;16.0
+Gene7;2.0;2.3;2.0;1.4;1.8;1.4
+Gene8;3.0;3.6;3.0;1.2;1.9;1.2"
+data_matrix <- read.table(text=data_matrix, header=T, row.names=1, sep=";")
+data_matrix
+```
+
+宽矩阵转换为长矩阵
+
+```{r}
+library(tidyr)
+
+data_matrix$Gene <- rownames(data_matrix) 
+
+data_matrix_long <- gather(data_matrix, key="Sample", value="Abundance", -Gene)
+
+head(data_matrix_long)
+```
+
+```{r}
+data_matrix_long <- data_matrix_long %>% separate("Sample", c("Group", "Rep"), sep=2, remove=F)
+
+head(data_matrix_long)
+```
+
+获取分组信息 (分组名字等长)
+
+```{r, echo=T, eval=F}
+library(stringr)
+data_matrix_long$Group2 <- str_sub(data_matrix_long$Sample,start=1,end=2)
+
+head(data_matrix_long)
+```
+
+
+另外一种拆分样本名字的方式 (分组名字和生物重复之间分隔符固定)
+
+```{r, echo=T}
+library(stringr)
+library(tidyr)
+
+data_matrix2 = "KO_1;KO_2;KO_3;WT_1;WT_2;WT_3
+Gene1;1.3;1.2;1.4;3.1;3.2;3.3
+Gene2;1.1;1.9;1.6;2.3;2.2;2.1
+Gene3;16.8;17.0;18.0;33.0;30.0;35.0
+Gene4;11.0;13.0;12.0;25.0;26.0;28.0
+Gene5;20.0;25.0;23.0;9.0;10.0;13.0
+Gene6;33.0;30.0;35.0;16.0;17.0;16.0
+Gene7;2.0;2.3;2.0;1.4;1.8;1.4
+Gene8;3.0;3.6;3.0;1.2;1.9;1.2"
+data_matrix2 <- read.table(text=data_matrix2, header=T, row.names=1, sep=";")
+
+data_matrix2$Gene <- rownames(data_matrix2) 
+
+data_matrix_long2 <- gather(data_matrix2, key="Sample", value="Abundance", -Gene)
+
+head(data_matrix_long2)
+```
+
+```{r}
+data_matrix_long2$Group <- str_split(data_matrix_long2$Sample, pattern="_", simplify=T)[,1]
+head(data_matrix_long2)
+```
+
+使用`separate`更简单
+
+```{r}
+data_matrix_long2 %>% separate(Sample, c("Group", "Rep"),sep="_", remove=F)
+```
+
+
+字符串拼合
+
+```{r}
+library(tidyr)
+# group_rep <- as.data.frame(str_split(data_matrix_long2$Sample, pattern="_", simplify=T))
+# colnames(group_rep) <- c("Group", "Rep")
+# unite(group_rep, col="Sample", sep="_")
+
+data_matrix_long2 %>% separate(Sample, c("Group", "Rep"),sep="_", remove=F) %>% unite(col="Sample2", c("Group","Rep"), sep="-", remove=F)
+
+```
+
+用柱状图看下每个Gene在不同组的表达情况
+
+```{r}
+library(ggplot2)
+library(dplyr)
+# 给定数据，和x轴、y轴所在列名字
+# 直接使用geom_bar就可以绘制柱状图
+# position: dodge: 柱子并排放置
+p <- ggplot(data_matrix_long, aes(x=Gene, y=Abundance))
+p + geom_bar(stat="identity", position="dodge", aes(fill=Sample))
+
+# 如果没有图形界面，运行下面的语句把图存在工作目录下的Rplots.pdf文件中
+#dev.off()
+```
+柱子有点多，也可以利用mean±SD的形式展现
+
+首先计算平均值和标准差，使用`group_by`按`Gene, Group`分组，对每组做`summarize`。
+
+```{r}
+data_matrix_long %>% arrange(Gene)
+```
+
+
+```{r}
+library(dplyr)
+# 获取平均值和标准差
+data_m_sd_mean <- data_matrix_long %>% group_by(Gene, Group) %>% 
+	dplyr::summarise(sd=sd(Abundance), mean_value=mean(Abundance))
+data_m_sd_mean <- as.data.frame(data_m_sd_mean)
+data_m_sd_mean
+```
+
+
+使用`geom_errorbar`添加误差线
+
+```{r}
+p <- ggplot(data_m_sd_mean, aes(x=Gene, y=mean_value, group=Group)) + 
+	   geom_bar(stat="identity", position="dodge", aes(fill=Group)) +
+     geom_errorbar(aes(ymin=mean_value-sd, ymax=mean_value+sd), width=0.2, position=position_dodge(width=0.9))
+p
+```
+
+采用`ggpubr`绘制`barplot+errorbar`
+
+```{r}
+library(ggpubr)
+ggbarplot(data_matrix_long, x = "Gene", y = "Abundance", color = "Group", #add.params = list(group = "Group"),
+ add = c("mean_se","jitter"), palette = c("#00AFBB", "#E7B800"),
+ position = position_dodge())
+```
+
+绘制带Error-bar的堆叠柱状图
+
+```{r}
+library(plyr) 
+data_m_sd_mean_stack <- data_m_sd_mean
+factor_level <- unique(data_m_sd_mean_stack$Group)
+data_m_sd_mean_stack$Group <- factor(data_m_sd_mean_stack$Group, levels=factor_level, ordered=T)
+mydata2 <- ddply(data_m_sd_mean_stack,.(Gene),transform,ymin = cumsum(mean_value) - sd,ymax = cumsum(mean_value) + sd)  
+mydata2
+```
+
+```{r}
+library(RColorBrewer)
+
+cols = colorRampPalette(brewer.pal(9, "Paired"))(length(factor_level))
+mydata2$Group <- factor(mydata2$Group, levels=rev(factor_level), ordered=T)
+p <- ggplot(mydata2, aes(x=Gene, y=mean_value, group=Group)) + 
+	   geom_bar(stat="identity", aes(fill=Group), position = "stack") +
+     scale_fill_manual(values=cols) + 
+     geom_errorbar(aes(ymin=ymin, ymax=ymax), width=0.2,color="black", position=position_identity())
+p
+```
+
+在柱子中标记百分比值
+
+首先计算百分比，同样是`group_by` (按照给定的变量分组，然后按组操作)和`mutate`两个函数(在当前数据表增加新变量)
+
+```{r}
+# group_by: 按照给定的变量分组，然后按组操作
+# mutate: 在当前数据表增加新变量
+# 第一步增加每个组的加和，第二步计算比例
+data_m <- data_matrix_long
+data_m <- data_m %>% group_by(Gene) %>% mutate(count=sum(Abundance), freq=round(100*Abundance/count,2)) %>% arrange(Gene, Sample)
+
+head(data_m)
+```
+
+再标记相对比例信息
+
+```{r}
+p <- ggplot(data_m, aes(x=Gene, y=Abundance, group=Group)) +
+	geom_bar(stat="identity", position="fill", aes(fill=Sample)) +
+	scale_y_continuous(labels = scales::percent) +
+	geom_text(aes(label=freq), position=position_fill(vjust=0.5))
+p
+```
+
+
+
+### 配色
+
+序列型颜色板适用于从低到高排序明显的数据，浅色数字小，深色数字大。
+
+```{r}
+library(RColorBrewer)
+display.brewer.all(type = "seq")
+```
+
+离散型颜色板适合带“正、负”的，对极值和中间值比较注重的数据。
+
+```{r}
+display.brewer.all(type = "div")
+```
+
+
+分类型颜色板比较适合区分分类型的数据。
+
+```{r}
+display.brewer.all(type = "qual")
+```
+
+
+### pheatmap绘制热图
+
+
+```{r, echo=T}
+data_matrix = "KO1;KO2;KO3;WT1;WT2;WT3
+Gene1;1.2;1.2;1.2;3.0;3.0;3.0
+Gene2;1.4;1.4;1.4;2.0;2.0;2.0
+Gene3;16.0;16.0;16.0;30.0;30.0;30.0
+Gene4;10.0;10.0;10.0;25.0;25.0;25.0
+Gene5;25.0;25.0;25.0;10.0;10.0;10.0
+Gene6;30.0;30.0;30.0;16.0;16.0;16.0
+Gene7;2.0;2.0;2.0;1.4;1.4;1.4
+Gene8;3.0;3.0;3.0;1.2;1.2;1.2"
+
+data_matrix <- read.table(text=data_matrix, header=T, row.names=1, sep=";")
+
+head(data_matrix)
+```
+
+```{r, eval=F}
+#data_matrix <- read.table("gene_expr_mat.txt", header=T, row.names=1, sep="\t")
+
+#head(data_matrix)
+```
+
+```{r, echo=T}
+library(pheatmap)
+pheatmap(data_matrix)
+```
+
+
+```{r, echo=T}
+metadata <- "samp;Grp
+WT1;WT
+WT2;WT
+WT3;WT
+KO1;KO
+KO2;KO
+KO3;KO"
+
+metadata <- read.table(text=metadata, header=T, row.names=1, sep=";")
+
+pheatmap(data_matrix, annotation_col = metadata)
+```
+
+
+```{r, echo=T}
+colorL = colorRampPalette(c("green","red"))(30)
+
+pheatmap(data_matrix, annotation_col = metadata, color = colorL)
+```
+
+
 
 ## CheetSheets
 
@@ -631,6 +1102,6 @@ usePackage <- function(p) {
 
 ## 参考
 
-* [生信宝典Linux系列](http://mp.weixin.qq.com/s/hEYU80fPf1eD5OWL3fO4Bg)
-* [生信宝典R系列](https://mp.weixin.qq.com/s/bsvB1k17Izom2ldgdwXrdg)
+* [生信宝典Linux系列](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI5MTcwNjA4NQ==&action=getalbum&album_id=1336510271359385600&subscene=21&scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzI5MTcwNjA4NQ%3D%3D%26mid%3D2247491983%26idx%3D1%26sn%3D2052e7a038f2db52eb282b88495a7dfd%26scene%3D21%26key%3Dbbd9db2a3d7572cddf07b767465efb56a0803b43fcdfeb1e1e9a662169975f57a1db506a826a6c934f03cc98245cd6cc1251c956555a9bdbb33b71e6fc4aec05daa254d390b8f4e2faee9da13572aa4d%26ascene%3D7%26uin%3DOTY2MDEyMzgw%26devicetype%3DWindows%2B10%2Bx64%26version%3D62090529%26lang%3Dzh_CN%26exportkey%3DARBvdJ7O%252BwuOu7%252FdoD45yto%253D%26pass_ticket%3D6oR4VId9JNdCLZp2iJjodI21oAREmYTa3D%252F9nfZlbY8TG5eZ3ToAoRlMm5nwdtwk%26winzoom%3D1#wechat_redirect)
+* [生信宝典R系列](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI5MTcwNjA4NQ==&action=getalbum&album_id=1335864997100224512&subscene=21&scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzI5MTcwNjA4NQ%3D%3D%26mid%3D2247490572%26idx%3D1%26sn%3Dc2ba3cb9e8117efff6bfd53c9f797109%26scene%3D21%26key%3D14893ff72db1d5ee36ae599230370c4cdd9e49dbfdd44fe73757d5c60d26ff6e698d2ccc26b16c7898a5164ac9ddb35f990c0bfeb88037b926c9eb29fbaf9867d2ad02e4b2e6da694013a82c124b6e44%26ascene%3D7%26uin%3DOTY2MDEyMzgw%26devicetype%3DWindows%2B10%2Bx64%26version%3D62090529%26lang%3Dzh_CN%26exportkey%3DAWleeoJ2D3RuwW6exYsshOM%253D%26pass_ticket%3D6oR4VId9JNdCLZp2iJjodI21oAREmYTa3D%252F9nfZlbY8TG5eZ3ToAoRlMm5nwdtwk%26winzoom%3D1#wechat_redirect)
 

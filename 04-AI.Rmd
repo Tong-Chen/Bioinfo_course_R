@@ -84,6 +84,7 @@ knitr::include_graphics("images/articlePic2nd_2.png")
 
 ### 视频教程
 
+(更多视频在B站：<https://space.bilibili.com/362709786>)
 
 第一个视频以[绘制的线图](http://mp.weixin.qq.com/s/D0b1gBoho5bnuDdsBRpA4g)为例，展示如果修改、调整矢量图的每个部分。`ggplot2`出品的矢量图整体逻辑比较清晰，一层层的叠加，修改起来也比较方便，没有太多难点；关键是熟悉用到的按钮的使用方式和快捷键的操作。
 

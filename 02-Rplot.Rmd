@@ -1399,6 +1399,8 @@ library(stringr)
 library(ggplot2)
 library(grid)
 
+# Function get from https://stackoverflow.com/questions/10674992/convert-a-character-vector-of-mixed-numbers-fractions-and-integers-to-numeric?rq=1
+# With little modifications
 mixedToFloat <- function(x){
   x <- sapply(x, as.character)
   is.integer  <- grepl("^-?\\d+$", x)
@@ -1450,6 +1452,7 @@ enrichment_sxbd_freq <- as.data.frame(table(enrichment_sxbd$Description))
 colnames(enrichment_sxbd_freq) <- c("Description", "IDctct")
 head(enrichment_sxbd_freq)
 ```
+
 根据出现次数、GeneRatio、-log10(qvalue)排序
 
 ```{r}
@@ -2342,6 +2345,7 @@ Gene3_b <- c(rnorm(count/2,15,0.2), rnorm(count/2,5,0.2))
 data3 <- data.frame(Gene1 = c(Gene1_a, Gene1_b), Gene2 = c(Gene2_a, Gene2_b), 
 		Gene3 = c(Gene3_a, Gene3_b), Group=c(grp_a, grp_b))
 data3 <- as.data.frame(data3)
+data3$Group <- as.factor(data3$Group)
 
 row.names(data3) <- label
 
@@ -3030,11 +3034,7 @@ a__ <- grid.arrange(ori_scale_pca_plot_t5, ori_no_scale_pca_plot_t5,
 
 * [ggplot2 side by side plot](http://stackoverflow.com/questions/1249548/side-by-side-plots-with-ggplot2)
 
-## 表达聚类分析
 
-```{r}
-#
-```
 
 ## 生存分析
 

@@ -1,5 +1,5 @@
 --- 
-title: "R\Cytoscape\AI生信作图分析培训"
+title: "R Cytoscape AI生信作图分析培训"
 author: 
 - "易生信培训团队"
 - "联系我们: train@ehbio.com"
@@ -8,9 +8,9 @@ documentclass: article
 site: bookdown::bookdown_site
 ---
 
-```{r setup, include=FALSE}
+```{r setup1, include=FALSE}
 library(knitr)
-output <- opts_knit$get("rmarkdown.pandoc.to")
+output <- "html"
 html = FALSE
 latex = FALSE
 opts_chunk$set(echo = TRUE, out.width="100%", fig.align="center", fig.show="hold", warning=FALSE, message=TRUE)
