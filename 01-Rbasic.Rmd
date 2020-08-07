@@ -58,8 +58,8 @@ knitr::include_graphics("images/Rstudio_version.png")
   
 ```
 # 自己根据自己安装时间自己去获取最新软件的下载地址
-wget https://download2.rstudio.org/rstudio-server-rhel-1.2.5001-x86_64.rpm
-sudo yum install --nogpgcheck rstudio-server-rhel-1.2.5001-x86_64.rpm
+wget wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.1056-x86_64.rpm
+sudo yum install --nogpgcheck rstudio-server-rhel-1.3.1056-x86_64.rpm
 ```
 
 安装完之后的检测、启动和配置
