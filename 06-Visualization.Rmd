@@ -79,7 +79,8 @@ head(de_gene)
 提取Top3 差异的基因
 
 ```{r}
-top6_de_gene <- de_gene %>% group_by(V2) %>% slice(1:3)
+library(dplyr)
+top6_de_gene <- de_gene %>% group_by(V2) %>% dplyr::slice(1:3)
 top6 <- expr[which(rownames(expr) %in% top6_de_gene$V1),]
 head(top6)
 ```
@@ -409,8 +410,8 @@ head(top6_t_with_group)
 
 ```{r}
 top6_t_with_group_long = top6_t_with_group %>% 
-  gather(key="Gene", value="Expr", -conditions, -Sample)
-
+  gather(key="Gene", value="Expr", -conditions, -Sample, -individual)
+top6_t_with_group_long$conditions <- as.factor(top6_t_with_group_long$conditions)
 head(top6_t_with_group_long)
 ```
 
@@ -485,7 +486,8 @@ ggstatsplot::grouped_ggwithinstats(
 )
 ```
 
-```{r, , fig.width=10, fig.height=10}
+```{r, fig.width=10, fig.height=10}
+
 ggstatsplot::grouped_ggwithinstats(
   data = top6_t_with_group_long,
   x = conditions,

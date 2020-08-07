@@ -937,16 +937,14 @@ sp_boxplot(untrt_down_genes_expr_long, melted=T, metadata=metadata,
 
 ### ComBat_seq直接校正Count matrix
 
-```{r}
+```{r, eval=F}
 adjusted <- ComBat_seq(count_matrix, batch=batch, group=NULL)
 ```
 
 
-```{r}
-biplot(pca)
-```
 
-```{r}
+
+```{r, eval=F, echo=F}
 data <- as.data.frame(t(expr_mat_batch_correct_limma3[1:5000,]))
 pca <- prcomp(data, scale = T)
 
@@ -958,22 +956,22 @@ percentVar2 <- as.data.frame(percentVar)
 rownames(percentVar2) <- colnames(x)
 ```
 
-```{r}
+```{r, eval=F, echo=F}
 x <- merge(x, metadata, by=0)
 colnames(x)[1] = "Sample"
 x
 ```
 
-```{r}
+```{r, eval=F, echo=F}
 ggplot(x, aes(x=PC1, y=PC2, color=conditions, shape=individual, size=2)) + 
   geom_point() 
 ```
 
-```{r}
+```{r, eval=F, echo=F}
 x
 ```
 
-```{r}
+```{r, eval=F, echo=F}
 fviz_pca_biplot(pca,
             palette="joo",
             addEllipses = T, 
@@ -1022,8 +1020,6 @@ https://github.com/Tong-Chen/Bioinfo_course_R
 
 
 
-<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js" charset="utf-8"></script><script src="https://casual-effects.com/markdeep/
-latest/markdeep.min.js" charset="utf-8"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
 
 
 
@@ -1031,7 +1027,7 @@ latest/markdeep.min.js" charset="utf-8"></script><script>window.alreadyProcessed
 
 ### 自定义绘图
 
-```{r}
+```{r, eval=F, echo=F}
 res_output <- read.table(paste0(output_prefix, ".DESeq2.untrt._vs_.trt.results.xls"), 
                          header=T, row.names=1)
 groupA = 'untrt'
@@ -1093,7 +1089,7 @@ ehbio_trans.Count_matrix.xls.DESeq2.untrt._vs_.trt.results.xls.volcano.pdf
 # head 15_enrichment/ehbio.simpler.DESeq2.normalized.symbol.txt
 ```
 
-```{r}
+```{r, eval=F, echo=F}
 library(dplyr)
 idmap <- read.table("13_salmon_deseq2/genome/GRCh38.idmap", sep="\t", header=T, row.names=NULL, quote="")
 
@@ -1109,7 +1105,7 @@ write.table(normalized_symbol, "15_enrichment/ehbio.simpler.DESeq2.normalized.sy
 
 ### 提取Log2FC值并转换为gene symbol (为GSEA准备)
 
-```{r}
+```{r, eval=F, echo=F}
 suppressMessages(library(data.table))
 
 vs_result <- read.table("13_salmon_deseq2/ehbio.simpler.DESeq2.untrt._vs_.trt.results.xls", header=T, sep="\t", quote="")
@@ -1133,7 +1129,7 @@ write.table(merge_result, "15_enrichment/ehbio.simpler.DESeq2.log2fc_ranked.symb
 ### 转换所有差异基因的名字为gene symbol 或 entrez id (为GO富集分析准备)
 
 
-```{r}
+```{r, eval=F, echo=F}
 idmap <- read.table("13_salmon_deseq2/genome/GRCh38.idmap", sep="\t", header=T, row.names=NULL, quote="")
 
 all_DE <- read.table("13_salmon_deseq2/ehbio.simpler.DESeq2.all.DE", sep="\t", header=F, row.names=NULL, quote="")
