@@ -1,6 +1,6 @@
-# R plots 
+# R plots {#Rplots}
 
-## qplot绘制图形 (王绪宁)
+## qplot绘制图形 (王绪宁) {#plot}
 
 ggplot2中两大精髓的函数分别为 `qplot` (快速作图quick plot)，类似于R中基本的`plot`和`ggplot` (更符合ggplot2图层式绘图理念，一层层添加修改)。
 
@@ -115,7 +115,7 @@ qplot(carat,price,data=dat,
 ```
 
 
-## 热图绘制
+## 热图绘制 {#ggplot2_heatmap}
 
 热图是做分析时常用的展示方式，简单、直观、清晰。可以用来显示基因在不同样品中表达的高低、表观修饰水平的高低、样品之间的相关性等。任何一个数值矩阵都可以通过合适的方式用热图展示。
 
@@ -124,7 +124,7 @@ qplot(carat,price,data=dat,
 上一篇讲述了Rstudio的使用作为R写作和编译环境的入门，后面的命令都可以拷贝到Rstudio中运行，或写成一个R脚本，使用`Rscript heatmap.r`运行。我们还提供了Bash的封装，在不修改R脚本的情况下，改变参数绘制出不同的图形。
 
 
-### 生成测试数据
+### 生成测试数据 {#ggplot2_heatmap_data}
 
 绘图首先需要数据。通过生成几组向量，转换为矩阵，得到想要的数据。
 
@@ -211,7 +211,7 @@ head(data2)
 #data2 <- read.table("filename",sep=";", header=T, row.names=1, quote="")
 ```
 
-### 转换数据格式
+### 转换数据格式 {#ggplot2_heatmap_dataformat}
 
 数据读入后，还需要一步格式转换。在使用ggplot2作图时，有一种长表格模式是最为常用的，尤其是数据不规则时，更应该使用 （这点，我们在讲解箱线图时再说）。
 
@@ -235,7 +235,7 @@ head(data_m)
 ```
 
 
-### 分解绘图
+### 分解绘图 {#ggplot2_heatmap_split}
 
 数据转换后就可以画图了，分解命令如下：
 
@@ -351,7 +351,7 @@ p
 
 
 
-### 图形存储
+### 图形存储 {#ggplot2_heatmapsave}
 
 图形出来了，就得考虑存储了，一般输出为`PDF`格式，方便后期的修改。
 
@@ -366,7 +366,7 @@ ggsave(p, filename="heatmap.pdf", width=10,
 
 至此，完成了简单的heatmap的绘图。但实际绘制时，经常会碰到由于数值变化很大，导致颜色过于集中，使得图的可读性下降很多。因此需要对数据进行一些处理，具体的下次再说。
 
-## 热图美化
+## 热图美化 {#ggplot2_heatmapmeihua}
 
 上面的测试数据，数值的分布比较均一，相差不是太大，但是`Gene_4`和`Gene_5`由于整体的值低于其它的基因，从颜色上看，不仔细看，看不出差别。
 
@@ -403,7 +403,7 @@ p
 
 图中只有右上角可以看到红色，其他地方就没了颜色的差异。这通常不是我们想要的。为了更好的可视化效果，需要对数据做些预处理，主要有 `对数转换`，`Z-score转换`，`抹去异常值`，`非线性颜色`等方式。
 
-### 对数转换
+### 对数转换 {#ggplot2_heatmap_log}
 
 假设下面的数据是基因表达数据，4个基因 (a, b, c, d)和5个样品 (Grp_1, Grp_2, Grp_3, Grp_4)，矩阵中的值代表基因表达FPKM值。
 
@@ -437,7 +437,7 @@ p
 对数转换后的数据，看起来就清晰的多了。而且对数转换后，数据还保留着之前的变化趋势，不只是基因在不同样品之间的表达可比 (同一行的不同列)，不同基因在同一样品的值也可比 (同一列的不同行) (不同基因之间比较表达值存在理论上的问题，即便是按照长度标准化之后的FPKM也不代表基因之间是完全可比的)。
 
 
-### Z-score转换
+### Z-score转换 {#ggplot2_heatmapzscore}
 
 `Z-score`又称为标准分数，是一组数中的每个数减去这一组数的平均值再除以这一组数的标准差，代表的是原始分数距离原始平均值的距离，以标准差为单位。可以对不同分布的各原始分数进行比较，用来反映数据的相对变化趋势，而非绝对变化量。
 
@@ -484,7 +484,7 @@ p
 `Z-score`转换后，颜色分布也相对均一了，每个基因在不同样品之间的表达的高低一目了然。但是不同基因之间就完全不可比了。
 
 
-### 抹去异常值
+### 抹去异常值 {#ggplot2_heatmapoutlier}
 
 粗暴一点，假设检测饱和度为100，大于100的值都视为100对待。
 
@@ -517,7 +517,7 @@ p
 
 虽然损失了一部分信息，但整体模式还是出来了。**但是在选择异常值标准时需要根据实际确认**。
 
-### 非线性颜色
+### 非线性颜色 {#ggplot2_heatmapnonlinear}
 
 正常来讲，颜色的赋予在最小值到最大值之间是均匀分布的。如果最小值到最大值之间用100个颜色区分，则其中每一个`bin`，不论其大小、有没有值都会赋予一个颜色。非线性颜色则是对数据比较小但密集的地方赋予更多颜色，数据大但分布散的地方赋予更少颜色，这样既能加大区分度，又最小的影响原始数值。通常可以根据数据模式，手动设置颜色区间。为了方便自动化处理，也可选择用**四分位数**的方式设置颜色区间。
 
@@ -593,7 +593,7 @@ p
 #ggsave(p, filename="heatmap_nonlinear.pdf", width=8, height=12, units=c("cm"),colormodel="srgb")
 ```
 
-### 调整行或列的顺序
+### 调整行或列的顺序 {#ggplot2_heatmaporder}
 
 如果想保持图中每一行的顺序与输入的数据框一致，需要设置因子的水平。这也是`ggplot2`中调整图例或横纵轴字符顺序的常用方式。
 
@@ -614,7 +614,7 @@ p
 基于ggplot2的heatmap绘制到现在就差不多了，但总是这么画下去也会觉得有点累，有没有办法更简化呢？。
 
 
-## 热图绘制 - pheatmap
+## 热图绘制 - pheatmap {#pheatmap_simple}
 
 绘制热图除了使用`ggplot2`，还可以有其它的包或函数，比如`pheatmap::pheatmap` (pheatmap包中的pheatmap函数)、`gplots::heatmap.2`等。
 
@@ -681,7 +681,161 @@ color=colorRampPalette(c('green','yellow','red'), bias=1)(50))
 `heatmap.2`的使用在上一期转录组分析绘制相关性热图时有提到，这次就不介绍了，跟`pheatmap`有些类似，而且也有不少教程。
 
 
-## 箱线图
+## 聚类热图如何按自己的意愿调整分支顺序？ {#pheatmap_branchorder}
+
+### 数据示例 {#pheatmap_branchorderdata}
+
+```{r}
+exprTable <- read.table("exprTable.txt", sep="\t", row.names=1, header=T, check.names = F)
+exprTable
+```
+
+测试时直接拷贝这个数据即可
+
+```
+##        Zygote 2_cell 4_cell 8_cell Morula  ICM
+## Pou5f1    1.0    2.0    4.0    8.0   16.0 32.0
+## Sox2      0.5    1.0    2.0    4.0    8.0 16.0
+## Gata2     0.3    0.6    1.3    2.6    5.2 10.4
+## cMyc     10.4    5.2    2.6    1.3    0.6  0.3
+## Tet1     16.0    8.0    4.0    2.0    1.0  0.5
+## Tet3     32.0   16.0    8.0    4.0    2.0  1.0
+```
+
+### 绘制一个聚类热图很简单 {#pheatmap_branchorder1}
+
+```{r}
+library(pheatmap)
+pheatmap(exprTable)
+```
+
+### 如何自定义分支顺序呢 {#pheatmap_branchorder2}
+
+自己做个`hclust`传进去，顺序跟pheatmap默认是一样的
+
+```{r}
+exprTable_t <- as.data.frame(t(exprTable))
+
+col_dist = dist(exprTable_t)
+
+hclust_1 <- hclust(col_dist)
+
+pheatmap(exprTable, cluster_cols = hclust_1)
+```
+
+### 人为指定顺序排序样品 {#pheatmap_branchorder3}
+
+按发育时间排序样品
+
+```{r}
+manual_order = c("Zygote", "2_cell", "4_cell", "8_cell", "Morula",  "ICM")
+
+dend = reorder(as.dendrogram(hclust_1), wts=order(match(manual_order, rownames(exprTable_t))))
+
+# 默认为mean，无效时使用其他函数尝试
+# dend = reorder(as.dendrogram(hclust_1), wts=order(match(manual_order, rownames(exprTable_t))), agglo.FUN = max)
+
+col_cluster <- as.hclust(dend)
+
+pheatmap(exprTable, cluster_cols = col_cluster)
+```
+
+### 按某个基因的表达由小到大排序 {#pheatmap_branchorder4}
+
+可以按任意指标排序，基因表达是一个例子。
+
+```{r}
+dend = reorder(as.dendrogram(hclust_1), wts=exprTable_t$Tet3)
+
+col_cluster <- as.hclust(dend)
+
+pheatmap(exprTable, cluster_cols = col_cluster)
+```
+
+### 按某个基因的表达由大到小排序 {#pheatmap_branchorder5}
+
+```{r}
+dend = reorder(as.dendrogram(hclust_1), wts=exprTable_t$Tet3*(-1))
+
+col_cluster <- as.hclust(dend)
+
+pheatmap(exprTable, cluster_cols = col_cluster)
+```
+
+
+
+### 按分支名字（样品名字）的字母顺序排序 {#pheatmap_branchorder6}
+
+```{r}
+library(dendextend)
+col_cluster <- hclust_1 %>% as.dendrogram %>% sort %>% as.hclust
+pheatmap(exprTable, cluster_cols = col_cluster)
+```
+
+### 梯子形排序：最小的分支在右侧  {#pheatmap_branchorder7}
+
+```{r}
+col_cluster <- hclust_1 %>% as.dendrogram %>% ladderize(TRUE) %>% as.hclust
+pheatmap(exprTable, cluster_cols = col_cluster)
+```
+
+### 梯子形排序：最小的分支在左侧 {#pheatmap_branchorder8}
+
+```{r}
+col_cluster <- hclust_1 %>% as.dendrogram %>% ladderize(FALSE) %>% as.hclust
+pheatmap(exprTable, cluster_cols = col_cluster)
+```
+
+### 按特征值排序 {#pheatmap_branchorder9}
+
+样本量多时的自动较忧排序
+
+```{r}
+sv = svd(exprTable)$v[,1]
+dend = reorder(as.dendrogram(hclust_1), wts=sv)
+col_cluster <- as.hclust(dend)
+
+pheatmap(exprTable, cluster_cols = col_cluster)
+```
+
+
+```{r}
+exprTable_cor <- cor(exprTable)
+exprTable_cor
+```
+
+```{r}
+pheatmap(exprTable_cor, cluster_rows = T, cluster_cols = T)
+```
+
+```{r}
+cor_cluster = hclust(as.dist(1-exprTable_cor))
+pheatmap(exprTable_cor, cluster_rows = cor_cluster, cluster_cols = cor_cluster)
+```
+
+```{r}
+cor_sum <- rowSums(exprTable_cor)
+dend = reorder(as.dendrogram(cor_cluster), wts=cor_sum)
+
+col_cluster <- as.hclust(dend)
+
+pheatmap(exprTable_cor, cluster_rows = col_cluster, cluster_cols = col_cluster)
+```
+
+```{r}
+manual_order = c("Zygote", "2_cell", "4_cell", "8_cell", "Morula",  "ICM")
+
+dend = reorder(as.dendrogram(cor_cluster), wts=order(match(manual_order, rownames(exprTable_cor))),agglo.FUN = max)
+col_cluster <- as.hclust(dend)
+
+pheatmap(exprTable_cor, cluster_rows = col_cluster, cluster_cols = col_cluster)
+```
+
+
+
+
+
+## 箱线图 {#ggplot2boxplot}
 
 箱线图是能同时反映数据统计量和整体分布，又很漂亮的展示图。在2014年的Nature Method上有2篇`Correspondence`论述了使用箱线图的好处和一个在线绘制箱线图的工具。就这样都可以发两篇Nature method，没天理，但也说明了箱线图的重要意义。
 
@@ -695,7 +849,7 @@ knitr::include_graphics("images/boxplot_nm.png")
 
 * Nature Method文章 <http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2811.html>
 
-### 一步步解析箱线图绘制
+### 一步步解析箱线图绘制  {#ggplot2boxplot1}
 
 假设有这么一个基因表达矩阵，第一列为基因名字，第一行为样品名字，想绘制样品中基因表达的整体分布。
 
@@ -811,7 +965,7 @@ knitr::include_graphics("images/boxplot_4.png")
 
 也可以用`geom_jitter(aes(colour=factor(variable)))`代替`geom_quasirandom(aes(colour=factor(variable)))`绘制抖动图，但个人认为geom_quasirandom给出的结果更有特色。
 
-### 绘制单个基因 (A)的箱线图
+### 绘制单个基因 (A)的箱线图 {#ggplot2boxplot2}
 
 为了更好的展示效果，下面的矩阵增加了样品数量和样品的分组信息。
 
@@ -889,7 +1043,7 @@ p
 #dev.off()
 ```
 
-### 长矩阵绘制箱线图
+### 长矩阵绘制箱线图 {#ggplot2boxplot3}
 
 常规矩阵绘制箱线图要求必须是个方正的矩阵输入，而有时想比较的几个组里面检测的值数目不同。比如有三个组，GrpA组检测了6个病人，GrpB组检测了10个病人，GrpC组是12个正常人的检测数据。这时就很难形成一个行为检测值，列为样品的矩阵，就需要长表格模式解决这一问题。
 
@@ -946,11 +1100,11 @@ p
 
 
 
-## 线图
+## 线图  {#ggplot2lineplot}
 
 线图是反映趋势变化的一种方式，其输入数据一般也是一个矩阵。
 
-### 单线图
+### 单线图  {#ggplot2singleline}
 
 假设有这么一个矩阵，第一列为转录起始位点及其上下游`5 kb`的区域，第二列为`H3K27ac`修饰在这些区域的丰度，想绘制一张线图展示。
 
@@ -1085,7 +1239,7 @@ p
 
 好了，终于完成了单条线图的绘制。
 
-### 多线图
+### 多线图 {#ggplot2multipleline}
 
 那么再来一个多线图的例子吧，只要给之前的数据矩阵多加几列就好了。
 
@@ -1119,7 +1273,7 @@ p
 ```
 
 
-### 横轴文本线图
+### 横轴文本线图 {#ggplot2xaxistext}
 
 如果横轴是文本，又该怎么调整顺序呢？还记得之前热图旁的行或列的顺序调整吗？重新设置变量的`factor`水平就可以控制其顺序。
 
@@ -1164,15 +1318,15 @@ plot_grid(p1,p2, labels=c("A","B"), ncol=2, nrow=1)
 
 
 
-## 散点图
+## 散点图 {#ggplot2scatter}
 
 散点图在生物信息分析中是应用比较广的一个图，常见的差异基因火山图、功能富集分析泡泡图、相关性分析散点图、抖动图、PCA样品分类图等。凡是想展示分布状态的都可以用散点图。
 
-### 横纵轴都为数字的散点图解析
+### 横纵轴都为数字的散点图解析 {#ggplot2scatter1}
 
 绘制散点图的输入一般都是规规矩矩的矩阵，可以让不同的列分别代表X轴、Y轴、点的大小、颜色、形状、名称等。
 
-#### 输入数据格式 (使用火山图的输入数据为例)
+#### 输入数据格式 (使用火山图的输入数据为例) {#ggplot2scatter2}
 
 火山图用于展示基因表达差异的分布，横轴为`Log2 Fold Change`，越偏离中心差异倍数越大；纵轴为`(-1)*Log10 P_adjust`，值越大差异越显著。一般横轴越偏离中心的点其纵轴值也会比较大，因此呈现火山喷发的形状。
 
@@ -1291,9 +1445,9 @@ volcanoData$sig <- factor(volcanoData$sig, levels=c("UP", "DW", "NoDiff"))
 summary(volcanoData)
 ```
 
-### 横纵轴都为字符串的散点图展示
+### 横纵轴都为字符串的散点图展示 {#ggplot2scatter3}
 
-#### 输入数据格式如下
+#### 输入数据格式如下 {#ggplot2scatter4}
 
 这个数据是FASTQC结果总结中的直观的查看所有样品测序碱基质量和GC含量的散点图的示例数据。
 
@@ -1336,7 +1490,7 @@ p
 ```
 
 
-## 功能富集泡泡图
+## 功能富集泡泡图 {#ggplot2enrichment}
 
 功能富集分析用来展示某一组基因(一般是单个样品上调或下调的基因)倾向参与哪些功能调控通路，对从整体理解变化了的基因的功能和潜在的调控意义具有指导作用，也是文章发表中一个有意义的美图。通常会用柱状图、泡泡图和热图进行展示。热图的画法之前已经介绍过，这次介绍下富集分析泡泡图, 其展示的信息是最为全面的，也是比较抓人眼球的。
 
@@ -1383,7 +1537,7 @@ enrichment = read.table("data/GOenrichement.xls", header=T, row.names=NULL,
 head(enrichment)
 ```
 
-### 单样品分开绘制
+### 单样品分开绘制 {#ggplot2enric2hment}
 
 示例矩阵中包含两个样品上调基因的富集通路，现在先取出一个样品绘制。
 
@@ -1530,7 +1684,7 @@ p <- p + theme(	panel.grid = element_blank(), panel.border=element_blank(),
 p
 ```
 
-### 多样品合并绘制
+### 多样品合并绘制 {#ggplot2enrichmen2t}
 
 ```{r}
 #enrichment$Type <- factor(enrichment$Type, levels=sample_ho, ordered=T)
@@ -1632,13 +1786,13 @@ p
 通过这张图解释下，富集分析的结果怎么解读。富集分析实际是查找哪些通路里面包含的差异基因占总差异基因的比例显著高于通路中总基因占所有已经注释的基因的比例。这一显著性通常用多重假设检验矫正过的`pvalue`(又称qvalue, FDR或p.adjust)来表示。在图中体现为点的颜色。从绿到红富集显著性逐渐增高。点的大小表示对应通路中包含的差异基因的数目。点的形状代表了不同类型的基因，如EHBIO中上调的基因和Baodian中上调的基因。横轴表示对应通路包含的差异基因占总的差异基因的比例, 本图中最高不过5%, 这个值越大说明通路被影响的越多。
 
 
-## 韦恩图
+## 韦恩图 {#venn}
 
 维恩图是用来反映不同集合之间的交集和并集情况的展示图。一般用于展示2-5个集合之间的交并关系。集合数目更多时，将会比较难分辨，更多集合的展示方式一般使用`upSetView`。
 
 较早的文章列举了多个在线工具<http://mp.weixin.qq.com/s/zn654JqG9OeO71rJUTDr2Q>。
 
-### 韦恩图三个圈
+### 韦恩图三个圈 {#venn2}
 
 ```{r}
 library(VennDiagram)
@@ -1664,7 +1818,7 @@ grid.draw(p)
 
 ```
 
-### 韦恩图五个圈
+### 韦恩图五个圈 {#venn5}
 
 假设有这么一个矩阵，第一列为不同集合中的ID，第二列为集合的名字，无标题行，存储为`venn.txt`。
 
@@ -1747,7 +1901,7 @@ grid.draw(p)
 ```
 
 
-### UpSetView展示
+### UpSetView展示 {#UpSetView}
 
 对于集合比较多的时候，包括上面提到的5个集合的交并集情况，如果只是为了展示个炫图，还可以，但如果想解释结果，就会比较头疼，难判断区域的归属。
 
@@ -1793,11 +1947,11 @@ UpSetR: http://www.caleydo.org/tools/upset/ 采用连线的方式展示不同的
 水平的柱子代表对应样品中Item的总数。
 
 
-## 柱状图绘制
+## 柱状图绘制  {#Barplot}
 
 柱状图也是较为常见的一种数据展示方式，可以展示基因的表达量，也可以展示GO富集分析结果，基因注释数据等。[39个转录组分析工具，120种组合评估(转录组分析工具哪家强-导读版)](http://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247484106&idx=1&sn=687a0def51f6ea91a335754eb3dc9ca9&chksm=ec0dc740db7a4e564e5b1e93a36e5d9447581e262eec9c2983d1d4e76788d673c9c07dec8f8e#rd)中提到了较多**堆积柱状图**的使用。下面就详细介绍下怎么绘制。
 
-### 常规矩阵柱状图绘制 
+### 常规矩阵柱状图绘制  {#Barplot1}
 
 有如下4个基因在5组样品中的表达值
 
@@ -1946,7 +2100,7 @@ p
 ```
 
 
-### 长矩阵分面绘制 
+### 长矩阵分面绘制  {#Barplot2}
 
 再复杂一些的矩阵 (除了有不同时间点的信息，再增加对照和处理的信息)
 
@@ -2093,9 +2247,9 @@ p
 这样两种条件下的比较更容易了。
 
 
-## 图形支持中文字体
+## 图形支持中文字体  {#Barplot3}
 
-### 修改图形的字体
+### 修改图形的字体  {#Barplot4}
 
 ggplot2中修改图形字体。
 
@@ -2109,7 +2263,7 @@ theme_bw(base_family="Arial")
 geom_text(family="Arial")
 ```
 
-### ggplot2支持中文字体输出PDF
+### ggplot2支持中文字体输出PDF  {#Barplot41}
 
 `showtext`包可给定字体文件，加载到R环境中，生成新的字体家族名字，后期调用这个名字设定字体，并且支持中文写入pdf不乱码
 
@@ -2129,13 +2283,13 @@ geom_text(family=font_name)
 ```
 
 
-### 系统可用字体
+### 系统可用字体  {#Barplot5}
 
 * Linux字体一般在 `/usr/share/fonts`下，也可以使用`fc-list`列出所以加载的字体。
 
 * Windows字体在 `C:\Windows\Fonts\`下，直接可以看到，也可以拷贝到Linux下使用。
 
-### 合并字体支持中英文
+### 合并字体支持中英文  {#Barplot6}
 
 通常情况下，作图的字体都是英文，ggplot2默认的或按需求加载一种字体就可以了。但如果中英文混合出现时，单个字体只能支持一种文字，最好的方式是合并两种字体，类似于Word中设置中英文分别使用不同的字体。
 
@@ -2170,7 +2324,7 @@ FZ_School.ttf FZSTK.TTF mergefont.pe Schoolbell-Regular.ttf
 
 然后安装前面的介绍使用`showtext`导入即可使用。
 
-### 一个示例
+### 一个示例  {#Barplot7}
 
 字体文件自己从Windows获取，School bell从Google fonts获取。
 
@@ -2210,7 +2364,7 @@ p
 knitr::include_graphics("images/sxbd_font.png")
 ```
 
-## PCA
+## PCA原理解析和图形绘制 {#pca}
 
 ```{r usedpackages}
 library(knitr)
@@ -2240,7 +2394,7 @@ mat_show <- function(matr) {
 }
 ```
 
-### 主成分分析简介
+### 主成分分析简介 {#pcaintroduc}
 
 主成分分析 (PCA, principal component analysis)是一种数学降维方法, 利用正交变换 (orthogonal transformation)把一系列可能**线性相关的变量**转换为一组**线性不相关的新变量**，也称为主成分，从而利用新变量在更小的维度下展示数据的特征。
 
@@ -2251,7 +2405,7 @@ mat_show <- function(matr) {
 这种投射方式会有很多，为了最大限度保留对原始数据的解释，一般会用最大方差理论或最小损失理论，使得第一主成分有着最大的方差或变异数 (就是说其能尽量多的解释原始数据的差异)；随后的每一个主成分都与前面的主成分正交，且有着仅次于前一主成分的最大方差 (正交简单的理解就是两个主成分空间夹角为90°，两者之间无线性关联，从而完成去冗余操作)。
 
 
-### 主成分分析的意义
+### 主成分分析的意义  {#pcaintroduc1}
 
 1. 简化运算。
 
@@ -2272,7 +2426,7 @@ mat_show <- function(matr) {
 
       我们在合并冗余原始变量得到主成分过程中，会发现某些原始变量对同一主成分有着相似的贡献，也就是说这些变量之间存在着某种相关性，为相关变量。同时也可以获得这些变量对主成分的贡献程度。对基因表达数据可以理解为发现了存在协同或拮抗关系的基因。
 
-### 示例展示原始变量对样品的分类
+### 示例展示原始变量对样品的分类 {#pcaintroduc2}
 
 假设有一套数据集，包含100个样品中某一基因的表达量。如下所示，每一行为一个样品，每一列为基因的表达值。这也是做PCA分析的基本数据组织方式，每一行代表一个样品，每一列代表一组观察数据即一个变量。
 
@@ -2564,7 +2718,7 @@ legend(-3,8, legend=levels(as.factor(group)), col=colorl, pch=pch_l, xpd=T, hori
 ```
 
 
-### PCA的实现原理
+### PCA的实现原理  {#pcaintroduc3}
 
 在上面的例子中，PCA分析不是简单地选取2个或3个变化最大的基因，而是先把原始的变量做一个评估，计算各个变量各自的变异度(方差)和两两变量的相关度（协方差），得到一个协方差矩阵。在这个协方差矩阵中，对角线的值为每一个变量的方差，其它值为每两个变量的协方差。随后对原变量的协方差矩阵对角化处理，即求解其特征值和特征向量。原变量与特征向量的乘积（对原始变量的线性组合）即为新变量（回顾下线性代数中的矩阵乘法）；新变量的协方差矩阵为对角协方差矩阵且对角线上的方差由大到小排列；然后从新变量中选择信息最丰富也就是方差最大的的前2个或前3个新变量也就是主成分用以可视化。下面我们一步步阐释这是怎么做的。
 
@@ -2704,7 +2858,7 @@ $$
 
 以上就完成了PCA的数学推导。
 
-### 简单的PCA实现
+### 简单的PCA实现 {#pcaintroduc4}
 
 我们使用前面用到的数据`data3`来演示下如何用R函数实现PCA的计算，并与R中自带的`prcomp`做个比较。
 
@@ -2867,7 +3021,7 @@ legend("top", legend=levels(data3$Group), col=colorl, pch=16, xpd=T, horiz=T)
 ```
 
 
-### PCA结果解释
+### PCA结果解释 {#pcaintroduc5}
 
 `prcomp`函数会返回主成分的标准差、特征向量和主成分构成的新矩阵。接下来，探索下不同主成分对数据差异的贡献和主成分与原始变量的关系。
 
@@ -2893,7 +3047,7 @@ legend("top", legend=levels(data3$Group), col=colorl, pch=16, xpd=T, horiz=T)
 在测试数据中，`scale`后，三个主成分对数据差异的贡献度大都在30%左右，而未`scale`的数据，三个主成分对数据差异的贡献度相差很大。这是因为三个基因由于自身表达量级所引起的方差的差异导致它们各自对数据的权重差异，从而使主成分偏向于数值大的变量。
 
 
-### PCA应用于测试数据
+### PCA应用于测试数据 {#pcaintroduc6}
 
 前面用到一组比较大的测试数据集，并做了PCA分析，现在测试不同的处理对结果的影响。
 
@@ -2992,7 +3146,7 @@ a__ <- grid.arrange(ori_scale_pca_plot_t5, ori_no_scale_pca_plot_t5,
 
 
 
-### PCA注意事项
+### PCA注意事项 {#pcaintroduc7}
 
 1. 一般说来，在PCA之前原始数据需要中心化（centering，数值减去平均值）。中心化的方法很多，除了平均值中心化（mean-centering）外，还包括其它更稳健的方法，比如中位数中心化等。
 
@@ -3009,7 +3163,7 @@ a__ <- grid.arrange(ori_scale_pca_plot_t5, ori_no_scale_pca_plot_t5,
 
 
 
-### 参考资料
+### 参考资料  {#pcaintroduc8}
 
 * https://www.zhihu.com/question/20998460
 * [PCA 教程1](http://blog.csdn.net/zhongkelee/article/details/44064401)
@@ -3036,7 +3190,7 @@ a__ <- grid.arrange(ori_scale_pca_plot_t5, ori_no_scale_pca_plot_t5,
 
 
 
-## 生存分析
+## 生存分析 {#survival}
 
 生存分析指根据试验或调查得到的数据对生物或人的生存时间进行分析和推断，研究生存时间和结局与众多影响因素间关系及其程度大小的方法，也称生存率分析或存活率分析。常用于肿瘤等疾病的标志物筛选、疗效及预后的考核。
 
@@ -3069,7 +3223,7 @@ knitr::include_graphics("images/surv_input_data.png")
 knitr::include_graphics("images/surv_life_table.png")
 ```
 
-### R做生存分析
+### R做生存分析 {#survival1}
 
 R中做生存分析需要用到包`survival`和`survminer`。输入数据至少两列，`存活时间`和`生存状态`，也就是测试数据中的`Days.survial`和`vital_status`列。如果需要比较不同组之间的差异，也需要提供个体的分组信息，如测试数据中的`PAM50`列。对应TCGA的数据，一般根据某个基因的表达量或突变有无对个体进行分组。
 
@@ -3137,7 +3291,9 @@ fit <- survfit(Surv(Days.survival, vital_status)~PS, data=BRCA_PAM50)
 ggsurvplot(fit, conf.int=F,risk.table=T, risk.table.col="strata", pval=T)
 ```
 
-## 一步作图的优势
+## 一步作图的优势 {#survival2}
+
+目前这部分已不再更新，具体见后面提到的在线绘图网站（在绘制每个图的同时，也提供了这个图的绘制代码）
 
 一步作图相比于直接写R代码有什么好处呢？
 
@@ -3206,7 +3362,7 @@ s-plot vennDiagram
 s-plot upsetView
 ```
 
-## 不改脚本的热图绘制
+## 不改脚本的热图绘制 {#survival3365}
 
 绘图时通常会碰到两个头疼的问题：
 1. 需要画很多的图，唯一的不同就是输出文件，其它都不需要修改。如果用R脚本，需要反复替换文件名，繁琐又容易出错。 
@@ -3411,7 +3567,7 @@ OPTIONS:
 ```
 
 
-### 箱线图 - 一步绘制
+### 箱线图 - 一步绘制 {#survival3367}
 
 首先把测试数据存储到文件中方便调用。数据矩阵存储在`boxplot.normal.data`、`sampleGroup`和`boxplot.melt.data`文件中 (TAB键分割，内容在文档最后。如果你手上有自己的数据，也可以拿来用)。
 
@@ -3560,7 +3716,7 @@ zygote_6	zygote
 4cell_6	4cell
 ```
 
-### 线图 - 一步绘制
+### 线图 - 一步绘制 {#survival3719}
 
 首先把测试数据存储到文件中方便调用。数据矩阵存储在`line_data.xls`和`line_data_melt.xls`文件中 (直接拷贝到文件中也可以，这里这么操作只是为了随文章提供个测试文件，方便使用。如果你手上有自己的数据，也可以拿来用)。
 
@@ -3978,7 +4134,7 @@ OPTIONS:
 ```
 
 
-### 一网打进散点图绘制
+### 一网打进散点图绘制 {#survival4137}
 
 假如有一个输入数据如下所示(存储于文件scatterplot.xls中)
 
@@ -4037,4 +4193,6 @@ knitr::include_graphics("images/scatterplot7.png")
 
 * <http://rpubs.com/xuefliang/153247>
 * <http://www.sthda.com/english/wiki/survminer-r-package-survival-data-analysis-and-visualization>
+* <https://stackoverflow.com/questions/52446477/r-hclust-common-order-for-multiple-trees>
+* <https://www.biostars.org/p/237067/>
 

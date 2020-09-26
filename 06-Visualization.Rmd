@@ -1,4 +1,4 @@
-# 易生信-数据可视化(1)
+# 易生信-数据可视化 {#visual1}
 
 
 ```{r setup, include=FALSE}
@@ -10,7 +10,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-## 加载需要的包
+## 加载需要的包 {#visual2}
+
 
 ```{r}
 library(dplyr)
@@ -22,16 +23,18 @@ library(ggstatsplot)
 library(Hmisc)
 ```
 
-## 读入数据
+## 读入数据 {#visual3}
 
-### Duplicate row names
+
+### Duplicate row names {#visual4}
+
 
 ```{r, eval=F}
 expr <- read.table("ehbio.simplier.DESeq2.normalized.symbol.txt", 
                    row.names=1, header=T, sep="\t")
 ```
 
-### 行名唯一化处理
+### 行名唯一化处理 {#visual15}
 
 这里使用`make.names`转换行名为唯一，实际需要先弄清楚为什么会有重复名字。
 
@@ -60,14 +63,14 @@ expr <- expr[,-1]
 head(expr)
 ```
 
-## 热图绘制
+## 热图绘制 {#visual5}
 
 ```{r}
 library(pheatmap)
 top6 <- head(expr)
 pheatmap(top6)
 ```
-### 提取差异基因绘制热图
+### 提取差异基因绘制热图 {#visual6}
 
 读入差异基因列表
 
@@ -97,7 +100,7 @@ pheatmap(top6, annotation_col = metadata)
 pheatmap(top6, annotation_col = metadata, scale="row", cluster_cols = F)
 ```
 
-## 箱线图和统计比较
+## 箱线图和统计比较 {#visual7}
 
 ```{r}
 head(top6)
@@ -123,7 +126,7 @@ colnames(top6_t_with_group)[1] = "Sample"
 head(top6_t_with_group)
 ```
 
-### 单基因箱线图
+### 单基因箱线图 {#visual8}
 
 ```{r}
 library(ggpubr)
@@ -135,7 +138,7 @@ ggboxplot(top6_t_with_group, x = "conditions", y = "KCTD12",
 # npg, lancet, 
 ```
 
-### 多基因箱线图 (combine)
+### 多基因箱线图 (combine) {#visual9}
 
 ```{r}
 ggboxplot(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA","PER1","SLC6A9"),
@@ -143,7 +146,7 @@ ggboxplot(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA","PER1","SLC
           color = "conditions", palette = "jco")
 ```
 
-### 多基因箱线图 (merge)
+### 多基因箱线图 (merge) {#visual10}
 
 ```{r}
 ggboxplot(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA","PER1","SLC6A9"),
@@ -151,7 +154,7 @@ ggboxplot(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA","PER1","SLC
           color = "conditions", palette = "nature")
 ```
 
-### 数据对数转换后绘制箱线图
+### 数据对数转换后绘制箱线图 {#visual11}
 
 ```{r}
 top6_t_with_group_log =  top6_t_with_group %>%
@@ -166,7 +169,7 @@ ggboxplot(top6_t_with_group_log, x = "conditions", y = c("KCTD12","MAOA","PER1",
           fill = "conditions", palette = "Set3")
 ```
 
-### 用ggplot2实现ggpubr
+### 用ggplot2实现ggpubr {#visual12}
 
 ```{r}
 head(top6_t_with_group)
@@ -184,7 +187,7 @@ ggplot(top6_t_with_group_melt, aes(x=Gene, y=Expr)) +
   geom_boxplot(aes(color=conditions)) + theme_classic() 
 ```
 
-### 配色
+### 配色 {#visual13}
 
 序列型颜色板适用于从低到高排序明显的数据，浅色数字小，深色数字大。
 
@@ -206,7 +209,7 @@ display.brewer.all(type = "div")
 display.brewer.all(type = "qual")
 ```
 
-### 箱线图加统计分析
+### 箱线图加统计分析 {#visual14}
 
 ```{r}
 my_comparisons <- list(c("trt", "untrt"))
@@ -273,7 +276,7 @@ ggstripchart(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA"),
           add = "median_iqr")
 ```
 
-## 通路内基因的比较
+## 通路内基因的比较 {#visual15}
 
 ```{r}
 pathway <- read.table("h.all.v6.2.symbols.gmt.forGO", sep="\t", row.names=NULL, header=T)
@@ -388,7 +391,7 @@ ggdotplot(HALLMARK_P53_PATHWAY, x = "conditions", y = "logExpr",
           add = "median_iqr")
 ```
 
-### 密度图
+### 密度图 {#visual16}
 
 ```{r}
 ggdensity(HALLMARK_P53_PATHWAY,
@@ -415,7 +418,7 @@ top6_t_with_group_long$conditions <- as.factor(top6_t_with_group_long$conditions
 head(top6_t_with_group_long)
 ```
 
-## ggstatsplot绘图和统计分析
+## ggstatsplot绘图和统计分析 {#visual17}
 
 箱线图
 
@@ -504,7 +507,7 @@ ggstatsplot::grouped_ggwithinstats(
 head(expr)
 ```
 
-### 散点图
+### 散点图 {#visual16}
 
 ```{r}
 ggstatsplot::ggscatterstats(
@@ -532,9 +535,9 @@ ggstatsplot::ggscatterstats(
 )
 ```
 
-### 相关性图
+### 相关性图 {#visual17}
 
-#### 基因共表达
+#### 基因共表达 {#visual18}
 
 ```{r}
 gene_cor <- cor(t(top6))
@@ -577,7 +580,7 @@ ggstatsplot::ggcorrmat(
 )
 ```
 
-#### 样品相关性
+#### 样品相关性 {#visual19}
 
 ```{r, fig.width=8, fig.height=8}
 top100 <- head(expr,100)

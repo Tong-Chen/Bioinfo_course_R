@@ -1,10 +1,10 @@
-# 高通量数据中批次效应的鉴定和处理
+# 高通量数据中批次效应的鉴定和处理 {#batch}
 
-## 什么是批次效应？
+## 什么是批次效应？ {#batch1}
 
 批次效应表示样品在不同的批次处理和测量时引入的与生物状态不相关的系统性的技术偏差。很多因素都可能导致批次效应的产生，如不同实验条件、不同操作者、不同公司的试剂、不同批的试剂、实验开展的时间、检测设备、不同的测序批次等。
 
-## 批次效应会有什么影响？
+## 批次效应会有什么影响？ {#batch2}
 
 2014年生信领域的大牛`Michael P Snyder`在`PNAS`上发表了一篇文章*Comparison of the transcriptional landscapes between human and mouse tissues*，比较了人和小鼠不同组织和器官中表达谱的异同。研究发现不同物种之间组织特异表达的基因是一致的，但很多基因在同一物种不同组织的表达相似度大于它们在不同物种同一组织的表达相似度。“我”来引申下 （原文并没有这么直接说），大体可以理解为小鼠的脑与小鼠的肾脏的相似性大于小鼠的脑与人的脑的相似性。“我”得出的这个结论是有一些颠覆认知的，如果这样，用小鼠做为模式动物是否会对人的研究给出相似性的推导？
 
@@ -25,7 +25,7 @@
 大家有兴趣可以在**https://f1000research.com/articles/4-121**看看`Yoav Gilad`的具体操作和PNAS一作`Yoav Gilad`等人的讨论，通过学习双方在这段公案中辩论的出发点和落脚点，相信对数据分析也会有更多认识，这个我们后续也会涉及。
 
 
-## 怎么确认数据有无受到批次效应影响
+## 怎么确认数据有无受到批次效应影响 {#batch3}
 
 *[通过样品的层级聚类热图+样品属性信息的注释来展示样品聚类结果有无受批次效应的影响](https://mp.weixin.qq.com/s/ykp1q7CiyTL2PCK5PuNyzw)*。如下面右图中可见`WT_1`样品在聚类分支上与其它样品处于不同的分支，而从列注释图可以看到`WT_1`的`seqPlatform`和`batch`信息与其它样品不同，这是给我们的一个提示可能存在批次效应影响。
 
@@ -47,7 +47,7 @@
 
 ![](images/batch18.jpg)
 
-## 怎么避免批次效应呢？
+## 怎么避免批次效应呢？ {#batch4}
 
 合理的实验设计和一致的实验操作是避免批次效应的最好方式。如下图所示如何通过合理的设计来避免检测批次带来的影响。
 
@@ -62,7 +62,7 @@
 
 所以需要有个方式去检测和尽量降低批次效应带来的数据偏差的影响。
 
-## 如何在差异基因鉴定过程中移除批次效应
+## 如何在差异基因鉴定过程中移除批次效应 {#batch5}
 
 在我们之前的文章*[DESeq2差异基因分析和批次效应移除](https://mp.weixin.qq.com/s/Vmhx_TGxNkQzkekf93Xl4w)*中也提到了用如下方式构建设计矩阵，以便在差异基因分析过程中移除批次效应的影响。
 
@@ -117,7 +117,7 @@ trt_N080611	trt	N080611
 trt_N061011	trt	N061011
 ```
 
-### 不考虑批次因素直接进行差异基因分析
+### 不考虑批次因素直接进行差异基因分析 {#batch6}
 
 初始化，定义输入、输出和参数
 
@@ -209,7 +209,7 @@ sp_pca(normexpr$rlog[1:5000,], metadata, color_variable="conditions", shape_vari
 multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
 ```
 
-### 考虑已知的批次因素进行差异基因分析
+### 考虑已知的批次因素进行差异基因分析 {#batch7}
 
 初始化，定义输入、输出和参数 （注意`covariate`变量使用`individual`列作为了批次信息）
 
@@ -271,7 +271,7 @@ sp_pca(normexpr$rlog[1:5000,], metadata, color_variable="conditions", shape_vari
 multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
 ```
 
-### 比较批次校正前后差异基因变化
+### 比较批次校正前后差异基因变化 {#batch8}
 
 校正后，差异基因数目变多了，上调多了*99*个，下调多了*61*个。不过数目变化，也说明不了太多问题。
 
@@ -357,7 +357,7 @@ p1 + p2 + plot_layout(guide = 'collect')
 2. 如果不知道数据是否来源于同一个个体或是否有其他批次因素的影响，怎么处理？
 
 
-## 批次效应未知时如何判断和在差异基因鉴定过程中移除批次效应
+## 批次效应未知时如何判断和在差异基因鉴定过程中移除批次效应 {#batch9}
 
 前面文章讲述了批次信息已知时，在差异基因分析中考虑批次效应的影响可以移除部分基因在个体中不同本底表达水平差异的影响，获得的差异基因倍数方差会变小，可以检测出更多差异基因，理论上也是更可靠的方式。那么如果批次信息未知或记录不完善时怎么处理呢？
 
@@ -407,7 +407,7 @@ trt_N080611	trt	N080611
 trt_N061011	trt	N061011
 ```
 
-### 预测混杂因素(cofounding factors)并在差异基因分析中移除这些因素
+### 预测混杂因素(cofounding factors)并在差异基因分析中移除这些因素 {#batch10}
 
 初始化，定义输入、输出和参数
 
@@ -462,7 +462,7 @@ normexpr <- deseq2normalizedExpr(dds, output_prefix=output_prefix)
 
 
 
-### 预测可能存在的混杂因素
+### 预测可能存在的混杂因素 {#batch11}
 
 
 ```
@@ -553,7 +553,7 @@ ggplot(plot_data, aes(x=SV1, y=SV2, color=conditions, shape=individual)) +
 multipleGroupDEgenes(dds, design=design, output_prefix=output_prefix, padj=padj, log2FC=log2FC)
 ```
 
-### 比较批次校正前、已知批次校正后和预测的批次校正后差异基因变化
+### 比较批次校正前、已知批次校正后和预测的批次校正后差异基因变化 {#batch12}
 
 ~~根据已知批次信息校正后差异基因数目变多了，上调了*99*个，下调多了*61*个。根据预测的混杂因素校正后，上调多了*52*个，下调少了*1*个。~~ (这个是只保留2个混杂因素的结果)
 
@@ -666,7 +666,7 @@ YSX:::sp_writeTable(untrt_up_genes_expr_long, file="1", keep_rownames =F)
 sp_boxplot(untrt_up_genes_expr_long, melted=T, metadata=metadata, 
            xvariable = "conditions", yvariable = "Expr", jitter_bp = T, 
            group_variable_for_line = "individual", 
-           facet = "Type", scales="free_y", legend.position = c(0.7,0.15), 
+           facet_variable = "Type", scales="free_y", legend.position = c(0.7,0.15), 
            x_label="",manual_color_vector = "Set2") + 
   theme(legend.direction = "horizontal")
 ```
@@ -701,7 +701,7 @@ metadata$Sample = rownames(metadata)
 sp_boxplot(untrt_down_genes_expr_long, melted=T, metadata=metadata, 
            xvariable = "conditions", yvariable = "Expr", jitter_bp = T, 
            group_variable_for_line = "individual", 
-           facet = "Type", scales="free_y", legend.position = c(0.7,0.15), 
+           facet_variable = "Type", scales="free_y", legend.position = c(0.7,0.15), 
            x_label="",manual_color_vector = "Set2") + 
   theme(legend.direction = "horizontal")
 ```
@@ -715,7 +715,7 @@ sp_boxplot(untrt_down_genes_expr_long, melted=T, metadata=metadata,
 1. 如果不设置只返回两个混杂因素，实际SVA会判断出存在3个混杂因素，全部混杂因素都考虑进去结果会有什么变化呢？
 2. 上面是取了单个基因查看其表达模式，还可以进一步比较不同子集的基因表达水平、差异倍数、FDR、差异倍数方差的整体分布，分析受影响的主要是哪些类型的基因？
 
-### 直接校正表达矩阵
+### 直接校正表达矩阵 {#batch13}
 
 处理批次因素最好的方式还是如前面所述将其整合到差异基因鉴定模型中，降低批次因素带来的模型残差的自由度。但一些下游分析，比如数据可视化，也需要直接移除效应影响的数据来展示，这时可以使用`ComBat`或`removeBatchEffect`函数来处理。
 
@@ -777,7 +777,7 @@ head(metadata)
 ```
 
 
-#### 使用ComBat校正
+#### 使用ComBat校正 {#batch14}
 
 ComBat校正时考虑生物分组信息
 
@@ -823,7 +823,7 @@ sp_pca(expr_mat_batch_correct2[1:5000,], metadata,
 
 `ComBat`只能处理批次信息为l离散型分组变量的数据，不能处理`sva`预测出的连续性混杂因素。
 
-#### 使用limma校正
+#### 使用limma校正 {#batch15}
 
 如果批次信息有多个或者不是分组变量而是类似`SVA`预测出的数值混杂因素，则需使用`limma`的`removeBatchEffect` (这里使用的是`SVA`预测出的全部3个混杂因素进行的校正。)。
 
@@ -899,7 +899,7 @@ metadata$Sample = rownames(metadata)
 sp_boxplot(untrt_down_genes_expr_long, melted=T, metadata=metadata, 
            xvariable = "conditions", yvariable = "Expr", jitter_bp = T, 
            group_variable_for_line = "individual", 
-           facet = "Type", scales="free_y", legend.position = c(0.7,0.1), 
+           facet_variable = "Type", scales="free_y", legend.position = c(0.7,0.1), 
            x_label="",manual_color_vector = "Set2") + 
   theme(legend.direction = "horizontal")
 ```
@@ -929,13 +929,13 @@ metadata$Sample = rownames(metadata)
 sp_boxplot(untrt_down_genes_expr_long, melted=T, metadata=metadata, 
            xvariable = "conditions", yvariable = "Expr", jitter_bp = T, 
            group_variable_for_line = "individual", 
-           facet = "Type", scales="free_y", legend.position = c(0.7,0.1), 
+           facet_variable = "Type", scales="free_y", legend.position = c(0.7,0.1), 
            x_label="",manual_color_vector = "Set2") + 
   theme(legend.direction = "horizontal")
 ```
 
 
-### ComBat_seq直接校正Count matrix
+### ComBat_seq直接校正Count matrix {#batch16}
 
 ```{r, eval=F}
 adjusted <- ComBat_seq(count_matrix, batch=batch, group=NULL)
@@ -995,7 +995,7 @@ https://github.com/Tong-Chen/Bioinfo_course_R
 ![](images/batch19.jpg)
 
 
-### 怎么从FASTQ数据中获得测序设备和批次相关信息
+### 怎么从FASTQ数据中获得测序设备和批次相关信息 {#batch17}
  
 ```
 # 原始FASTQ序列名字行有如下的对应关系 (跟CASAVA版本有关)
@@ -1006,17 +1006,17 @@ https://github.com/Tong-Chen/Bioinfo_course_R
 
 关于FASTQ，见[NGS基础 - FASTQ格式解释和质量评估](http://mp.weixin.qq.com/s/tDMih7ISLJcL4F4sWBq3Vw)。
 
-### 如何合并人的表达数据和小鼠的表达数据？
+### 如何合并人的表达数据和小鼠的表达数据？ {#batch18}
 
 基于同源基因合并。
 
-### 质控中的GC含量和Overrepresented sequences
+### 质控中的GC含量和Overrepresented sequences {#batch19}
 
-### 样品是否在某种属性中存在偏好性
+### 样品是否在某种属性中存在偏好性 {#batch20}
 
-### 为什么聚类结果不可靠
+### 为什么聚类结果不可靠 {#batch21}
 
-### sampleFile文件的生成
+### sampleFile文件的生成 {#batch22}
 
 
 

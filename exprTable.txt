@@ -1,0 +1,7 @@
+ID	Zygote	2_cell	4_cell	8_cell	Morula	ICM
+Pou5f1	1	2	4	8	16	32
+Sox2	0.5	1	2	4	8	16
+Gata2	0.3	0.6	1.3	2.6	5.2	10.4
+cMyc	10.4	5.2	2.6	1.3	0.6	0.3
+Tet1	16	8	4	2	1	0.5
+Tet3	32	16	8	4	2	1

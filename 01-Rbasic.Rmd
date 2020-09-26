@@ -2,7 +2,7 @@
 
 R语言是比较常用的统计分析和绘图语言，拥有强大的统计库、绘图库和生信分析的Bioconductor库，是学习生物信息分析的必备语言之一。
 
-## R安装
+## R安装 {#R_install}
 
 **Linux下安装**
 
@@ -36,11 +36,11 @@ make install
 
 两者都需要考虑环境变量，若有问题，见文后的参考。
 
-## Rstudio基础
+## Rstudio基础 {#R_basic}
 
 Rstudio是编辑、运行R语言的最为理想的工具之一，支持纯R脚本、Rmarkdown (脚本文档混排)、Bookdown (脚本文档混排成书)、Shiny (交互式网络应用)等。
 
-### Rstudio版本
+### Rstudio版本 {#R_version}
 
 Rsdutio分为桌面版和服务器版，桌面版可以在单机使用，服务器版可以从浏览器访问供多人使用。
 
@@ -50,7 +50,7 @@ Rsdutio分为桌面版和服务器版，桌面版可以在单机使用，服务�
 knitr::include_graphics("images/Rstudio_version.png")
 ```
 
-### Rstudio安装
+### Rstudio安装 {#Rstudio_install}
 
 **Linux下安装服务器版**
 
@@ -58,8 +58,8 @@ knitr::include_graphics("images/Rstudio_version.png")
   
 ```
 # 自己根据自己安装时间自己去获取最新软件的下载地址
-wget wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.1056-x86_64.rpm
-sudo yum install --nogpgcheck rstudio-server-rhel-1.3.1056-x86_64.rpm
+wget -c https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.3.1073-x86_64.rpm
+sudo yum install --nogpgcheck rstudio-server-rhel-1.3.1073-x86_64.rpm
 ```
 
 安装完之后的检测、启动和配置
@@ -76,8 +76,8 @@ sudo rstudio-server suspend-session <pid> ## 暂停session
 sudo rstudio-server suspend-all ##暂停所有session
 ```
 
-* Rstudio日志目录，方便查看错误信息：/var/log/rstudio-server/
-* 配置文件：
+* 如果启动失败，进入Rstudio日志目录查看错误信息：`/var/log/rstudio-server/`
+* Rstudio的其它配置可在配置文件修改：
   * /etc/rstudio/rserver.conf 
   	
 ```bash
@@ -97,22 +97,31 @@ session-timeout-minutes=30
 session-timeout-minutes=0
 ```
 
+配置好并且`rstudio-server`成功启动后，就可以在火狐或谷歌浏览器中输入`IP地址:端口号`，比如`127.123,34.29:8787`进行访问了。
+
+如果该网址不能打开，一般有2个原因：
+
+1. 安装`rstudio-server`的服务器是内网IP，不可以在外网访问，只能被连接到同一台路由器的电脑访问。这时需要配置外网IP或百度查找下其它IP穿透方式的设置。
+
+2. 确定自己的服务器没有被防火墙限制端口，一般在学校或科研单位会设置防火墙屏蔽大部分端口，这时联系网络管理员开通相应的端口即可。
+
+
 **Windows下安装桌面版**
 
 下载之后 (<https://www.rstudio.com/products/rstudio/download2/>)双击安装 (若windows登录名为中文，需要使用**管理员权限**)，其它无需要注意的。
 
 
-### Rstudio 使用
+### Rstudio 使用 {#Rstudio_usage}
 
 Windows下桌面版直接双击打开即可使用，Linux服务器版访问地址为**服务器IP:8787**，用户名和密码为Linux用户的用户名和密码。
 
-#### Rstudio 界面
+#### Rstudio 界面 {#Rstudio_gui}
 
 ```{r, echo=F}
 knitr::include_graphics("images/Rstudio_IDE.png")
 ```
 
-#### Rstudio中新建或打开文件
+#### Rstudio中新建或打开文件 {#Rstudio_new_file}
 
 如果是桌面版，直接就可以访问"我的电脑"去打开之前写过的脚本。如果是服务器版，可直接访问服务器上写过的脚本。Rstudio右下1/4部分可以切换目录，点击more，设置工作目录。可以上传本地的脚本到对应目录打开。
 
@@ -121,13 +130,13 @@ knitr::include_graphics("images/Rstudio_IDE.png")
 knitr::include_graphics("images/Rstudio.gif")
 ```
 
-## R基本语法
+## R基本语法 {#R_basic_formula}
 
 ```{r}
 knitr::include_graphics("images/R_basic.jpg")
 ```
 
-### 获取帮助文档，查看命令或函数的使用方法、事例或适用范围
+### 获取帮助文档，查看命令或函数的使用方法、事例或适用范围 {#R_help}
 
 ```r
 >>> ?command
@@ -138,7 +147,7 @@ knitr::include_graphics("images/R_basic.jpg")
 >>> example(plot)
 ```
 
-### R中的变量及其初始化
+### R中的变量及其初始化 {#R_variable}
 
 ```{r, echo=T}
 # 数字变量
@@ -245,7 +254,7 @@ colnames(a) <- letters[1:4]
 a
 ```
 
-### 变量类型和转换
+### 变量类型和转换 {#vairableType}
 
 不同的变量类型有不同的操作方式，`is`系列和`as`系列函数用来判断变量的属性和转换变量的属性
 
@@ -269,7 +278,7 @@ is.data.frame(a)
 is.data.frame(as.data.frame(a))
 ```
 
-### R中矩阵运算
+### R中矩阵运算 {#Rmatrix}
 
 ```{r, echo=T}
 # 获得随机的正态分布数据
@@ -476,7 +485,7 @@ expr2
 ```
 
 
-### R中矩阵筛选合并
+### R中矩阵筛选合并 {#Rmatrixcombine}
 
 ```{r, echo=T}
 # 读入样品信息
@@ -531,7 +540,7 @@ merge_data[sapply(merge_data, is.numeric)]
 
 
 
-### `str`的应用
+### `str`的应用 {#str}
 
 `str`:  Compactly display the internal *str*ucture of an R object, a
      diagnostic function and an alternative to 'summary (and to some
@@ -567,7 +576,7 @@ pca_result$sdev
 
 ```
 
-### R的包管理
+### R的包管理 {#Rpackage}
 
 
 什么时候需要安装包
@@ -629,7 +638,7 @@ usePackage <- function(p) {
 }
 ```
 
-## ggplot2绘图
+## ggplot2绘图 {#ggplot2_plot}
 
 ```{r, echo=T}
 data <- "Gene;Sample;Group;Abundance
@@ -811,7 +820,7 @@ ggviolin(data, x="Group", y="Abundance", fill="Group", palette = "npg", add=c("j
 
 
 
-### 数据格式转换和字符串处理
+### 数据格式转换和字符串处理 {#matrixFormat}
 
 假如我们的数据如下形式，如何完成上面的图的绘制？
 
@@ -1019,7 +1028,7 @@ p
 
 
 
-### 配色
+### 配色 {#RColorBrewer}
 
 序列型颜色板适用于从低到高排序明显的数据，浅色数字小，深色数字大。
 
@@ -1042,7 +1051,7 @@ display.brewer.all(type = "qual")
 ```
 
 
-### pheatmap绘制热图
+### pheatmap绘制热图 {#phetamap}
 
 
 ```{r, echo=T}
@@ -1096,12 +1105,12 @@ pheatmap(data_matrix, annotation_col = metadata, color = colorL)
 
 
 
-## CheetSheets
+## CheetSheets 
 
 <https://www.rstudio.com/resources/cheatsheets/>
+ 
+## 参考 {ref01}
 
-## 参考
-
-* [生信宝典Linux系列](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI5MTcwNjA4NQ==&action=getalbum&album_id=1336510271359385600&subscene=21&scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzI5MTcwNjA4NQ%3D%3D%26mid%3D2247491983%26idx%3D1%26sn%3D2052e7a038f2db52eb282b88495a7dfd%26scene%3D21%26key%3Dbbd9db2a3d7572cddf07b767465efb56a0803b43fcdfeb1e1e9a662169975f57a1db506a826a6c934f03cc98245cd6cc1251c956555a9bdbb33b71e6fc4aec05daa254d390b8f4e2faee9da13572aa4d%26ascene%3D7%26uin%3DOTY2MDEyMzgw%26devicetype%3DWindows%2B10%2Bx64%26version%3D62090529%26lang%3Dzh_CN%26exportkey%3DARBvdJ7O%252BwuOu7%252FdoD45yto%253D%26pass_ticket%3D6oR4VId9JNdCLZp2iJjodI21oAREmYTa3D%252F9nfZlbY8TG5eZ3ToAoRlMm5nwdtwk%26winzoom%3D1#wechat_redirect)
+* [生信宝典Linux系列](http://www.ehbio.com/Bioinfo_bash_course/)
 * [生信宝典R系列](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI5MTcwNjA4NQ==&action=getalbum&album_id=1335864997100224512&subscene=21&scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzI5MTcwNjA4NQ%3D%3D%26mid%3D2247490572%26idx%3D1%26sn%3Dc2ba3cb9e8117efff6bfd53c9f797109%26scene%3D21%26key%3D14893ff72db1d5ee36ae599230370c4cdd9e49dbfdd44fe73757d5c60d26ff6e698d2ccc26b16c7898a5164ac9ddb35f990c0bfeb88037b926c9eb29fbaf9867d2ad02e4b2e6da694013a82c124b6e44%26ascene%3D7%26uin%3DOTY2MDEyMzgw%26devicetype%3DWindows%2B10%2Bx64%26version%3D62090529%26lang%3Dzh_CN%26exportkey%3DAWleeoJ2D3RuwW6exYsshOM%253D%26pass_ticket%3D6oR4VId9JNdCLZp2iJjodI21oAREmYTa3D%252F9nfZlbY8TG5eZ3ToAoRlMm5nwdtwk%26winzoom%3D1#wechat_redirect)
 

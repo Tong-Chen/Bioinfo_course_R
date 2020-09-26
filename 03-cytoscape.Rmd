@@ -10,7 +10,7 @@ Cytoscape已成为网络图绘制的核心工具，基因表达调控网络、�
 
 本次三个视频，截取不同的角度 (更多Cytoscape视频在B站: <https://space.bilibili.com/362709786>)。
 
-### 基本操作
+### 基本操作 {#basic}
 
 利用一个简单的组织构建图展示Cytoscape的基本使用，导入网络、导入节点属性，更改点的形状、颜色，在点上插入图片、绘制饼图、柱状图、加入颜色条纹，点的手动对齐、横向分布等。
 
@@ -19,19 +19,19 @@ Cytoscape已成为网络图绘制的核心工具，基因表达调控网络、�
 <https://imgcache.qq.com/tencentvideo_v1/playerv3/TPout.swf?max_age=86400&v=20161117&vid=p0541x250n9&auto=0>
 
 
-### miRNA-mRNA调控网络
+### miRNA-mRNA调控网络 {#mirna}
 
 Cytoscape可用于绘制基因共表达网络，这儿选取miRNA-gene调控网络 (含miRNA-gene表达相关性数据)做为例子，涉及到根据表达变化倍数对每个点进行着色、根据表达相关性对线进行着色、miRNA和靶基因采用不同的形状表示、微调获得合适的展示图形、结果导出PDF格式、导出图例等。
 
 <https://imgcache.qq.com/tencentvideo_v1/playerv3/TPout.swf?max_age=86400&v=20161117&vid=z0541oby69q&auto=0>
 
-### 不同的布局的调试和修改
+### 不同的布局的调试和修改 {#layout}
 
 网络绘制根据网络图的大小、展示的用意可以选择合适的布局。Cytoscape提供了多种布局算法，具体见[http://manual.cytoscape.org/en/stable/Navigation_and_Layout.html](http://manual.cytoscape.org/en/stable/Navigation_and_Layout.html)。
 
 下面列出几种示例
 
-#### Attribute Circle Layout
+#### Attribute Circle Layout {#circle}
 
 属性环展示方式所有的节点都在环上，适用于点比较少的时候。环上点的顺序可以根据某一列来调整。
 
