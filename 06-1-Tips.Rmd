@@ -1,0 +1,122 @@
+# 问题答疑 {#questions}
+
+## ggplot2绘图如何根据一个变量即区分颜色又区分深浅？{#ggplot2_variable_color_saturation}
+
+群里有这么一个问题：
+
+> 请问用ggplot2绘制气泡图的时候，根据数字的**正负**设置红蓝两种颜色，根据数字的**大小**可以设置颜色的深浅吗？如何实现？可以用哪个函数，谢谢大家
+
+
+先构造一个正弦曲线数据集，数值有正有负。
+
+
+```{r}
+x <- seq(0,2*pi,0.05)
+y <- sin(x)
+data <- data.frame(X=x,y=y)
+
+library(ggplot2)
+
+ggplot(data, aes(x=x, y=y)) + geom_point()
+```
+
+怎么来设置颜色呢？`color=y>0`: 根据正负设置颜色（0这里归类为负）；`alpha=abs(y)`根据数值绝对值设置透明度，模拟颜色饱和度。
+
+```{r}
+ggplot(data, aes(x=x, y=y)) + 
+  geom_point(aes(color=y>0, alpha=abs(y))) + 
+  scale_color_manual(values=c("blue","red"))
+```
+
+
+
+先构造一个数据集(这里用泊松分布数据集做个演示)，绘制个散点图：
+
+```{r}
+
+```
+
+```{r}
+ggplot(data, aes(x=x, y=y)) + geom_point(aes(color=y>0.05, alpha=y))
+```
+
+## ggplot2绘图点的形状不够用怎么办？
+
+群里有这么一个问题：
+
+> 请问老师，fviz_pca_ind 做pca，当设置geom.ind = "point"，group>6时，就不能显示第7，8组的点，应该如何处理（在不设置为文本的情况下），只改变点的几何形状和颜色
+
+`fviz_pca_ind`是`factoextra`里面用来可视化PCA结果的一个参数，具体见[PCA主成分分析实战和可视化 | 附R代码和测试数据](https://mp.weixin.qq.com/s/GlSgSmaqf1T0x1iFDatSCA)。
+
+这个问题是`ggplot2`绘制形状时的通用问题，默认只支持6种形状。我们生成个测试数据看下效果：
+
+```{r}
+x <- 1:50
+y <- dpois(x, lambda = 10)
+data <- data.frame(X=x,y=y)
+data$type <- as.factor(x)
+library(ggplot2)
+
+ggplot(data, aes(x=x, y=y)) + geom_point(aes(shape=type))
+```
+
+图效果如下。同时给出了一段提示：
+
+> Warning: The shape palette can deal with a maximum of 6 discrete values because more than 6 becomes
+difficult to discriminate; you have 50. Consider specifying shapes manually if you must
+have them.
+> 
+> Warning: Removed 44 rows containing missing values (geom_point).
+
+就是说我们需要自己手动指定形状。
+
+
+
+
+`ggplot2`默认支持下面122种形状。
+
+```{r}
+# 代码来自 http://sape.inf.usi.ch/quick-reference/ggplot2/shape
+d=data.frame(p=c(0:25,32:127))
+ggplot() +
+scale_y_continuous(name="") +
+scale_x_continuous(name="") +
+scale_shape_identity() +
+geom_point(data=d, mapping=aes(x=p%%16, y=p%/%16, shape=p), size=5, fill="red") +
+  geom_text(data=d, mapping=aes(x=p%%16, y=p%/%16+0.25, label=p), size=3)
+
+```
+那怎么利用起来呢？需要转换计算下能用的符号编号，这里选取`0:14, 33-127`  (`15-25`是其它形状加了颜色或变了大小，可能会对设置的大小或颜色属性有影响，先暂时忽略了; `32`没看出来是什么形状)。
+
+下面根据设定的符号列的因子数，通过取余数的方式获取这些数字，然后传递给`scale_shape_manual`函数。
+
+```{r}
+shape_level <- nlevels(data[["type"]])
+if (shape_level < 15){
+  shapes = (0:shape_level) %% 15
+} else{
+  shapes = c(0:14,c((15:shape_level) %% 110 + 18))
+}
+  
+ggplot(data, aes(x=x, y=y)) + 
+  geom_point(aes(shape=type)) + 
+  scale_shape_manual(values=shapes)
+```
+回到上面的问题，因为没有给代码和数据，这里也就只能意思一下了。
+
+```
+# type 需要改成自己映射到形状的列名
+shape_level <- length(levels(data[["type"]]))
+if (shape_level < 15){
+  shapes = (0:shape_level) %% 15
+} else{
+  shapes = c(0:14,c((15:shape_level) %% 110 + 18))
+}
+
+fviz_pca_ind(....) + scale_shape_manual(values=shapes)
+```
+
+
+
+
+

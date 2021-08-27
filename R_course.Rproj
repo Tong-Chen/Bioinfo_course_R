@@ -1,4 +1,3 @@
-
 Version: 1.0
 
 RestoreWorkspace: Default
@@ -14,4 +13,3 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
 BuildType: Website
-
