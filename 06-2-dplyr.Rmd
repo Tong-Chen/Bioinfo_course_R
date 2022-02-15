@@ -1,0 +1,114 @@
+
+# 推荐一个 R 中很好用的条件判断语句
+
+```{r}
+text <- "Gene	log2FoldChange	padj
+a	1	0.1
+b	2	0.05
+d	3	0.001
+e	-2	0.0002
+G	0	0.0001"
+
+res_output <- read.table(text=text, row.names=NULL, header=T)
+
+padj_thresh = 0.05
+log2FC = 1
+groupA = 'trt'
+groupB = 'untrt'
+```
+
+## ifelse 标记差异基因
+
+不想安装额外的包，可以用 `ifelse`，要稍微复杂一点。
+
+```{r}
+res_output$level <- ifelse(res_output$padj<=padj_thresh,
+                      ifelse(res_output$log2FoldChange>=log2FC,
+                             paste(groupA,"UP"),
+                             ifelse(res_output$log2FoldChange<=(-1)*(log2FC),
+                                    paste(groupB,"UP"), "NoDiff")) , "NoDiff")
+```
+
+或
+
+```{r}
+res_output$level <- 
+ifelse(res_output$padj<=padj_thresh & res_output$log2FoldChange>=log2FC, paste(groupA,"UP"),
+ifelse(res_output$padj<=padj_thresh & res_output$log2FoldChange<=(-1)*(log2FC), paste(groupB,"UP"),
+       "NoDiff")) 
+```
+
+## dplyr::case-when 标记差异基因
+
+比之前简洁了一些，可读性强
+
+```{r}
+library(dplyr)
+res_output %>% mutate(level = case_when(
+  (padj<=padj_thresh) & (log2FoldChange>=log2FC) ~ paste(groupA,"UP"),
+  (padj<=padj_thresh) & (log2FoldChange<=(-1)*log2FC) ~ paste(groupB, "UP"),
+  TRUE ~ "NoDiff"
+  ))
+```
+
+## dplyr::if_else 会更快一点
+
+速度快一点，但可读性弱了一些。
+
+```{r}
+res_output %>% mutate(level = 
+if_else(res_output$padj<=padj_thresh & res_output$log2FoldChange>=log2FC, paste(groupA,"UP"),
+if_else(res_output$padj<=padj_thresh & res_output$log2FoldChange<=(-1)*(log2FC), paste(groupB,"UP"),
+       "NoDiff"))) 
+```
+
+## case-when只保留差异基因的名字
+
+```{r}
+library(dplyr)
+res_output %>% mutate(diff_gene = case_when(
+  (padj<=padj_thresh) & (log2FoldChange>=log2FC) ~ Gene,
+  (padj<=padj_thresh) & (log2FoldChange<=(-1)*log2FC) ~ Gene,
+  TRUE ~ ""
+  ))
+```
+
+## case-when每隔 1 个基因保留 1 个
+
+临时生成列时操作起来更方便了
+
+```{r}
+library(dplyr)
+res_output %>% mutate(rank=1:n(),
+                       keep_gene = case_when(
+  rank %% 2 == 1 ~ Gene,
+  TRUE ~ ""
+  ))
+```
+
+## `dplyr::if_else`速度最快！
+
+`dplyr::if_else`速度最快！
+
+```
+suppressPackageStartupMessages(library(tidyverse))
+
+microbenchmark::microbenchmark(
+  case_when(1:1000 < 100 ~ "low", TRUE ~ "high"),
+  if_else(1:1000 < 3, "low", "high"),
+  ifelse(1:1000 < 3, "low", "high")
+)
+#> Unit: microseconds
+#>                                            expr     min      lq     mean
+#>  case_when(1:1000 < 100 ~ "low", TRUE ~ "high") 384.786 418.629 953.4921
+#>              if_else(1:1000 < 3, "low", "high")  61.943  67.686 128.9811
+#>               ifelse(1:1000 < 3, "low", "high") 256.797 264.796 391.7180
+#>    median       uq       max neval
+#>  631.9420 708.4480 33149.364   100
+#>   90.0435 127.9885  2496.182   100
+#>  327.9695 460.8810  2354.246   100
+
+Ref: https://community.rstudio.com/t/case-when-why-not/2685/2
+```
+
+如果不想安装额外包，用`ifelse`；如果是单个条件，用`dplyr::if_else`；如果多个条件，用`dplyr::case_when` (更可读)。
