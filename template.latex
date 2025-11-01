@@ -1,0 +1,306 @@
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$]{$documentclass$}
+\usepackage{booktabs}
+\usepackage{geometry} 		% 設定邊界
+\geometry{
+  top=1in,
+  inner=0.6in,
+  outer=0.6in,
+  bottom=0.6in,
+  headheight=3ex,
+  headsep=2ex
+}
+\errorcontextlines 10000
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
+\usepackage[section]{placeins}
+\usepackage{float}
+% set table unfloat
+\usepackage{varioref}
+
+% set table font size
+\usepackage[font=normalsize]{caption}     %% make caption in normal size
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\footnotesize}{}{}   %% change all longtabu content to foot note size >
+
+%\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+%\renewcommand{\bottomfraction}{0.8}	% max fraction of floats	at bottom
+%   Parameters for TEXT pages (not float pages):
+%\setcounter{topnumber}{2}
+%\setcounter{bottomnumber}{2}
+%\setcounter{totalnumber}{4}     % 2 may work better
+%\setcounter{dbltopnumber}{2}    % for	2-column pages
+%\renewcommand{\dbltopfraction}{0.9}	%	fit big float above 2-col. text
+%\renewcommand{\textfraction}{0.07} % allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+%\renewcommand{\floatpagefraction}{0.7} % require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+%\renewcommand{\dblfloatpagefraction}{0.7} % require fuller float pages
+
+
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+\else % if luatex or xelatex
+  \usepackage{fontspec} 	% 允許設定字體
+  \usepackage{xeCJK} 		% 分開設置中英文字型
+  %\setCJKmainfont{Microsoft YaHei} 	% 設定中文字型
+  \setCJKmainfont{WenQuanYi Zen Hei} 	% 設定中文字型
+  \setmainfont{Arial} 	% 設定英文字型
+  \setromanfont{Arial} 	% 字型
+  \setmonofont{Courier New}
+  \linespread{1.2}\selectfont 	% 行距
+  \XeTeXlinebreaklocale "zh" 	% 針對中文自動換行
+  \XeTeXlinebreakskip = 0pt plus 1pt % 字與字之間加入0pt至1pt的間距，確保左右對整齊
+  \parindent 0em 		% 段落縮進
+  \setlength{\parskip}{20pt} 	% 段落之間的距離
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+$if(mainfont)$
+    \setmainfont{$mainfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont{$mathfont$}
+$endif$
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+
+$if(biblatex)$
+\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+
+
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=bash,basicstyle=\ttfamily\tiny, breaklines=true}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+\let\Oldincludegraphics\includegraphics
+$if(graphics)$
+\usepackage{graphicx}
+% We will generate all images so they have a width \maxwidth. This means
+% that they will get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+\else\Gin@nat@width\fi}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+%\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=0.7\maxwidth,height=0.8\textheight,keepaspectratio=true]{#1}}
+$endif$
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            colorlinks=true,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
+			filecolor=green,
+			pdfcreator={Chen Tong}
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+\setlength{\parindent}{0pt}
+%\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\usepackage{titling}
+\setlength{\droptitle}{-8em} 	% 將標題移動至頁面的上面
+
+% Remove list identation
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+
+% FIgure with section number
+\usepackage{amsmath}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancyplain}
+
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(lang)$
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{$mainlang$}
+\else
+  \usepackage[$lang$]{babel}
+\fi
+$endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+%\renewcommand{\sectionmark}[1]{\markboth{#1}} % set the \leftmark
+
+%\setlength{\headheight}{23pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+
+\fancyhead[R]{
+
+}
+\fancyfoot[R]{\thepage}
+
+%\pagestyle{plain}
+$if(title)$
+%\titlehead{\centering\includegraphics{/MPATHB/self/pandoc/ehbio_logo.png}}
+\title{$title$$if(subtitle)$\\\vsapce{0.5em}{\large $subtitle$}$endif$}
+$endif$
+\author{$for(author)$$author$\\\\ $endfor$}
+\date{$date$}% \\\\
+
+%multidor pic
+\usepackage[multidot]{grffile}
+
+\begin{document}
+$if(title)$
+%\maketitle
+%{\scshape\LARGE 易汉博基因科技(北京)有限公司 \par}
+
+\begin{titlepage}
+  \centering{
+
+  
+
+  \vspace{4cm}
+
+  {\Huge\bfseries $title$ \par}
+
+  \vspace{4cm}
+  }
+  \begin{minipage}{0.6\linewidth}
+  %\centering{
+  %\begin{flushleft}
+  $if(subtitle)${\scshape\huge $subtitle$ \par}$endif$
+  
+  \vspace{0.5cm}
+  $for(author)$
+	{\scshape\huge $author$ \par} 
+	\vspace{0.3cm}
+  $endfor$
+  %\end{flushleft}
+  %}
+  \end{minipage}
+
+  \centering{
+  \vfill
+  {\LARGE $date$\par}
+  }
+\end{titlepage}
+%\thispagestyle{fancy}
+$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+{
+\hypersetup{linkcolor=cyan}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$body$
+
+
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+
+
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
+

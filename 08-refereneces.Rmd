@@ -23,31 +23,11 @@
 
 *注：下面为往期文章目录集合，所有蓝字均为文章链接，点击阅读原文*
 
-## 教程合集
 
-* [生信宝典-Linux教程.pdf](http://www.ehbio.com/tutorial/%E7%94%9F%E4%BF%A1%E5%AE%9D%E5%85%B8-Linux%E6%95%99%E7%A8%8B.pdf) (微信公众号后台回复 **生信宝典福利第一波**)
-* [生信宝典Py3_course.pdf](http://www.ehbio.com/tutorial/%E7%94%9F%E4%BF%A1%E5%AE%9D%E5%85%B8Py3_course.pdf)
-* [生信宝典-R学习教程.pdf](http://www.ehbio.com/tutorial/%E7%94%9F%E4%BF%A1%E5%AE%9D%E5%85%B8-R%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B.pdf)
-
-## 加拿大生信课程
-
-* [国外生信教程免费领 加拿大生信开源学习资源Bioinformatics.ca](https://mp.weixin.qq.com/s/hQRPqZzXCJc6-O9WAt7qIQ)
-* [Bioinformatics_for_Cancer_Genomics](http://www.ehbio.com/ehbio_resource/canada/1.Bioinformatics_for_Cancer_Genomics.zip)
-* [Informatics_on_High-Throughput_Sequencing_Data](http://www.ehbio.com/ehbio_resource/canada/2.Informatics_on_High-Throughput_Sequencing_Data.zip)
-* [Informatics_for_RNA-Seq_Analysis](http://www.ehbio.com/ehbio_resource/canada/3.Informatics_for_RNA-Seq_Analysis.zip)
-* [Analysis_of_Metagenomic_Data](http://www.ehbio.com/ehbio_resource/canada/4.Analysis_of_Metagenomic_Data.zip)
-* [Informatics_and_Statistics_for_Metabolomics](http://www.ehbio.com/ehbio_resource/canada/5.Informatics_and_Statistics_for_Metabolomics.zip)
-* [Bioinformatics_of_Genomic_Medicine](http://www.ehbio.com/ehbio_resource/canada/6.Bioinformatics_of_Genomic_Medicine.zip)
-* [Epigenomic_Data_Analysis](http://www.ehbio.com/ehbio_resource/canada/7.Epigenomic_Data_Analysis.zip)
-* [Pathway_and_Network_Analysis_of_omics_Data](http://www.ehbio.com/ehbio_resource/canada/8.Pathway_and_Network_Analysis_of_omics_Data.zip)
-* [Infectious_Disease_Genomic_Epidemiology](http://www.ehbio.com/ehbio_resource/canada/9.Infectious_Disease_Genomic_Epidemiology.zip)
 
 ## Illumina测序应用手册
 
 * [Illumina测序仪比较和各种测序应用模式图，助力了解高通量测序](https://mp.weixin.qq.com/s/Ty5SPJSQ6I3icHDlcZTnMQ)
-* [RNA层面](http://www.ehbio.com/ehbio_resource/for-all-you-seq-rna.pdf)
-* [DNA层面](http://www.ehbio.com/ehbio_resource/for-all-you-seq-dna.pdf)
-* [单细胞层面](http://www.ehbio.com/ehbio_resource/for-all-you-seq-single-cell.pdf)
 
 ## 系列教程
 
@@ -1264,18 +1244,3 @@
 
 * [http://blog.genesino.com/](http://blog.genesino.com/)
 
-## 招聘
-
-* [易汉博欢迎您加入](http://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&amp;mid=2247484036&amp;idx=5&amp;sn=bb1007d2c3d60e7a2bcf2d6fc7a9a2bb&amp;chksm=ec0dc70edb7a4e185bafd0f49440bf1a032915c7e8d8fc2cb37c70a81ce3446a4ae990df89a5#rd)
-
-
-
-## 联系我们
-
-![](http://blog.genesino.com/images/ehbio/ehbio_RNAseq.jpg)
-
-
-![](http://blog.genesino.com/images/ehbio/EHBIO_hire_bioinfo1.jpg)
-
-
-![](http://blog.genesino.com/images/ehbio/shengxinbaodian_gognzhonghao.jpg)

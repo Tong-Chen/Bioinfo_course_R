@@ -1,4 +1,4 @@
-# 问题答疑 {#questions}
+# 问题答疑 {#questions06}
 
 ## ggplot2绘图如何根据一个变量即区分颜色又区分深浅？{#ggplot2_variable_color_saturation}
 

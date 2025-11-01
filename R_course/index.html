@@ -1,46 +1,47 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>R, Cytoscape, AI生信作图分析培训</title>
-  <meta name="description" content="R, Cytoscape, AI生信作图分析培训">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>R Cytoscape AI生信作图分析教程</title>
+  <meta name="description" content="R Cytoscape AI生信作图分析教程" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="R, Cytoscape, AI生信作图分析培训" />
+  <meta property="og:title" content="R Cytoscape AI生信作图分析教程" />
   <meta property="og:type" content="book" />
-  
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R, Cytoscape, AI生信作图分析培训" />
+  <meta name="twitter:title" content="R Cytoscape AI生信作图分析教程" />
   
   
   
 
-<meta name="author" content="易生信培训团队">
-<meta name="author" content="联系我们: train@ehbio.com">
+<meta name="author" content="生信宝典 陈同" />
+<meta name="author" content="chentong_biology@163.com" />
 
 
-<meta name="date" content="2018-05-09">
+<meta name="date" content="2025-11-01" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 
-<link rel="next" href="questions.html">
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="next" href="questions.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,44 +49,81 @@
 
 
 
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -101,174 +139,280 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="http://www.ehbio.com"><img src="http://www.ehbio.com/logos/ehbio_gitbook_logo.png" width="95%"></a></li>
+<li><a href="http://www.bic.ac.cn">Hello</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>EHBIO Gene Technology</a></li>
-<li class="chapter" data-level="1" data-path="questions.html"><a href="questions.html"><i class="fa fa-check"></i><b>1</b> 考题</a><ul>
-<li class="chapter" data-level="1.1" data-path="questions.html"><a href="questions.html#-50"><i class="fa fa-check"></i><b>1.1</b> 理论题 (50分)</a></li>
-<li class="chapter" data-level="1.2" data-path="questions.html"><a href="questions.html#-70"><i class="fa fa-check"></i><b>1.2</b> 代码题 (70分)</a></li>
-<li class="chapter" data-level="1.3" data-path="questions.html"><a href="questions.html#-"><i class="fa fa-check"></i><b>1.3</b> 错误识别题 (选答)</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Hello</a></li>
+<li class="chapter" data-level="1" data-path="questions.html"><a href="questions.html"><i class="fa fa-check"></i><b>1</b> 考题</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="questions.html"><a href="questions.html#%E7%90%86%E8%AE%BA%E9%A2%98-50%E5%88%86"><i class="fa fa-check"></i><b>1.1</b> 理论题 (50分)</a></li>
+<li class="chapter" data-level="1.2" data-path="questions.html"><a href="questions.html#%E4%BB%A3%E7%A0%81%E9%A2%98-70%E5%88%86"><i class="fa fa-check"></i><b>1.2</b> 代码题 (70分)</a></li>
+<li class="chapter" data-level="1.3" data-path="questions.html"><a href="questions.html#%E9%94%99%E8%AF%AF%E8%AF%86%E5%88%AB%E9%A2%98-%E9%80%89%E7%AD%94"><i class="fa fa-check"></i><b>1.3</b> 错误识别题 (选答)</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="Rbasic.html"><a href="Rbasic.html"><i class="fa fa-check"></i><b>2</b> R基础</a><ul>
-<li class="chapter" data-level="2.1" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>2.1</b> R安装</a></li>
-<li class="chapter" data-level="2.2" data-path="Rbasic.html"><a href="Rbasic.html#rstudio"><i class="fa fa-check"></i><b>2.2</b> Rstudio基础</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="Rbasic.html"><a href="Rbasic.html#rstudio"><i class="fa fa-check"></i><b>2.2.1</b> Rstudio版本</a></li>
-<li class="chapter" data-level="2.2.2" data-path="Rbasic.html"><a href="Rbasic.html#rstudio"><i class="fa fa-check"></i><b>2.2.2</b> Rstudio安装</a></li>
-<li class="chapter" data-level="2.2.3" data-path="Rbasic.html"><a href="Rbasic.html#rstudio-"><i class="fa fa-check"></i><b>2.2.3</b> Rstudio 使用</a></li>
+<li class="chapter" data-level="2" data-path="Rbasic.html"><a href="Rbasic.html"><i class="fa fa-check"></i><b>2</b> R基础</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Rbasic.html"><a href="Rbasic.html#R_install"><i class="fa fa-check"></i><b>2.1</b> R安装</a></li>
+<li class="chapter" data-level="2.2" data-path="Rbasic.html"><a href="Rbasic.html#R_basic"><i class="fa fa-check"></i><b>2.2</b> Rstudio基础</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="Rbasic.html"><a href="Rbasic.html#R_version"><i class="fa fa-check"></i><b>2.2.1</b> Rstudio版本</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Rbasic.html"><a href="Rbasic.html#Rstudio_install"><i class="fa fa-check"></i><b>2.2.2</b> Rstudio安装</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Rbasic.html"><a href="Rbasic.html#Rstudio_usage"><i class="fa fa-check"></i><b>2.2.3</b> Rstudio 使用</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>2.3</b> R基本语法</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="Rbasic.html"><a href="Rbasic.html#section-2.3.1"><i class="fa fa-check"></i><b>2.3.1</b> 获取帮助文档，查看命令或函数的使用方法、事例或适用范围</a></li>
-<li class="chapter" data-level="2.3.2" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>2.3.2</b> R中的变量及其初始化</a></li>
-<li class="chapter" data-level="2.3.3" data-path="Rbasic.html"><a href="Rbasic.html#section-2.3.3"><i class="fa fa-check"></i><b>2.3.3</b> 变量类型和转换</a></li>
-<li class="chapter" data-level="2.3.4" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>2.3.4</b> R中矩阵运算</a></li>
-<li class="chapter" data-level="2.3.5" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>2.3.5</b> R中矩阵筛选合并</a></li>
+<li class="chapter" data-level="2.3" data-path="Rbasic.html"><a href="Rbasic.html#R_basic_formula"><i class="fa fa-check"></i><b>2.3</b> R基本语法</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="Rbasic.html"><a href="Rbasic.html#R_help"><i class="fa fa-check"></i><b>2.3.1</b> 获取帮助文档，查看命令或函数的使用方法、事例或适用范围</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Rbasic.html"><a href="Rbasic.html#R_variable"><i class="fa fa-check"></i><b>2.3.2</b> R中的变量及其初始化</a></li>
+<li class="chapter" data-level="2.3.3" data-path="Rbasic.html"><a href="Rbasic.html#vairableType"><i class="fa fa-check"></i><b>2.3.3</b> 变量类型和转换</a></li>
+<li class="chapter" data-level="2.3.4" data-path="Rbasic.html"><a href="Rbasic.html#Rmatrix"><i class="fa fa-check"></i><b>2.3.4</b> R中矩阵运算</a></li>
+<li class="chapter" data-level="2.3.5" data-path="Rbasic.html"><a href="Rbasic.html#Rmatrixcombine"><i class="fa fa-check"></i><b>2.3.5</b> R中矩阵筛选合并</a></li>
 <li class="chapter" data-level="2.3.6" data-path="Rbasic.html"><a href="Rbasic.html#str"><i class="fa fa-check"></i><b>2.3.6</b> <code>str</code>的应用</a></li>
-<li class="chapter" data-level="2.3.7" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>2.3.7</b> R的包管理</a></li>
+<li class="chapter" data-level="2.3.7" data-path="Rbasic.html"><a href="Rbasic.html#Rpackage"><i class="fa fa-check"></i><b>2.3.7</b> R的包管理</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="Rbasic.html"><a href="Rbasic.html#cheetsheets"><i class="fa fa-check"></i><b>2.4</b> CheetSheets</a></li>
-<li class="chapter" data-level="2.5" data-path="Rbasic.html"><a href="Rbasic.html#section-2.5"><i class="fa fa-check"></i><b>2.5</b> 参考</a></li>
+<li class="chapter" data-level="2.4" data-path="Rbasic.html"><a href="Rbasic.html#checkinstalltpackages"><i class="fa fa-check"></i><b>2.4</b> 检查并安装本教程需要的 R 包</a></li>
+<li class="chapter" data-level="2.5" data-path="Rbasic.html"><a href="Rbasic.html#ggplot2_plot"><i class="fa fa-check"></i><b>2.5</b> ggplot2绘图</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="Rbasic.html"><a href="Rbasic.html#matrixFormat"><i class="fa fa-check"></i><b>2.5.1</b> 数据格式转换和字符串处理</a></li>
+<li class="chapter" data-level="2.5.2" data-path="Rbasic.html"><a href="Rbasic.html#RColorBrewer"><i class="fa fa-check"></i><b>2.5.2</b> 配色</a></li>
+<li class="chapter" data-level="2.5.3" data-path="Rbasic.html"><a href="Rbasic.html#phetamap"><i class="fa fa-check"></i><b>2.5.3</b> pheatmap绘制热图</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="r-plots.html"><a href="r-plots.html"><i class="fa fa-check"></i><b>3</b> R plots</a><ul>
-<li class="chapter" data-level="3.1" data-path="r-plots.html"><a href="r-plots.html#qplot-"><i class="fa fa-check"></i><b>3.1</b> qplot绘制图形 (王绪宁)</a></li>
-<li class="chapter" data-level="3.2" data-path="r-plots.html"><a href="r-plots.html#section-3.2"><i class="fa fa-check"></i><b>3.2</b> 热图绘制</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="r-plots.html"><a href="r-plots.html#section-3.2.1"><i class="fa fa-check"></i><b>3.2.1</b> 生成测试数据</a></li>
-<li class="chapter" data-level="3.2.2" data-path="r-plots.html"><a href="r-plots.html#section-3.2.2"><i class="fa fa-check"></i><b>3.2.2</b> 转换数据格式</a></li>
-<li class="chapter" data-level="3.2.3" data-path="r-plots.html"><a href="r-plots.html#section-3.2.3"><i class="fa fa-check"></i><b>3.2.3</b> 分解绘图</a></li>
-<li class="chapter" data-level="3.2.4" data-path="r-plots.html"><a href="r-plots.html#section-3.2.4"><i class="fa fa-check"></i><b>3.2.4</b> 图形存储</a></li>
+<li class="chapter" data-level="2.6" data-path="Rbasic.html"><a href="Rbasic.html#cheetsheets"><i class="fa fa-check"></i><b>2.6</b> CheetSheets</a></li>
+<li class="chapter" data-level="2.7" data-path="Rbasic.html"><a href="Rbasic.html#%E5%8F%82%E8%80%83-ref01"><i class="fa fa-check"></i><b>2.7</b> 参考 {ref01}</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="r-plots.html"><a href="r-plots.html#section-3.3"><i class="fa fa-check"></i><b>3.3</b> 热图美化</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="r-plots.html"><a href="r-plots.html#section-3.3.1"><i class="fa fa-check"></i><b>3.3.1</b> 对数转换</a></li>
-<li class="chapter" data-level="3.3.2" data-path="r-plots.html"><a href="r-plots.html#z-score"><i class="fa fa-check"></i><b>3.3.2</b> Z-score转换</a></li>
-<li class="chapter" data-level="3.3.3" data-path="r-plots.html"><a href="r-plots.html#section-3.3.3"><i class="fa fa-check"></i><b>3.3.3</b> 抹去异常值</a></li>
-<li class="chapter" data-level="3.3.4" data-path="r-plots.html"><a href="r-plots.html#section-3.3.4"><i class="fa fa-check"></i><b>3.3.4</b> 非线性颜色</a></li>
-<li class="chapter" data-level="3.3.5" data-path="r-plots.html"><a href="r-plots.html#section-3.3.5"><i class="fa fa-check"></i><b>3.3.5</b> 调整行或列的顺序</a></li>
+<li class="chapter" data-level="3" data-path="Rplots.html"><a href="Rplots.html"><i class="fa fa-check"></i><b>3</b> R plots</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Rplots.html"><a href="Rplots.html#plot"><i class="fa fa-check"></i><b>3.1</b> qplot绘制图形 (王绪宁)</a></li>
+<li class="chapter" data-level="3.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap"><i class="fa fa-check"></i><b>3.2</b> 热图绘制</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_data"><i class="fa fa-check"></i><b>3.2.1</b> 生成测试数据</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_dataformat"><i class="fa fa-check"></i><b>3.2.2</b> 转换数据格式</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_split"><i class="fa fa-check"></i><b>3.2.3</b> 分解绘图</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapsave"><i class="fa fa-check"></i><b>3.2.4</b> 图形存储</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="r-plots.html"><a href="r-plots.html#---pheatmap"><i class="fa fa-check"></i><b>3.4</b> 热图绘制 - pheatmap</a></li>
-<li class="chapter" data-level="3.5" data-path="r-plots.html"><a href="r-plots.html#section-3.5"><i class="fa fa-check"></i><b>3.5</b> 箱线图</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="r-plots.html"><a href="r-plots.html#section-3.5.1"><i class="fa fa-check"></i><b>3.5.1</b> 一步步解析箱线图绘制</a></li>
-<li class="chapter" data-level="3.5.2" data-path="r-plots.html"><a href="r-plots.html#-a"><i class="fa fa-check"></i><b>3.5.2</b> 绘制单个基因 (A)的箱线图</a></li>
-<li class="chapter" data-level="3.5.3" data-path="r-plots.html"><a href="r-plots.html#section-3.5.3"><i class="fa fa-check"></i><b>3.5.3</b> 长矩阵绘制箱线图</a></li>
+<li class="chapter" data-level="3.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapmeihua"><i class="fa fa-check"></i><b>3.3</b> 热图美化</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_log"><i class="fa fa-check"></i><b>3.3.1</b> 对数转换</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapzscore"><i class="fa fa-check"></i><b>3.3.2</b> Z-score转换</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapoutlier"><i class="fa fa-check"></i><b>3.3.3</b> 抹去异常值</a></li>
+<li class="chapter" data-level="3.3.4" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapnonlinear"><i class="fa fa-check"></i><b>3.3.4</b> 非线性颜色</a></li>
+<li class="chapter" data-level="3.3.5" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmaporder"><i class="fa fa-check"></i><b>3.3.5</b> 调整行或列的顺序</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="r-plots.html"><a href="r-plots.html#section-3.6"><i class="fa fa-check"></i><b>3.6</b> 线图</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="r-plots.html"><a href="r-plots.html#section-3.6.1"><i class="fa fa-check"></i><b>3.6.1</b> 单线图</a></li>
-<li class="chapter" data-level="3.6.2" data-path="r-plots.html"><a href="r-plots.html#section-3.6.2"><i class="fa fa-check"></i><b>3.6.2</b> 多线图</a></li>
-<li class="chapter" data-level="3.6.3" data-path="r-plots.html"><a href="r-plots.html#section-3.6.3"><i class="fa fa-check"></i><b>3.6.3</b> 横轴文本线图</a></li>
+<li class="chapter" data-level="3.4" data-path="Rplots.html"><a href="Rplots.html#pheatmap_simple"><i class="fa fa-check"></i><b>3.4</b> 热图绘制 - pheatmap</a></li>
+<li class="chapter" data-level="3.5" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder"><i class="fa fa-check"></i><b>3.5</b> 聚类热图如何按自己的意愿调整分支顺序？</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorderdata"><i class="fa fa-check"></i><b>3.5.1</b> 数据示例</a></li>
+<li class="chapter" data-level="3.5.2" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder1"><i class="fa fa-check"></i><b>3.5.2</b> 绘制一个聚类热图很简单</a></li>
+<li class="chapter" data-level="3.5.3" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder2"><i class="fa fa-check"></i><b>3.5.3</b> 如何自定义分支顺序呢</a></li>
+<li class="chapter" data-level="3.5.4" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder3"><i class="fa fa-check"></i><b>3.5.4</b> 人为指定顺序排序样品</a></li>
+<li class="chapter" data-level="3.5.5" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder4"><i class="fa fa-check"></i><b>3.5.5</b> 按某个基因的表达由小到大排序</a></li>
+<li class="chapter" data-level="3.5.6" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder5"><i class="fa fa-check"></i><b>3.5.6</b> 按某个基因的表达由大到小排序</a></li>
+<li class="chapter" data-level="3.5.7" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder6"><i class="fa fa-check"></i><b>3.5.7</b> 按分支名字（样品名字）的字母顺序排序</a></li>
+<li class="chapter" data-level="3.5.8" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder7"><i class="fa fa-check"></i><b>3.5.8</b> 梯子形排序：最小的分支在右侧</a></li>
+<li class="chapter" data-level="3.5.9" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder8"><i class="fa fa-check"></i><b>3.5.9</b> 梯子形排序：最小的分支在左侧</a></li>
+<li class="chapter" data-level="3.5.10" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder9"><i class="fa fa-check"></i><b>3.5.10</b> 按特征值排序</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="r-plots.html"><a href="r-plots.html#section-3.7"><i class="fa fa-check"></i><b>3.7</b> 散点图</a><ul>
-<li class="chapter" data-level="3.7.1" data-path="r-plots.html"><a href="r-plots.html#section-3.7.1"><i class="fa fa-check"></i><b>3.7.1</b> 横纵轴都为数字的散点图解析</a></li>
-<li class="chapter" data-level="3.7.2" data-path="r-plots.html"><a href="r-plots.html#section-3.7.2"><i class="fa fa-check"></i><b>3.7.2</b> 横纵轴都为字符串的散点图展示</a></li>
+<li class="chapter" data-level="3.6" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot"><i class="fa fa-check"></i><b>3.6</b> 箱线图</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot1"><i class="fa fa-check"></i><b>3.6.1</b> 一步步解析箱线图绘制</a></li>
+<li class="chapter" data-level="3.6.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot2"><i class="fa fa-check"></i><b>3.6.2</b> 绘制单个基因 (A)的箱线图</a></li>
+<li class="chapter" data-level="3.6.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot3"><i class="fa fa-check"></i><b>3.6.3</b> 长矩阵绘制箱线图</a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="r-plots.html"><a href="r-plots.html#section-3.8"><i class="fa fa-check"></i><b>3.8</b> 功能富集泡泡图</a><ul>
-<li class="chapter" data-level="3.8.1" data-path="r-plots.html"><a href="r-plots.html#section-3.8.1"><i class="fa fa-check"></i><b>3.8.1</b> 单样品分开绘制</a></li>
-<li class="chapter" data-level="3.8.2" data-path="r-plots.html"><a href="r-plots.html#section-3.8.2"><i class="fa fa-check"></i><b>3.8.2</b> 多样品合并绘制</a></li>
+<li class="chapter" data-level="3.7" data-path="Rplots.html"><a href="Rplots.html#ggplot2lineplot"><i class="fa fa-check"></i><b>3.7</b> 线图</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2singleline"><i class="fa fa-check"></i><b>3.7.1</b> 单线图</a></li>
+<li class="chapter" data-level="3.7.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2multipleline"><i class="fa fa-check"></i><b>3.7.2</b> 多线图</a></li>
+<li class="chapter" data-level="3.7.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2xaxistext"><i class="fa fa-check"></i><b>3.7.3</b> 横轴文本线图</a></li>
 </ul></li>
-<li class="chapter" data-level="3.9" data-path="r-plots.html"><a href="r-plots.html#section-3.9"><i class="fa fa-check"></i><b>3.9</b> 韦恩图</a><ul>
-<li class="chapter" data-level="3.9.1" data-path="r-plots.html"><a href="r-plots.html#section-3.9.1"><i class="fa fa-check"></i><b>3.9.1</b> 韦恩图三个圈</a></li>
-<li class="chapter" data-level="3.9.2" data-path="r-plots.html"><a href="r-plots.html#section-3.9.2"><i class="fa fa-check"></i><b>3.9.2</b> 韦恩图五个圈</a></li>
-<li class="chapter" data-level="3.9.3" data-path="r-plots.html"><a href="r-plots.html#upsetview"><i class="fa fa-check"></i><b>3.9.3</b> UpSetView展示</a></li>
+<li class="chapter" data-level="3.8" data-path="Rplots.html"><a href="Rplots.html#ggplot2scatter"><i class="fa fa-check"></i><b>3.8</b> 散点图</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2scatter1"><i class="fa fa-check"></i><b>3.8.1</b> 横纵轴都为数字的散点图解析</a></li>
+<li class="chapter" data-level="3.8.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2scatter3"><i class="fa fa-check"></i><b>3.8.2</b> 横纵轴都为字符串的散点图展示</a></li>
 </ul></li>
-<li class="chapter" data-level="3.10" data-path="r-plots.html"><a href="r-plots.html#section-3.10"><i class="fa fa-check"></i><b>3.10</b> 柱状图绘制</a><ul>
-<li class="chapter" data-level="3.10.1" data-path="r-plots.html"><a href="r-plots.html#section-3.10.1"><i class="fa fa-check"></i><b>3.10.1</b> 常规矩阵柱状图绘制</a></li>
-<li class="chapter" data-level="3.10.2" data-path="r-plots.html"><a href="r-plots.html#section-3.10.2"><i class="fa fa-check"></i><b>3.10.2</b> 长矩阵分面绘制</a></li>
+<li class="chapter" data-level="3.9" data-path="Rplots.html"><a href="Rplots.html#ggplot2enrichment"><i class="fa fa-check"></i><b>3.9</b> 功能富集泡泡图</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2enric2hment"><i class="fa fa-check"></i><b>3.9.1</b> 单样品分开绘制</a></li>
+<li class="chapter" data-level="3.9.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2enrichmen2t"><i class="fa fa-check"></i><b>3.9.2</b> 多样品合并绘制</a></li>
 </ul></li>
-<li class="chapter" data-level="3.11" data-path="r-plots.html"><a href="r-plots.html#section-3.11"><i class="fa fa-check"></i><b>3.11</b> 图形支持中文字体</a><ul>
-<li class="chapter" data-level="3.11.1" data-path="r-plots.html"><a href="r-plots.html#section-3.11.1"><i class="fa fa-check"></i><b>3.11.1</b> 修改图形的字体</a></li>
-<li class="chapter" data-level="3.11.2" data-path="r-plots.html"><a href="r-plots.html#ggplot2pdf"><i class="fa fa-check"></i><b>3.11.2</b> ggplot2支持中文字体输出PDF</a></li>
-<li class="chapter" data-level="3.11.3" data-path="r-plots.html"><a href="r-plots.html#section-3.11.3"><i class="fa fa-check"></i><b>3.11.3</b> 系统可用字体</a></li>
-<li class="chapter" data-level="3.11.4" data-path="r-plots.html"><a href="r-plots.html#section-3.11.4"><i class="fa fa-check"></i><b>3.11.4</b> 合并字体支持中英文</a></li>
-<li class="chapter" data-level="3.11.5" data-path="r-plots.html"><a href="r-plots.html#section-3.11.5"><i class="fa fa-check"></i><b>3.11.5</b> 一个示例</a></li>
+<li class="chapter" data-level="3.10" data-path="Rplots.html"><a href="Rplots.html#venn"><i class="fa fa-check"></i><b>3.10</b> 韦恩图</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="Rplots.html"><a href="Rplots.html#venn2"><i class="fa fa-check"></i><b>3.10.1</b> 韦恩图三个圈</a></li>
+<li class="chapter" data-level="3.10.2" data-path="Rplots.html"><a href="Rplots.html#venn5"><i class="fa fa-check"></i><b>3.10.2</b> 韦恩图五个圈</a></li>
+<li class="chapter" data-level="3.10.3" data-path="Rplots.html"><a href="Rplots.html#UpSetView"><i class="fa fa-check"></i><b>3.10.3</b> UpSetView展示</a></li>
 </ul></li>
-<li class="chapter" data-level="3.12" data-path="r-plots.html"><a href="r-plots.html#pca"><i class="fa fa-check"></i><b>3.12</b> PCA</a><ul>
-<li class="chapter" data-level="3.12.1" data-path="r-plots.html"><a href="r-plots.html#section-3.12.1"><i class="fa fa-check"></i><b>3.12.1</b> 主成分分析简介</a></li>
-<li class="chapter" data-level="3.12.2" data-path="r-plots.html"><a href="r-plots.html#section-3.12.2"><i class="fa fa-check"></i><b>3.12.2</b> 主成分分析的意义</a></li>
-<li class="chapter" data-level="3.12.3" data-path="r-plots.html"><a href="r-plots.html#section-3.12.3"><i class="fa fa-check"></i><b>3.12.3</b> 示例展示原始变量对样品的分类</a></li>
-<li class="chapter" data-level="3.12.4" data-path="r-plots.html"><a href="r-plots.html#pca"><i class="fa fa-check"></i><b>3.12.4</b> PCA的实现原理</a></li>
-<li class="chapter" data-level="3.12.5" data-path="r-plots.html"><a href="r-plots.html#pca"><i class="fa fa-check"></i><b>3.12.5</b> 简单的PCA实现</a></li>
-<li class="chapter" data-level="3.12.6" data-path="r-plots.html"><a href="r-plots.html#pca"><i class="fa fa-check"></i><b>3.12.6</b> PCA结果解释</a></li>
-<li class="chapter" data-level="3.12.7" data-path="r-plots.html"><a href="r-plots.html#pca"><i class="fa fa-check"></i><b>3.12.7</b> PCA应用于测试数据</a></li>
-<li class="chapter" data-level="3.12.8" data-path="r-plots.html"><a href="r-plots.html#pca"><i class="fa fa-check"></i><b>3.12.8</b> PCA注意事项</a></li>
-<li class="chapter" data-level="3.12.9" data-path="r-plots.html"><a href="r-plots.html#section-3.12.9"><i class="fa fa-check"></i><b>3.12.9</b> 参考资料</a></li>
+<li class="chapter" data-level="3.11" data-path="Rplots.html"><a href="Rplots.html#Barplot"><i class="fa fa-check"></i><b>3.11</b> 柱状图绘制</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="Rplots.html"><a href="Rplots.html#Barplot1"><i class="fa fa-check"></i><b>3.11.1</b> 常规矩阵柱状图绘制</a></li>
+<li class="chapter" data-level="3.11.2" data-path="Rplots.html"><a href="Rplots.html#Barplot2"><i class="fa fa-check"></i><b>3.11.2</b> 长矩阵分面绘制</a></li>
 </ul></li>
-<li class="chapter" data-level="3.13" data-path="r-plots.html"><a href="r-plots.html#section-3.13"><i class="fa fa-check"></i><b>3.13</b> 表达聚类分析</a></li>
-<li class="chapter" data-level="3.14" data-path="r-plots.html"><a href="r-plots.html#section-3.14"><i class="fa fa-check"></i><b>3.14</b> 生存分析</a><ul>
-<li class="chapter" data-level="3.14.1" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>3.14.1</b> R做生存分析</a></li>
+<li class="chapter" data-level="3.12" data-path="Rplots.html"><a href="Rplots.html#Barplot3"><i class="fa fa-check"></i><b>3.12</b> 图形支持中文字体</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="Rplots.html"><a href="Rplots.html#Barplot4"><i class="fa fa-check"></i><b>3.12.1</b> 修改图形的字体</a></li>
+<li class="chapter" data-level="3.12.2" data-path="Rplots.html"><a href="Rplots.html#Barplot41"><i class="fa fa-check"></i><b>3.12.2</b> ggplot2支持中文字体输出PDF</a></li>
+<li class="chapter" data-level="3.12.3" data-path="Rplots.html"><a href="Rplots.html#Barplot5"><i class="fa fa-check"></i><b>3.12.3</b> 系统可用字体</a></li>
+<li class="chapter" data-level="3.12.4" data-path="Rplots.html"><a href="Rplots.html#Barplot6"><i class="fa fa-check"></i><b>3.12.4</b> 合并字体支持中英文</a></li>
+<li class="chapter" data-level="3.12.5" data-path="Rplots.html"><a href="Rplots.html#Barplot7"><i class="fa fa-check"></i><b>3.12.5</b> 一个示例</a></li>
 </ul></li>
-<li class="chapter" data-level="3.15" data-path="r-plots.html"><a href="r-plots.html#section-3.15"><i class="fa fa-check"></i><b>3.15</b> 一步作图的优势</a></li>
-<li class="chapter" data-level="3.16" data-path="r-plots.html"><a href="r-plots.html#section-3.16"><i class="fa fa-check"></i><b>3.16</b> 不改脚本的热图绘制</a><ul>
-<li class="chapter" data-level="3.16.1" data-path="r-plots.html"><a href="r-plots.html#---"><i class="fa fa-check"></i><b>3.16.1</b> 箱线图 - 一步绘制</a></li>
-<li class="chapter" data-level="3.16.2" data-path="r-plots.html"><a href="r-plots.html#---"><i class="fa fa-check"></i><b>3.16.2</b> 线图 - 一步绘制</a></li>
-<li class="chapter" data-level="3.16.3" data-path="r-plots.html"><a href="r-plots.html#section-3.16.3"><i class="fa fa-check"></i><b>3.16.3</b> 一网打进散点图绘制</a></li>
+<li class="chapter" data-level="3.13" data-path="Rplots.html"><a href="Rplots.html#pca"><i class="fa fa-check"></i><b>3.13</b> PCA原理解析和图形绘制</a>
+<ul>
+<li class="chapter" data-level="3.13.1" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc"><i class="fa fa-check"></i><b>3.13.1</b> 主成分分析简介</a></li>
+<li class="chapter" data-level="3.13.2" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc1"><i class="fa fa-check"></i><b>3.13.2</b> 主成分分析的意义</a></li>
+<li class="chapter" data-level="3.13.3" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc2"><i class="fa fa-check"></i><b>3.13.3</b> 示例展示原始变量对样品的分类</a></li>
+<li class="chapter" data-level="3.13.4" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc3"><i class="fa fa-check"></i><b>3.13.4</b> PCA的实现原理</a></li>
+<li class="chapter" data-level="3.13.5" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc4"><i class="fa fa-check"></i><b>3.13.5</b> 简单的PCA实现</a></li>
+<li class="chapter" data-level="3.13.6" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc5"><i class="fa fa-check"></i><b>3.13.6</b> PCA结果解释</a></li>
+<li class="chapter" data-level="3.13.7" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc6"><i class="fa fa-check"></i><b>3.13.7</b> PCA应用于测试数据</a></li>
+<li class="chapter" data-level="3.13.8" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc7"><i class="fa fa-check"></i><b>3.13.8</b> PCA注意事项</a></li>
+<li class="chapter" data-level="3.13.9" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc8"><i class="fa fa-check"></i><b>3.13.9</b> 参考资料</a></li>
 </ul></li>
-<li class="chapter" data-level="3.17" data-path="r-plots.html"><a href="r-plots.html#-1"><i class="fa fa-check"></i><b>3.17</b> 参考资料</a></li>
+<li class="chapter" data-level="3.14" data-path="Rplots.html"><a href="Rplots.html#survival"><i class="fa fa-check"></i><b>3.14</b> 生存分析</a>
+<ul>
+<li class="chapter" data-level="3.14.1" data-path="Rplots.html"><a href="Rplots.html#survival1"><i class="fa fa-check"></i><b>3.14.1</b> R做生存分析</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="section-4.html"><a href="section-4.html"><i class="fa fa-check"></i><b>4</b> 交互式图</a><ul>
-<li class="chapter" data-level="4.1" data-path="section-4.html"><a href="section-4.html#section-4.1"><i class="fa fa-check"></i><b>4.1</b> 交互式网络图</a></li>
-<li class="chapter" data-level="4.2" data-path="section-4.html"><a href="section-4.html#section-4.2"><i class="fa fa-check"></i><b>4.2</b> 交互式桑基图</a></li>
+<li class="chapter" data-level="3.15" data-path="Rplots.html"><a href="Rplots.html#survival2"><i class="fa fa-check"></i><b>3.15</b> 一步作图的优势</a></li>
+<li class="chapter" data-level="3.16" data-path="Rplots.html"><a href="Rplots.html#survival3365"><i class="fa fa-check"></i><b>3.16</b> 不改脚本的热图绘制</a>
+<ul>
+<li class="chapter" data-level="3.16.1" data-path="Rplots.html"><a href="Rplots.html#survival3367"><i class="fa fa-check"></i><b>3.16.1</b> 箱线图 - 一步绘制</a></li>
+<li class="chapter" data-level="3.16.2" data-path="Rplots.html"><a href="Rplots.html#survival3719"><i class="fa fa-check"></i><b>3.16.2</b> 线图 - 一步绘制</a></li>
+<li class="chapter" data-level="3.16.3" data-path="Rplots.html"><a href="Rplots.html#survival4137"><i class="fa fa-check"></i><b>3.16.3</b> 一网打进散点图绘制</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="imagegp.html"><a href="imagegp.html"><i class="fa fa-check"></i><b>5</b> 在线绘图</a><ul>
-<li class="chapter" data-level="5.1" data-path="imagegp.html"><a href="imagegp.html#section-5.1"><i class="fa fa-check"></i><b>5.1</b> 功能和数据概览</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="imagegp.html"><a href="imagegp.html#section-5.1.1"><i class="fa fa-check"></i><b>5.1.1</b> 图形支持</a></li>
-<li class="chapter" data-level="5.1.2" data-path="imagegp.html"><a href="imagegp.html#section-5.1.2"><i class="fa fa-check"></i><b>5.1.2</b> 整体界面</a></li>
-<li class="chapter" data-level="5.1.3" data-path="imagegp.html"><a href="imagegp.html#section-5.1.3"><i class="fa fa-check"></i><b>5.1.3</b> 数据格式</a></li>
+<li class="chapter" data-level="3.17" data-path="Rplots.html"><a href="Rplots.html#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><i class="fa fa-check"></i><b>3.17</b> 参考资料</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="imagegp.html"><a href="imagegp.html#section-5.2"><i class="fa fa-check"></i><b>5.2</b> 图形展示和绘图展示</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="r-plots.html"><a href="r-plots.html#-1"><i class="fa fa-check"></i><b>5.2.1</b> 线图</a></li>
-<li class="chapter" data-level="5.2.2" data-path="imagegp.html"><a href="imagegp.html#section-5.2.2"><i class="fa fa-check"></i><b>5.2.2</b> 富集分析泡泡图</a></li>
-<li class="chapter" data-level="5.2.3" data-path="imagegp.html"><a href="imagegp.html#section-5.2.3"><i class="fa fa-check"></i><b>5.2.3</b> 热图</a></li>
-<li class="chapter" data-level="5.2.4" data-path="r-plots.html"><a href="r-plots.html#-1"><i class="fa fa-check"></i><b>5.2.4</b> 箱线图</a></li>
-<li class="chapter" data-level="5.2.5" data-path="r-plots.html"><a href="r-plots.html#-1"><i class="fa fa-check"></i><b>5.2.5</b> 散点图</a></li>
-<li class="chapter" data-level="5.2.6" data-path="imagegp.html"><a href="imagegp.html#section-5.2.6"><i class="fa fa-check"></i><b>5.2.6</b> 柱状图</a></li>
-<li class="chapter" data-level="5.2.7" data-path="imagegp.html"><a href="imagegp.html#section-5.2.7"><i class="fa fa-check"></i><b>5.2.7</b> 火山图</a></li>
-<li class="chapter" data-level="5.2.8" data-path="imagegp.html"><a href="imagegp.html#section-5.2.8"><i class="fa fa-check"></i><b>5.2.8</b> 维恩图</a></li>
-<li class="chapter" data-level="5.2.9" data-path="imagegp.html"><a href="imagegp.html#upsetview-1"><i class="fa fa-check"></i><b>5.2.9</b> UpsetView</a></li>
-<li class="chapter" data-level="5.2.10" data-path="imagegp.html"><a href="imagegp.html#section-5.2.10"><i class="fa fa-check"></i><b>5.2.10</b> <a href="http://mp.weixin.qq.com/s/ST2SAmfKOptpJOHS8podmQ">共表达密度图</a></a></li>
-<li class="chapter" data-level="5.2.11" data-path="imagegp.html"><a href="imagegp.html#section-5.2.11"><i class="fa fa-check"></i><b>5.2.11</b> 直方图</a></li>
-<li class="chapter" data-level="5.2.12" data-path="imagegp.html"><a href="imagegp.html#pca-1"><i class="fa fa-check"></i><b>5.2.12</b> PCA</a></li>
-<li class="chapter" data-level="5.2.13" data-path="imagegp.html"><a href="imagegp.html#section-5.2.13"><i class="fa fa-check"></i><b>5.2.13</b> 曼哈顿图</a></li>
-<li class="chapter" data-level="5.2.14" data-path="imagegp.html"><a href="imagegp.html#pcoa"><i class="fa fa-check"></i><b>5.2.14</b> PcOA</a></li>
-<li class="chapter" data-level="5.2.15" data-path="imagegp.html"><a href="imagegp.html#cpcoa"><i class="fa fa-check"></i><b>5.2.15</b> CPcOA</a></li>
-<li class="chapter" data-level="5.2.16" data-path="imagegp.html"><a href="imagegp.html#section-5.2.16"><i class="fa fa-check"></i><b>5.2.16</b> 桑基图</a></li>
-<li class="chapter" data-level="5.2.17" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>5.2.17</b> R绘图文章</a></li>
+<li class="chapter" data-level="4" data-path="cytoscape.html"><a href="cytoscape.html"><i class="fa fa-check"></i><b>4</b> 网络图</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="cytoscape.html"><a href="cytoscape.html#basic"><i class="fa fa-check"></i><b>4.0.1</b> 基本操作</a></li>
+<li class="chapter" data-level="4.0.2" data-path="cytoscape.html"><a href="cytoscape.html#mirna"><i class="fa fa-check"></i><b>4.0.2</b> miRNA-mRNA调控网络</a></li>
+<li class="chapter" data-level="4.0.3" data-path="cytoscape.html"><a href="cytoscape.html#layout"><i class="fa fa-check"></i><b>4.0.3</b> 不同的布局的调试和修改</a></li>
+<li class="chapter" data-level="4.1" data-path="cytoscape.html"><a href="cytoscape.html#%E5%8F%82%E8%80%83"><i class="fa fa-check"></i><b>4.1</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="AI.html"><a href="AI.html"><i class="fa fa-check"></i><b>5</b> 图形排版</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="AI.html"><a href="AI.html#%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%92%8C%E6%A0%87%E9%87%8F%E5%9B%BE"><i class="fa fa-check"></i><b>5.0.1</b> 矢量图和标量图</a></li>
+<li class="chapter" data-level="5.0.2" data-path="AI.html"><a href="AI.html#%E7%9F%A2%E9%87%8F%E5%9B%BE%E7%9A%84%E5%88%B6%E4%BD%9C"><i class="fa fa-check"></i><b>5.0.2</b> 矢量图的制作</a></li>
+<li class="chapter" data-level="5.0.3" data-path="AI.html"><a href="AI.html#%E7%9F%A2%E9%87%8F%E5%9B%BE%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7"><i class="fa fa-check"></i><b>5.0.3</b> 矢量图编辑工具</a></li>
+<li class="chapter" data-level="5.0.4" data-path="AI.html"><a href="AI.html#%E4%BD%9C%E5%9B%BE%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99"><i class="fa fa-check"></i><b>5.0.4</b> 作图基本原则</a></li>
+<li class="chapter" data-level="5.0.5" data-path="AI.html"><a href="AI.html#%E4%BD%9C%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%A6%81%E7%82%B9%E6%B3%A8%E6%84%8F"><i class="fa fa-check"></i><b>5.0.5</b> 作图中的要点注意</a></li>
+<li class="chapter" data-level="5.0.6" data-path="AI.html"><a href="AI.html#adobe-illustrator%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E6%93%8D%E4%BD%9C%E6%8F%8F%E8%BF%B0"><i class="fa fa-check"></i><b>5.0.6</b> <code>Adobe Illustrator</code>中的基本概念和操作描述</a></li>
+<li class="chapter" data-level="5.0.7" data-path="AI.html"><a href="AI.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>5.0.7</b> 视频教程</a></li>
+<li class="chapter" data-level="5.0.8" data-path="AI.html"><a href="AI.html#%E5%8A%A8%E5%9B%BE%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>5.0.8</b> 动图教程</a></li>
+<li class="chapter" data-level="5.1" data-path="AI.html"><a href="AI.html#%E5%8F%82%E8%80%83-1"><i class="fa fa-check"></i><b>5.1</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="batch.html"><a href="batch.html"><i class="fa fa-check"></i><b>6</b> 高通量数据中批次效应的鉴定和处理</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="batch.html"><a href="batch.html#batch1"><i class="fa fa-check"></i><b>6.1</b> 什么是批次效应？</a></li>
+<li class="chapter" data-level="6.2" data-path="batch.html"><a href="batch.html#batch2"><i class="fa fa-check"></i><b>6.2</b> 批次效应会有什么影响？</a></li>
+<li class="chapter" data-level="6.3" data-path="batch.html"><a href="batch.html#batch3"><i class="fa fa-check"></i><b>6.3</b> 怎么确认数据有无受到批次效应影响</a></li>
+<li class="chapter" data-level="6.4" data-path="batch.html"><a href="batch.html#batch4"><i class="fa fa-check"></i><b>6.4</b> 怎么避免批次效应呢？</a></li>
+<li class="chapter" data-level="6.5" data-path="batch.html"><a href="batch.html#batch5"><i class="fa fa-check"></i><b>6.5</b> 如何在差异基因鉴定过程中移除批次效应</a></li>
+<li class="chapter" data-level="6.6" data-path="batch.html"><a href="batch.html#%E6%A3%80%E6%9F%A5%E6%9C%89%E6%97%A0%E7%BC%BA%E5%A4%B1%E7%9A%84%E5%8C%85%E5%B9%B6%E5%AE%89%E8%A3%85%E5%8A%A0%E8%BD%BD%E6%89%80%E6%9C%89%E5%8C%85"><i class="fa fa-check"></i><b>6.6</b> 检查有无缺失的包并安装，加载所有包</a></li>
+<li class="chapter" data-level="6.7" data-path="batch.html"><a href="batch.html#batch6"><i class="fa fa-check"></i><b>6.7</b> 不考虑批次因素直接进行差异基因分析</a></li>
+<li class="chapter" data-level="6.8" data-path="batch.html"><a href="batch.html#batch7"><i class="fa fa-check"></i><b>6.8</b> 考虑已知的批次因素进行差异基因分析</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="batch.html"><a href="batch.html#batch8"><i class="fa fa-check"></i><b>6.8.1</b> 比较批次校正前后差异基因变化</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="batch.html"><a href="batch.html#batch9"><i class="fa fa-check"></i><b>6.9</b> 批次效应未知时如何判断和在差异基因鉴定过程中移除批次效应</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="batch.html"><a href="batch.html#batch10"><i class="fa fa-check"></i><b>6.9.1</b> 预测混杂因素(cofounding factors)并在差异基因分析中移除这些因素</a></li>
+<li class="chapter" data-level="6.9.2" data-path="batch.html"><a href="batch.html#batch11"><i class="fa fa-check"></i><b>6.9.2</b> 预测可能存在的混杂因素</a></li>
+<li class="chapter" data-level="6.9.3" data-path="batch.html"><a href="batch.html#%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B1%95%E7%A4%BA%E9%A2%84%E6%B5%8B%E5%87%BA%E7%9A%84surrogate-variable%E5%B1%9E%E6%80%A7%E4%B8%8E%E5%B7%B2%E7%9F%A5%E7%9A%84%E6%89%B9%E6%AC%A1%E4%BF%A1%E6%81%AF%E7%9A%84%E5%85%B3%E7%B3%BB"><i class="fa fa-check"></i><b>6.9.3</b> 可视化展示预测出的<code>Surrogate variable</code>属性与已知的批次信息的关系</a></li>
+<li class="chapter" data-level="6.9.4" data-path="batch.html"><a href="batch.html#%E5%9F%BA%E4%BA%8E%E9%A2%84%E6%B5%8B%E5%87%BA%E7%9A%84%E6%B7%B7%E6%9D%82%E5%9B%A0%E7%B4%A0%E5%86%8D%E6%AC%A1%E8%BF%9B%E8%A1%8C%E5%B7%AE%E5%BC%82%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>6.9.4</b> 基于预测出的混杂因素再次进行差异分析</a></li>
+<li class="chapter" data-level="6.9.5" data-path="batch.html"><a href="batch.html#batch12"><i class="fa fa-check"></i><b>6.9.5</b> 比较批次校正前、已知批次校正后和预测的批次校正后差异基因变化</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="batch.html"><a href="batch.html#batch13"><i class="fa fa-check"></i><b>6.10</b> 直接校正表达矩阵</a>
+<ul>
+<li class="chapter" data-level="6.10.1" data-path="batch.html"><a href="batch.html#%E8%AF%BB%E5%85%A5%E6%A0%87%E5%87%86%E5%8C%96%E5%90%8E%E7%9A%84%E8%A1%A8%E8%BE%BE%E7%9F%A9%E9%98%B5%E5%92%8C%E6%A0%B7%E5%93%81%E4%BF%A1%E6%81%AF%E8%A1%A8"><i class="fa fa-check"></i><b>6.10.1</b> 读入标准化后的表达矩阵和样品信息表</a></li>
+<li class="chapter" data-level="6.10.2" data-path="batch.html"><a href="batch.html#batch14"><i class="fa fa-check"></i><b>6.10.2</b> 使用ComBat校正</a></li>
+<li class="chapter" data-level="6.10.3" data-path="batch.html"><a href="batch.html#batch15"><i class="fa fa-check"></i><b>6.10.3</b> 使用limma校正</a></li>
+<li class="chapter" data-level="6.10.4" data-path="batch.html"><a href="batch.html#%E6%9F%A5%E7%9C%8B%E6%A0%A1%E6%AD%A3%E5%AE%8C%E5%90%8E%E5%9F%BA%E5%9B%A0%E7%9A%84%E8%A1%A8%E8%BE%BE%E6%83%85%E5%86%B5"><i class="fa fa-check"></i><b>6.10.4</b> 查看校正完后基因的表达情况</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="cytoscape.html"><a href="cytoscape.html"><i class="fa fa-check"></i><b>6</b> 网络图</a><ul>
-<li class="chapter" data-level="6.0.1" data-path="cytoscape.html"><a href="cytoscape.html#section-6.0.1"><i class="fa fa-check"></i><b>6.0.1</b> 基本操作</a></li>
-<li class="chapter" data-level="6.0.2" data-path="cytoscape.html"><a href="cytoscape.html#mirna-mrna"><i class="fa fa-check"></i><b>6.0.2</b> miRNA-mRNA调控网络</a></li>
-<li class="chapter" data-level="6.0.3" data-path="cytoscape.html"><a href="cytoscape.html#section-6.0.3"><i class="fa fa-check"></i><b>6.0.3</b> 不同的布局的调试和修改</a></li>
-<li class="chapter" data-level="6.1" data-path="r-plots.html"><a href="r-plots.html#-1"><i class="fa fa-check"></i><b>6.1</b> 参考</a></li>
+<li class="chapter" data-level="7" data-path="questions06.html"><a href="questions06.html"><i class="fa fa-check"></i><b>7</b> 问题答疑</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="questions06.html"><a href="questions06.html#ggplot2_variable_color_saturation"><i class="fa fa-check"></i><b>7.1</b> ggplot2绘图如何根据一个变量即区分颜色又区分深浅？</a></li>
+<li class="chapter" data-level="7.2" data-path="questions06.html"><a href="questions06.html#ggplot2%E7%BB%98%E5%9B%BE%E7%82%B9%E7%9A%84%E5%BD%A2%E7%8A%B6%E4%B8%8D%E5%A4%9F%E7%94%A8%E6%80%8E%E4%B9%88%E5%8A%9E"><i class="fa fa-check"></i><b>7.2</b> ggplot2绘图点的形状不够用怎么办？</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="AI.html"><a href="AI.html"><i class="fa fa-check"></i><b>7</b> 图形排版</a><ul>
-<li class="chapter" data-level="7.0.1" data-path="AI.html"><a href="AI.html#section-7.0.1"><i class="fa fa-check"></i><b>7.0.1</b> 矢量图和标量图</a></li>
-<li class="chapter" data-level="7.0.2" data-path="AI.html"><a href="AI.html#section-7.0.2"><i class="fa fa-check"></i><b>7.0.2</b> 矢量图的制作</a></li>
-<li class="chapter" data-level="7.0.3" data-path="AI.html"><a href="AI.html#section-7.0.3"><i class="fa fa-check"></i><b>7.0.3</b> 矢量图编辑工具</a></li>
-<li class="chapter" data-level="7.0.4" data-path="AI.html"><a href="AI.html#section-7.0.4"><i class="fa fa-check"></i><b>7.0.4</b> 作图基本原则</a></li>
-<li class="chapter" data-level="7.0.5" data-path="AI.html"><a href="AI.html#section-7.0.5"><i class="fa fa-check"></i><b>7.0.5</b> 作图中的要点注意</a></li>
-<li class="chapter" data-level="7.0.6" data-path="AI.html"><a href="AI.html#adobe-illustrator"><i class="fa fa-check"></i><b>7.0.6</b> <code>Adobe Illustrator</code>中的基本概念和操作描述</a></li>
-<li class="chapter" data-level="7.0.7" data-path="AI.html"><a href="AI.html#section-7.0.7"><i class="fa fa-check"></i><b>7.0.7</b> 视频教程</a></li>
-<li class="chapter" data-level="7.0.8" data-path="AI.html"><a href="AI.html#section-7.0.8"><i class="fa fa-check"></i><b>7.0.8</b> 动图教程</a></li>
-<li class="chapter" data-level="7.1" data-path="AI.html"><a href="AI.html#-2"><i class="fa fa-check"></i><b>7.1</b> 参考</a></li>
+<li class="chapter" data-level="8" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html"><i class="fa fa-check"></i><b>8</b> 推荐一个 R 中很好用的条件判断语句</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#ifelse-%E6%A0%87%E8%AE%B0%E5%B7%AE%E5%BC%82%E5%9F%BA%E5%9B%A0"><i class="fa fa-check"></i><b>8.1</b> ifelse 标记差异基因</a></li>
+<li class="chapter" data-level="8.2" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#dplyrcase-when-%E6%A0%87%E8%AE%B0%E5%B7%AE%E5%BC%82%E5%9F%BA%E5%9B%A0"><i class="fa fa-check"></i><b>8.2</b> dplyr::case-when 标记差异基因</a></li>
+<li class="chapter" data-level="8.3" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#dplyrif_else-%E4%BC%9A%E6%9B%B4%E5%BF%AB%E4%B8%80%E7%82%B9"><i class="fa fa-check"></i><b>8.3</b> dplyr::if_else 会更快一点</a></li>
+<li class="chapter" data-level="8.4" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#case-when%E5%8F%AA%E4%BF%9D%E7%95%99%E5%B7%AE%E5%BC%82%E5%9F%BA%E5%9B%A0%E7%9A%84%E5%90%8D%E5%AD%97"><i class="fa fa-check"></i><b>8.4</b> case-when只保留差异基因的名字</a></li>
+<li class="chapter" data-level="8.5" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#case-when%E6%AF%8F%E9%9A%94-1-%E4%B8%AA%E5%9F%BA%E5%9B%A0%E4%BF%9D%E7%95%99-1-%E4%B8%AA"><i class="fa fa-check"></i><b>8.5</b> case-when每隔 1 个基因保留 1 个</a></li>
+<li class="chapter" data-level="8.6" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#dplyrif_else%E9%80%9F%E5%BA%A6%E6%9C%80%E5%BF%AB"><i class="fa fa-check"></i><b>8.6</b> <code>dplyr::if_else</code>速度最快！</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="ref.html"><a href="ref.html"><i class="fa fa-check"></i><b>8</b> 参考</a><ul>
-<li class="chapter" data-level="8.1" data-path="ref.html"><a href="ref.html#section-8.1"><i class="fa fa-check"></i><b>8.1</b> 程序学习心得</a></li>
-<li class="chapter" data-level="8.2" data-path="ref.html"><a href="ref.html#ngs"><i class="fa fa-check"></i><b>8.2</b> NGS分析工具评估</a></li>
-<li class="chapter" data-level="8.3" data-path="ref.html"><a href="ref.html#section-8.3"><i class="fa fa-check"></i><b>8.3</b> 文献精读</a></li>
-<li class="chapter" data-level="8.4" data-path="ref.html"><a href="ref.html#linux-"><i class="fa fa-check"></i><b>8.4</b> Linux 学习</a></li>
-<li class="chapter" data-level="8.5" data-path="Rbasic.html"><a href="Rbasic.html#r"><i class="fa fa-check"></i><b>8.5</b> R统计和作图</a></li>
-<li class="chapter" data-level="8.6" data-path="ref.html"><a href="ref.html#ngs"><i class="fa fa-check"></i><b>8.6</b> NGS基础</a></li>
-<li class="chapter" data-level="8.7" data-path="ref.html"><a href="ref.html#section-8.7"><i class="fa fa-check"></i><b>8.7</b> 癌症数据库</a></li>
-<li class="chapter" data-level="8.8" data-path="ref.html"><a href="ref.html#python"><i class="fa fa-check"></i><b>8.8</b> Python学习</a></li>
-<li class="chapter" data-level="8.9" data-path="ref.html"><a href="ref.html#ngs"><i class="fa fa-check"></i><b>8.9</b> NGS软件</a></li>
-<li class="chapter" data-level="8.10" data-path="cytoscape.html"><a href="cytoscape.html#cytoscape"><i class="fa fa-check"></i><b>8.10</b> Cytoscape网络图</a></li>
-<li class="chapter" data-level="8.11" data-path="ref.html"><a href="ref.html#section-8.11"><i class="fa fa-check"></i><b>8.11</b> 分子对接</a></li>
-<li class="chapter" data-level="8.12" data-path="ref.html"><a href="ref.html#section-8.12"><i class="fa fa-check"></i><b>8.12</b> 生信宝典之傻瓜式</a></li>
-<li class="chapter" data-level="8.13" data-path="ref.html"><a href="ref.html#section-8.13"><i class="fa fa-check"></i><b>8.13</b> 生信人写程序</a></li>
-<li class="chapter" data-level="8.14" data-path="ref.html"><a href="ref.html#section-8.14"><i class="fa fa-check"></i><b>8.14</b> 小技巧系列</a></li>
-<li class="chapter" data-level="8.15" data-path="ref.html"><a href="ref.html#section-8.15"><i class="fa fa-check"></i><b>8.15</b> 招聘</a></li>
+<li class="chapter" data-level="9" data-path="visual1.html"><a href="visual1.html"><i class="fa fa-check"></i><b>9</b> 易生信-数据可视化</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="visual1.html"><a href="visual1.html#visual2"><i class="fa fa-check"></i><b>9.1</b> 加载需要的包</a></li>
+<li class="chapter" data-level="9.2" data-path="visual1.html"><a href="visual1.html#visual3"><i class="fa fa-check"></i><b>9.2</b> 读入数据</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="visual1.html"><a href="visual1.html#visual4"><i class="fa fa-check"></i><b>9.2.1</b> Duplicate row names</a></li>
+<li class="chapter" data-level="9.2.2" data-path="visual1.html"><a href="visual1.html#visual15"><i class="fa fa-check"></i><b>9.2.2</b> 行名唯一化处理</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="company-intro.html"><a href="company-intro.html"><i class="fa fa-check"></i><b>9</b> 公司简介</a></li>
+<li class="chapter" data-level="9.3" data-path="visual1.html"><a href="visual1.html#visual5"><i class="fa fa-check"></i><b>9.3</b> 热图绘制</a></li>
+<li class="chapter" data-level="9.4" data-path="visual1.html"><a href="visual1.html#visual7"><i class="fa fa-check"></i><b>9.4</b> 箱线图和统计比较</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="visual1.html"><a href="visual1.html#visual8"><i class="fa fa-check"></i><b>9.4.1</b> 单基因箱线图</a></li>
+<li class="chapter" data-level="9.4.2" data-path="visual1.html"><a href="visual1.html#visual9"><i class="fa fa-check"></i><b>9.4.2</b> 多基因箱线图 (combine)</a></li>
+<li class="chapter" data-level="9.4.3" data-path="visual1.html"><a href="visual1.html#visual10"><i class="fa fa-check"></i><b>9.4.3</b> 多基因箱线图 (merge)</a></li>
+<li class="chapter" data-level="9.4.4" data-path="visual1.html"><a href="visual1.html#visual11"><i class="fa fa-check"></i><b>9.4.4</b> 数据对数转换后绘制箱线图</a></li>
+<li class="chapter" data-level="9.4.5" data-path="visual1.html"><a href="visual1.html#visual12"><i class="fa fa-check"></i><b>9.4.5</b> 用ggplot2实现ggpubr</a></li>
+<li class="chapter" data-level="9.4.6" data-path="visual1.html"><a href="visual1.html#visual13"><i class="fa fa-check"></i><b>9.4.6</b> 配色</a></li>
+<li class="chapter" data-level="9.4.7" data-path="visual1.html"><a href="visual1.html#visual14"><i class="fa fa-check"></i><b>9.4.7</b> 箱线图加统计分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="visual1.html"><a href="visual1.html#visual151"><i class="fa fa-check"></i><b>9.5</b> 通路内基因的比较</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="visual1.html"><a href="visual1.html#visual161"><i class="fa fa-check"></i><b>9.5.1</b> 密度图</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="visual1.html"><a href="visual1.html#visual171"><i class="fa fa-check"></i><b>9.6</b> ggstatsplot绘图和统计分析</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="visual1.html"><a href="visual1.html#visual162"><i class="fa fa-check"></i><b>9.6.1</b> 散点图</a></li>
+<li class="chapter" data-level="9.6.2" data-path="visual1.html"><a href="visual1.html#visual172"><i class="fa fa-check"></i><b>9.6.2</b> 相关性图</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="imageGP.html"><a href="imageGP.html"><i class="fa fa-check"></i><b>10</b> 高颜值免费在线绘图（提供绘图源码）</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="imageGP.html"><a href="imageGP.html#imagegpbasic"><i class="fa fa-check"></i><b>10.1</b> 高颜值免费在线绘图基础版视频</a></li>
+<li class="chapter" data-level="10.2" data-path="imageGP.html"><a href="imageGP.html#imagepbetter"><i class="fa fa-check"></i><b>10.2</b> 高颜值免费在线绘图进阶版视频</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ref.html"><a href="ref.html"><i class="fa fa-check"></i><b>11</b> 参考</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ref.html"><a href="ref.html#illumina%E6%B5%8B%E5%BA%8F%E5%BA%94%E7%94%A8%E6%89%8B%E5%86%8C"><i class="fa fa-check"></i><b>11.1</b> Illumina测序应用手册</a></li>
+<li class="chapter" data-level="11.2" data-path="ref.html"><a href="ref.html#%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>11.2</b> 系列教程</a></li>
+<li class="chapter" data-level="11.3" data-path="ref.html"><a href="ref.html#%E8%9B%8B%E7%99%BD%E8%B4%A8%E7%BB%84%E5%AD%A6%E7%A0%94%E7%A9%B6"><i class="fa fa-check"></i><b>11.3</b> 蛋白质组学研究</a></li>
+<li class="chapter" data-level="11.4" data-path="ref.html"><a href="ref.html#%E8%BD%AC%E5%BD%95%E7%BB%84%E7%A0%94%E7%A9%B6"><i class="fa fa-check"></i><b>11.4</b> 转录组研究</a></li>
+<li class="chapter" data-level="11.5" data-path="ref.html"><a href="ref.html#%E5%8D%95%E7%BB%86%E8%83%9E%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>11.5</b> 单细胞系列教程</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="ref.html"><a href="ref.html#%E7%BB%8F%E5%85%B8%E7%BB%BC%E8%BF%B0"><i class="fa fa-check"></i><b>11.5.1</b> 经典综述</a></li>
+<li class="chapter" data-level="11.5.2" data-path="ref.html"><a href="ref.html#%E6%96%87%E7%AB%A0%E8%A7%A3%E8%AF%BB"><i class="fa fa-check"></i><b>11.5.2</b> 文章解读</a></li>
+<li class="chapter" data-level="11.5.3" data-path="ref.html"><a href="ref.html#%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B-1"><i class="fa fa-check"></i><b>11.5.3</b> 系列教程</a></li>
+<li class="chapter" data-level="11.5.4" data-path="ref.html"><a href="ref.html#%E7%89%B9%E8%89%B2%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>11.5.4</b> 特色分析</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="ref.html"><a href="ref.html#geotcga%E6%95%B0%E6%8D%AE"><i class="fa fa-check"></i><b>11.6</b> GEO/TCGA数据</a></li>
+<li class="chapter" data-level="11.7" data-path="ref.html"><a href="ref.html#%E6%89%A9%E5%A2%9E%E5%AD%90%E4%B8%89%E6%AD%A5%E6%9B%B2"><i class="fa fa-check"></i><b>11.7</b> 扩增子三步曲</a></li>
+<li class="chapter" data-level="11.8" data-path="ref.html"><a href="ref.html#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>11.8</b> 宏基因组教程</a></li>
+<li class="chapter" data-level="11.9" data-path="ref.html"><a href="ref.html#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90%E4%B8%93%E9%A2%98"><i class="fa fa-check"></i><b>11.9</b> 宏基因组分析专题</a></li>
+<li class="chapter" data-level="11.10" data-path="ref.html"><a href="ref.html#chip-seq%E4%B8%93%E9%A2%98"><i class="fa fa-check"></i><b>11.10</b> ChIP-seq专题</a></li>
+<li class="chapter" data-level="11.11" data-path="ref.html"><a href="ref.html#linux-%E5%85%A8%E4%BB%8B%E7%BB%8D"><i class="fa fa-check"></i><b>11.11</b> Linux 全介绍</a></li>
+<li class="chapter" data-level="11.12" data-path="ref.html"><a href="ref.html#circos%E7%B3%BB%E5%88%97"><i class="fa fa-check"></i><b>11.12</b> CIRCOS系列</a></li>
+<li class="chapter" data-level="11.13" data-path="ref.html"><a href="ref.html#r%E7%BB%9F%E8%AE%A1%E5%92%8C%E4%BD%9C%E5%9B%BE"><i class="fa fa-check"></i><b>11.13</b> R统计和作图</a></li>
+<li class="chapter" data-level="11.14" data-path="ref.html"><a href="ref.html#ngs%E5%9F%BA%E7%A1%80%E5%92%8C%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8"><i class="fa fa-check"></i><b>11.14</b> NGS基础和软件应用</a></li>
+<li class="chapter" data-level="11.15" data-path="ref.html"><a href="ref.html#%E7%94%9F%E4%BF%A1%E5%AE%9D%E5%85%B8%E4%B9%8B%E5%82%BB%E7%93%9C%E5%BC%8F"><i class="fa fa-check"></i><b>11.15</b> 生信宝典之傻瓜式</a></li>
+<li class="chapter" data-level="11.16" data-path="ref.html"><a href="ref.html#python"><i class="fa fa-check"></i><b>11.16</b> Python</a></li>
+<li class="chapter" data-level="11.17" data-path="ref.html"><a href="ref.html#cytoscape%E7%BD%91%E7%BB%9C%E5%9B%BE"><i class="fa fa-check"></i><b>11.17</b> Cytoscape网络图</a></li>
+<li class="chapter" data-level="11.18" data-path="ref.html"><a href="ref.html#%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5"><i class="fa fa-check"></i><b>11.18</b> 分子对接</a></li>
+<li class="chapter" data-level="11.19" data-path="ref.html"><a href="ref.html#%E6%96%87%E7%8C%AE%E7%B2%BE%E8%AF%BB"><i class="fa fa-check"></i><b>11.19</b> 文献精读</a></li>
+<li class="chapter" data-level="11.20" data-path="ref.html"><a href="ref.html#%E7%9A%84%E9%AB%98%E9%98%85%E8%AF%BB%E6%96%87%E7%AB%A0%E5%90%88%E9%9B%86"><i class="fa fa-check"></i><b>11.20</b> 2019的高阅读文章合集</a></li>
+<li class="chapter" data-level="11.21" data-path="ref.html"><a href="ref.html#%E7%B2%BE%E9%80%89%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90"><i class="fa fa-check"></i><b>11.21</b> 精选文章推荐</a></li>
+<li class="chapter" data-level="11.22" data-path="ref.html"><a href="ref.html#%E7%A7%91%E7%A0%94%E7%BB%8F%E9%AA%8C"><i class="fa fa-check"></i><b>11.22</b> 科研经验</a></li>
+<li class="chapter" data-level="11.23" data-path="ref.html"><a href="ref.html#%E8%BD%AF%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93"><i class="fa fa-check"></i><b>11.23</b> 软件和数据库</a></li>
+<li class="chapter" data-level="11.24" data-path="ref.html"><a href="ref.html#%E6%89%A9%E5%A2%9E%E5%AD%90%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>11.24</b> 扩增子分析</a></li>
+<li class="chapter" data-level="11.25" data-path="ref.html"><a href="ref.html#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>11.25</b> 宏基因组分析</a></li>
+<li class="chapter" data-level="11.26" data-path="ref.html"><a href="ref.html#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%8A%80%E6%9C%AF"><i class="fa fa-check"></i><b>11.26</b> 实验设计与技术</a></li>
+<li class="chapter" data-level="11.27" data-path="ref.html"><a href="ref.html#%E6%96%87%E7%8C%AE%E7%B2%BE%E8%AF%BB-1"><i class="fa fa-check"></i><b>11.27</b> 文献精读</a></li>
+<li class="chapter" data-level="11.28" data-path="ref.html"><a href="ref.html#%E7%A7%91%E6%99%AE%E8%A7%86%E9%A2%91%E5%AF%93%E6%95%99%E4%BA%8E%E4%B9%90"><i class="fa fa-check"></i><b>11.28</b> 科普视频*寓教于乐</a></li>
+<li class="chapter" data-level="11.29" data-path="ref.html"><a href="ref.html#%E7%B3%BB%E5%88%97%E5%AE%A3%E4%BC%A0"><i class="fa fa-check"></i><b>11.29</b> 系列宣传</a></li>
+<li class="chapter" data-level="11.30" data-path="ref.html"><a href="ref.html#%E6%B0%B8%E4%B9%85%E9%93%BE%E6%8E%A5"><i class="fa fa-check"></i><b>11.30</b> 永久链接</a></li>
+</ul></li>
 <li class="divider"></li>
-<li><a href="mailto:ct@ehbio.com" target="blank">ct@ehbio.com</a></li>
+<li><a href="http://www.bic.ac.cn">Hello</a></li>
 
 </ul>
 
@@ -279,7 +423,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R, Cytoscape, AI生信作图分析培训</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Cytoscape AI生信作图分析教程</a>
           </h1>
         </div>
 
@@ -288,14 +432,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">R, Cytoscape, AI生信作图分析培训</h1>
-<h4 class="author"><em>易生信培训团队</em></h4>
-<h4 class="author"><em>联系我们: <a href="mailto:train@ehbio.com">train@ehbio.com</a></em></h4>
-<h4 class="date"><em>2018-05-09</em></h4>
+<h1 class="title">R Cytoscape AI生信作图分析教程</h1>
+<p class="author"><em>生信宝典 陈同</em></p>
+<p class="author"><em><a href="mailto:chentong_biology@163.com" class="email">chentong_biology@163.com</a></em></p>
+<p class="date"><em>2025-11-01</em></p>
 </div>
-<div id="ehbio-gene-technology" class="section level1 unnumbered">
-<h1>EHBIO Gene Technology</h1>
-<p><img src="ehbio/cover.png" width="99%" style="display: block; margin: auto;" /></p>
+<div id="hello" class="section level1 unnumbered hasAnchor">
+<h1>Hello<a href="index.html#hello" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><a href="http://www.bic.ac.cm/public/Bioinfo_R_course/">点击访问编译好的网页版教案</a></p>
+<p>生信的作用越来越大，想学的人越来越多，不管是为了以后发展，还是为了解决眼下的问题。但生信学习不是一朝一夕就可以完成的事情，也许你可以很短时间学会一个交互式软件的操作，却不能看完程序教学视频后就直接写程序。也许你可以跟着一个测序分析流程完成操作，但不懂得背后的原理，不知道什么参数需要修改，结果可以出来，却把握不住对还是错。</p>
+<p>学习生信从来就不是一个简单的事，需要做好持久战的心理准备。</p>
+<p>在学习时，我们都希望由浅入深的逐步深入，不断地练习和实践，这就是为什么我们需要一本书，因为书很系统。但生信发展的历史短于计算机编程的历史，如果想要一门程序设计的入门数据，每种语言都可以找到几本。但想要一个囊括生信的书，就有些难了。本身生信跨领域，需要多学科的知识，而其内部又有不少分子，都囊括了太大，包括的少又有些隔靴搔痒的感觉。</p>
+<p>我们当时都是零基础下自学Linux, 自学Python，自学R，自学高通量测序；这些学习经历，之前都零星地记录在博客里。现在回头去看几年前自己记录的东西，觉得好简单，而当时却费了很大的力气。这些零星的随手记，当时也只是为了自己看，到现在确实只有自己能看得懂，不便惠及更多的人。</p>
+<p>因此我们创建了生信宝典，希望从不同的角度传播知识。这个不同有三点含义，一是形式上的不同，摒弃之前主编们单人作战想写啥就写啥，而是有组织有计划的内容聚合，提供一系列的教程，由入门到提高。二是内容的不同，不去用网上现有教程的通用数据做例子，而是拿实际生物数据，讲述如何解释生信中普遍碰到的问题，讲述如何处理自己的数据。三是立足点不同。在写作时，我们回到了当年，在回忆中用整个阶段的学习去指导当初的那个小白，从那些会了的人觉得微不足道而不会的人又迈不过的坎入手，直击痛点。知识点的收录依据不是是否炫酷，是否难，而是是否必要。如果必要，再简单，也要提及；如果不必要，再炫酷，也暂不纳入。</p>
+<p>通过大量的生信例子、关键的注释和浓缩的语句形成下面的一系列学习教程。每一篇内容都不多，可以当做小说阅读，也可以跟着去练，反复几遍，每读一次都会有不同的收获和体会。</p>
 
 </div>
             </section>
@@ -308,38 +458,52 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"google": false,
-"weibo": false,
-"instapper": false,
-"vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"download": ["R_course.pdf"],
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Tong-Chen/Bioinfo_course_R/edit/master/index.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["R_course.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -349,9 +513,12 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

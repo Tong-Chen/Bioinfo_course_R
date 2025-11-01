@@ -1,4 +1,4 @@
-[点击访问编译好的网页版教案](http://www.ehbio.com/Bioinfo_R_course/)
+[点击访问编译好的网页版教案](http://www.bic.ac.cm/public/Bioinfo_R_course/)
 
 生信的作用越来越大，想学的人越来越多，不管是为了以后发展，还是为了解决眼下的问题。但生信学习不是一朝一夕就可以完成的事情，也许你可以很短时间学会一个交互式软件的操作，却不能看完程序教学视频后就直接写程序。也许你可以跟着一个测序分析流程完成操作，但不懂得背后的原理，不知道什么参数需要修改，结果可以出来，却把握不住对还是错。
 
@@ -167,9 +167,5 @@
 * [一个R包玩转单细胞免疫组库分析，还能与Seurat无缝对接](https://mp.weixin.qq.com/s/R8k1zRJlaKSpdJ8Dh9Uryw)
 * [这个R包自动注释单细胞数据的平均准确率为83％，使用后我的结果出现了点问题|附全代码](https://mp.weixin.qq.com/s/4715ApG-r_YtKwXslgPAQw)
 * [一个R包完成单细胞基因集富集分析 （全代码）](https://mp.weixin.qq.com/s/9Glw7s0uqL-4VB58cu53xg)
-
-![](http://www.ehbio.com/ehbio_resource/R_course.png)
-
-视频课程地址：<https://ke.qq.com/course/382233?tuin=20cd7788>
 
 

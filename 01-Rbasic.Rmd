@@ -16,10 +16,10 @@ R语言是比较常用的统计分析和绘图语言，拥有强大的统计库�
 # configure是收集系统信息，生成Makefile的过程
 # --enable-R-shlib 需要设置，使得其他程序包括Rstudio可以使用R的动态库
 # --prefix指定软件安装目录，需使用绝对路径
-./configure --prefix=/home/ehbio/R/4.0.2 --enable-R-shlib
+./configure --prefix=/home/ysx/R/4.0.2 --enable-R-shlib
 
 # 也可以使用这个命令，共享系统的blas库，提高运输速度
-#./configure --prefix=/home/ehbio/R/4.0.2 --enable-R-shlib --with-blas --with-lapack
+#./configure --prefix=/home/ysx/R/4.0.2 --enable-R-shlib --with-blas --with-lapack
 
 # make是编译的过程
 make
@@ -604,7 +604,7 @@ install.packages("devtools")
 devtools::install_github("JustinaZ/pcaReduce")
 
 # 手动安装, 首先下载包的源文件（压缩版就可），然后在终端运行下面的命令。
-ct@ehbio:~$ R CMD INSTALL package.tar.gz
+ct@ysx:~$ R CMD INSTALL package.tar.gz
 
 # 移除包
 remove.packages("package_name")
@@ -635,6 +635,80 @@ usePackage <- function(p) {
 	if (!requireNamespace(p, quietly = TRUE))
       BiocManager::install(p, update = F)
 	require(p, character.only = TRUE)
+}
+```
+
+## 检查并安装本教程需要的 R 包 {#checkinstalltpackages}
+
+```{r}
+site = "https://mirrors.tuna.tsinghua.edu.cn/CRAN"
+
+# options(BioC_mirror = "https://mirrors.tuna.tsinghua.edu.cn/bioconductor")
+options(BioC_mirror="https://mirrors.westlake.edu.cn/bioconductor")
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager", repos = site)
+
+a = rownames(installed.packages())
+
+install_bioc <- c(
+  "amap",
+"BiocParallel",
+"cowplot",
+"data.table",
+"dendextend",
+"DESeq2",
+"dplyr",
+"ggfortify",
+"ggplot2",
+"ggpubr",
+"ggrepel",
+"ggstatsplot",
+"ggthemes",
+"gplots",
+"grid",
+"gridExtra",
+"Hmisc",
+"knitr",
+"limma",
+"patchwork",
+"pheatmap",
+"plyr ",
+"psych",
+"RColorBrewer",
+"reshape2",
+"scatterplot3d",
+"showtext",
+"stringr",
+"survival",
+"survminer",
+"sva",
+"tidyr",
+"tidyverse",
+"UpSetR",
+"useful",
+"VennDiagram"
+)
+
+for (i in install_bioc) {
+  if (!i %in% a)
+    BiocManager::install(i)
+}
+
+
+installed_packages = installed.packages()
+
+if (!"ggbeeswarm" %in% a){
+   install.packages("https://cran.r-project.org/src/contrib/Archive/ggbeeswarm/ggbeeswarm_0.6.0.tar.gz", repos = NULL, type = "source")
+} else {
+  if (installed_packages["ggbeeswarm","Version"] != "0.6.0") {
+    install.packages("https://cran.r-project.org/src/contrib/Archive/ggbeeswarm/ggbeeswarm_0.6.0.tar.gz", repos = NULL, type = "source")
+  }
+}
+
+if (!"ImageGP" %in% a) {
+  # devtools::install_github("Tong-Chen/ImageGP")
+  devtools::install_git("https://gitee.com/ct5869/ImageGP.git")
 }
 ```
 
@@ -1111,6 +1185,6 @@ pheatmap(data_matrix, annotation_col = metadata, color = colorL)
  
 ## 参考 {ref01}
 
-* [生信宝典Linux系列](http://www.ehbio.com/Bioinfo_bash_course/)
+* [生信宝典Linux系列](http://www.ysx.com/Bioinfo_bash_course/)
 * [生信宝典R系列](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI5MTcwNjA4NQ==&action=getalbum&album_id=1335864997100224512&subscene=21&scenenote=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzI5MTcwNjA4NQ%3D%3D%26mid%3D2247490572%26idx%3D1%26sn%3Dc2ba3cb9e8117efff6bfd53c9f797109%26scene%3D21%26key%3D14893ff72db1d5ee36ae599230370c4cdd9e49dbfdd44fe73757d5c60d26ff6e698d2ccc26b16c7898a5164ac9ddb35f990c0bfeb88037b926c9eb29fbaf9867d2ad02e4b2e6da694013a82c124b6e44%26ascene%3D7%26uin%3DOTY2MDEyMzgw%26devicetype%3DWindows%2B10%2Bx64%26version%3D62090529%26lang%3Dzh_CN%26exportkey%3DAWleeoJ2D3RuwW6exYsshOM%253D%26pass_ticket%3D6oR4VId9JNdCLZp2iJjodI21oAREmYTa3D%252F9nfZlbY8TG5eZ3ToAoRlMm5nwdtwk%26winzoom%3D1#wechat_redirect)
 

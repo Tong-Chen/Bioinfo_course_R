@@ -1,0 +1,23 @@
+Description	GeneRatio	qvalue	Count	Type
+ERBB signaling pathway	7/320	0.001836081	7	EHBIO_up
+regulation of ERBB signaling pathway	5/320	0.003886659	5	EHBIO_up
+negative regulation of cell cycle G1/S phase transition	4/320	0.016153254	4	EHBIO_up
+Wnt signaling pathway	13/320	0.01680096	13	EHBIO_up
+cell-cell signaling by wnt	13/320	0.0171473	13	EHBIO_up
+negative regulation of cell cycle process	8/320	0.019453085	8	EHBIO_up
+extrinsic apoptotic signaling pathway	9/320	0.024164034	9	EHBIO_up
+positive regulation of extrinsic apoptotic signaling pathway	4/320	0.025708228	4	EHBIO_up
+cell cycle G1/S phase transition	7/320	0.035797856	7	EHBIO_up
+negative regulation of apoptotic signaling pathway	8/320	0.038684745	8	EHBIO_up
+regulation of Notch signaling pathway	4/320	0.041592045	4	EHBIO_up
+regulation of cell cycle G1/S phase transition	5/320	0.047407619	5	EHBIO_up
+negative regulation of BMP signaling pathway	3/320	0.049460847	3	EHBIO_up
+regulation of ERK1 and ERK2 cascade	14/342	0.000629602	14	Baodian_up
+positive regulation of cell adhesion	17/342	0.000827275	17	Baodian_up
+ERK1 and ERK2 cascade	14/342	0.001086508	14	Baodian_up
+regulation of cell growth	17/342	0.002228511	17	Baodian_up
+positive regulation of cytoskeleton organization	10/342	0.004406867	10	Baodian_up
+regulation of cell-cell adhesion	15/342	0.005075219	15	Baodian_up
+regulation of cytoskeleton organization	15/342	0.019685646	15	Baodian_up
+negative regulation of Notch signaling pathway	3/342	0.020578211	3	Baodian_up
+neuron apoptotic process	10/342	0.040284925	10	Baodian_up

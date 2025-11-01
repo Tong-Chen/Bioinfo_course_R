@@ -4,9 +4,9 @@ bookdown::gitbook:
     download: [pdf]
     toc:
       before: |
-          <li><a href="http://www.ehbio.com"><img src="http://www.ehbio.com/logos/ehbio_gitbook_logo.png" width="95%"></a></li>
+          <li><a href="http://www.bic.ac.cn">Hello</a></li>
       after: |
-          <li><a href="mailto:train@ehbio.com" target="blank">易生信-生信宝典-宏基因组出品 train@ehbio.com</a></li>
+          <li><a href="http://www.bic.ac.cn">Hello</a></li>
     edit: https://github.com/Tong-Chen/Bioinfo_course_R/edit/master/%s
     sharing: 
       github: no

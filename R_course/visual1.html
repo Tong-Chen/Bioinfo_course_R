@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 易生信-数据可视化 | R Cytoscape AI生信作图分析教程</title>
+  <meta name="description" content="9 易生信-数据可视化 | R Cytoscape AI生信作图分析教程" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 易生信-数据可视化 | R Cytoscape AI生信作图分析教程" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 易生信-数据可视化 | R Cytoscape AI生信作图分析教程" />
+  
+  
+  
+
+<meta name="author" content="生信宝典 陈同" />
+<meta name="author" content="chentong_biology@163.com" />
+
+
+<meta name="date" content="2025-11-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="推荐一个-r-中很好用的条件判断语句.html"/>
+<link rel="next" href="imageGP.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="http://www.bic.ac.cn">Hello</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Hello</a></li>
+<li class="chapter" data-level="1" data-path="questions.html"><a href="questions.html"><i class="fa fa-check"></i><b>1</b> 考题</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="questions.html"><a href="questions.html#%E7%90%86%E8%AE%BA%E9%A2%98-50%E5%88%86"><i class="fa fa-check"></i><b>1.1</b> 理论题 (50分)</a></li>
+<li class="chapter" data-level="1.2" data-path="questions.html"><a href="questions.html#%E4%BB%A3%E7%A0%81%E9%A2%98-70%E5%88%86"><i class="fa fa-check"></i><b>1.2</b> 代码题 (70分)</a></li>
+<li class="chapter" data-level="1.3" data-path="questions.html"><a href="questions.html#%E9%94%99%E8%AF%AF%E8%AF%86%E5%88%AB%E9%A2%98-%E9%80%89%E7%AD%94"><i class="fa fa-check"></i><b>1.3</b> 错误识别题 (选答)</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Rbasic.html"><a href="Rbasic.html"><i class="fa fa-check"></i><b>2</b> R基础</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Rbasic.html"><a href="Rbasic.html#R_install"><i class="fa fa-check"></i><b>2.1</b> R安装</a></li>
+<li class="chapter" data-level="2.2" data-path="Rbasic.html"><a href="Rbasic.html#R_basic"><i class="fa fa-check"></i><b>2.2</b> Rstudio基础</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="Rbasic.html"><a href="Rbasic.html#R_version"><i class="fa fa-check"></i><b>2.2.1</b> Rstudio版本</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Rbasic.html"><a href="Rbasic.html#Rstudio_install"><i class="fa fa-check"></i><b>2.2.2</b> Rstudio安装</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Rbasic.html"><a href="Rbasic.html#Rstudio_usage"><i class="fa fa-check"></i><b>2.2.3</b> Rstudio 使用</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="Rbasic.html"><a href="Rbasic.html#R_basic_formula"><i class="fa fa-check"></i><b>2.3</b> R基本语法</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="Rbasic.html"><a href="Rbasic.html#R_help"><i class="fa fa-check"></i><b>2.3.1</b> 获取帮助文档，查看命令或函数的使用方法、事例或适用范围</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Rbasic.html"><a href="Rbasic.html#R_variable"><i class="fa fa-check"></i><b>2.3.2</b> R中的变量及其初始化</a></li>
+<li class="chapter" data-level="2.3.3" data-path="Rbasic.html"><a href="Rbasic.html#vairableType"><i class="fa fa-check"></i><b>2.3.3</b> 变量类型和转换</a></li>
+<li class="chapter" data-level="2.3.4" data-path="Rbasic.html"><a href="Rbasic.html#Rmatrix"><i class="fa fa-check"></i><b>2.3.4</b> R中矩阵运算</a></li>
+<li class="chapter" data-level="2.3.5" data-path="Rbasic.html"><a href="Rbasic.html#Rmatrixcombine"><i class="fa fa-check"></i><b>2.3.5</b> R中矩阵筛选合并</a></li>
+<li class="chapter" data-level="2.3.6" data-path="Rbasic.html"><a href="Rbasic.html#str"><i class="fa fa-check"></i><b>2.3.6</b> <code>str</code>的应用</a></li>
+<li class="chapter" data-level="2.3.7" data-path="Rbasic.html"><a href="Rbasic.html#Rpackage"><i class="fa fa-check"></i><b>2.3.7</b> R的包管理</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="Rbasic.html"><a href="Rbasic.html#checkinstalltpackages"><i class="fa fa-check"></i><b>2.4</b> 检查并安装本教程需要的 R 包</a></li>
+<li class="chapter" data-level="2.5" data-path="Rbasic.html"><a href="Rbasic.html#ggplot2_plot"><i class="fa fa-check"></i><b>2.5</b> ggplot2绘图</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="Rbasic.html"><a href="Rbasic.html#matrixFormat"><i class="fa fa-check"></i><b>2.5.1</b> 数据格式转换和字符串处理</a></li>
+<li class="chapter" data-level="2.5.2" data-path="Rbasic.html"><a href="Rbasic.html#RColorBrewer"><i class="fa fa-check"></i><b>2.5.2</b> 配色</a></li>
+<li class="chapter" data-level="2.5.3" data-path="Rbasic.html"><a href="Rbasic.html#phetamap"><i class="fa fa-check"></i><b>2.5.3</b> pheatmap绘制热图</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="Rbasic.html"><a href="Rbasic.html#cheetsheets"><i class="fa fa-check"></i><b>2.6</b> CheetSheets</a></li>
+<li class="chapter" data-level="2.7" data-path="Rbasic.html"><a href="Rbasic.html#%E5%8F%82%E8%80%83-ref01"><i class="fa fa-check"></i><b>2.7</b> 参考 {ref01}</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Rplots.html"><a href="Rplots.html"><i class="fa fa-check"></i><b>3</b> R plots</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Rplots.html"><a href="Rplots.html#plot"><i class="fa fa-check"></i><b>3.1</b> qplot绘制图形 (王绪宁)</a></li>
+<li class="chapter" data-level="3.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap"><i class="fa fa-check"></i><b>3.2</b> 热图绘制</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_data"><i class="fa fa-check"></i><b>3.2.1</b> 生成测试数据</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_dataformat"><i class="fa fa-check"></i><b>3.2.2</b> 转换数据格式</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_split"><i class="fa fa-check"></i><b>3.2.3</b> 分解绘图</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapsave"><i class="fa fa-check"></i><b>3.2.4</b> 图形存储</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapmeihua"><i class="fa fa-check"></i><b>3.3</b> 热图美化</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmap_log"><i class="fa fa-check"></i><b>3.3.1</b> 对数转换</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapzscore"><i class="fa fa-check"></i><b>3.3.2</b> Z-score转换</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapoutlier"><i class="fa fa-check"></i><b>3.3.3</b> 抹去异常值</a></li>
+<li class="chapter" data-level="3.3.4" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmapnonlinear"><i class="fa fa-check"></i><b>3.3.4</b> 非线性颜色</a></li>
+<li class="chapter" data-level="3.3.5" data-path="Rplots.html"><a href="Rplots.html#ggplot2_heatmaporder"><i class="fa fa-check"></i><b>3.3.5</b> 调整行或列的顺序</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="Rplots.html"><a href="Rplots.html#pheatmap_simple"><i class="fa fa-check"></i><b>3.4</b> 热图绘制 - pheatmap</a></li>
+<li class="chapter" data-level="3.5" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder"><i class="fa fa-check"></i><b>3.5</b> 聚类热图如何按自己的意愿调整分支顺序？</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorderdata"><i class="fa fa-check"></i><b>3.5.1</b> 数据示例</a></li>
+<li class="chapter" data-level="3.5.2" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder1"><i class="fa fa-check"></i><b>3.5.2</b> 绘制一个聚类热图很简单</a></li>
+<li class="chapter" data-level="3.5.3" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder2"><i class="fa fa-check"></i><b>3.5.3</b> 如何自定义分支顺序呢</a></li>
+<li class="chapter" data-level="3.5.4" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder3"><i class="fa fa-check"></i><b>3.5.4</b> 人为指定顺序排序样品</a></li>
+<li class="chapter" data-level="3.5.5" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder4"><i class="fa fa-check"></i><b>3.5.5</b> 按某个基因的表达由小到大排序</a></li>
+<li class="chapter" data-level="3.5.6" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder5"><i class="fa fa-check"></i><b>3.5.6</b> 按某个基因的表达由大到小排序</a></li>
+<li class="chapter" data-level="3.5.7" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder6"><i class="fa fa-check"></i><b>3.5.7</b> 按分支名字（样品名字）的字母顺序排序</a></li>
+<li class="chapter" data-level="3.5.8" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder7"><i class="fa fa-check"></i><b>3.5.8</b> 梯子形排序：最小的分支在右侧</a></li>
+<li class="chapter" data-level="3.5.9" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder8"><i class="fa fa-check"></i><b>3.5.9</b> 梯子形排序：最小的分支在左侧</a></li>
+<li class="chapter" data-level="3.5.10" data-path="Rplots.html"><a href="Rplots.html#pheatmap_branchorder9"><i class="fa fa-check"></i><b>3.5.10</b> 按特征值排序</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot"><i class="fa fa-check"></i><b>3.6</b> 箱线图</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot1"><i class="fa fa-check"></i><b>3.6.1</b> 一步步解析箱线图绘制</a></li>
+<li class="chapter" data-level="3.6.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot2"><i class="fa fa-check"></i><b>3.6.2</b> 绘制单个基因 (A)的箱线图</a></li>
+<li class="chapter" data-level="3.6.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2boxplot3"><i class="fa fa-check"></i><b>3.6.3</b> 长矩阵绘制箱线图</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="Rplots.html"><a href="Rplots.html#ggplot2lineplot"><i class="fa fa-check"></i><b>3.7</b> 线图</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2singleline"><i class="fa fa-check"></i><b>3.7.1</b> 单线图</a></li>
+<li class="chapter" data-level="3.7.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2multipleline"><i class="fa fa-check"></i><b>3.7.2</b> 多线图</a></li>
+<li class="chapter" data-level="3.7.3" data-path="Rplots.html"><a href="Rplots.html#ggplot2xaxistext"><i class="fa fa-check"></i><b>3.7.3</b> 横轴文本线图</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="Rplots.html"><a href="Rplots.html#ggplot2scatter"><i class="fa fa-check"></i><b>3.8</b> 散点图</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2scatter1"><i class="fa fa-check"></i><b>3.8.1</b> 横纵轴都为数字的散点图解析</a></li>
+<li class="chapter" data-level="3.8.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2scatter3"><i class="fa fa-check"></i><b>3.8.2</b> 横纵轴都为字符串的散点图展示</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="Rplots.html"><a href="Rplots.html#ggplot2enrichment"><i class="fa fa-check"></i><b>3.9</b> 功能富集泡泡图</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="Rplots.html"><a href="Rplots.html#ggplot2enric2hment"><i class="fa fa-check"></i><b>3.9.1</b> 单样品分开绘制</a></li>
+<li class="chapter" data-level="3.9.2" data-path="Rplots.html"><a href="Rplots.html#ggplot2enrichmen2t"><i class="fa fa-check"></i><b>3.9.2</b> 多样品合并绘制</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="Rplots.html"><a href="Rplots.html#venn"><i class="fa fa-check"></i><b>3.10</b> 韦恩图</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="Rplots.html"><a href="Rplots.html#venn2"><i class="fa fa-check"></i><b>3.10.1</b> 韦恩图三个圈</a></li>
+<li class="chapter" data-level="3.10.2" data-path="Rplots.html"><a href="Rplots.html#venn5"><i class="fa fa-check"></i><b>3.10.2</b> 韦恩图五个圈</a></li>
+<li class="chapter" data-level="3.10.3" data-path="Rplots.html"><a href="Rplots.html#UpSetView"><i class="fa fa-check"></i><b>3.10.3</b> UpSetView展示</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="Rplots.html"><a href="Rplots.html#Barplot"><i class="fa fa-check"></i><b>3.11</b> 柱状图绘制</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="Rplots.html"><a href="Rplots.html#Barplot1"><i class="fa fa-check"></i><b>3.11.1</b> 常规矩阵柱状图绘制</a></li>
+<li class="chapter" data-level="3.11.2" data-path="Rplots.html"><a href="Rplots.html#Barplot2"><i class="fa fa-check"></i><b>3.11.2</b> 长矩阵分面绘制</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="Rplots.html"><a href="Rplots.html#Barplot3"><i class="fa fa-check"></i><b>3.12</b> 图形支持中文字体</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="Rplots.html"><a href="Rplots.html#Barplot4"><i class="fa fa-check"></i><b>3.12.1</b> 修改图形的字体</a></li>
+<li class="chapter" data-level="3.12.2" data-path="Rplots.html"><a href="Rplots.html#Barplot41"><i class="fa fa-check"></i><b>3.12.2</b> ggplot2支持中文字体输出PDF</a></li>
+<li class="chapter" data-level="3.12.3" data-path="Rplots.html"><a href="Rplots.html#Barplot5"><i class="fa fa-check"></i><b>3.12.3</b> 系统可用字体</a></li>
+<li class="chapter" data-level="3.12.4" data-path="Rplots.html"><a href="Rplots.html#Barplot6"><i class="fa fa-check"></i><b>3.12.4</b> 合并字体支持中英文</a></li>
+<li class="chapter" data-level="3.12.5" data-path="Rplots.html"><a href="Rplots.html#Barplot7"><i class="fa fa-check"></i><b>3.12.5</b> 一个示例</a></li>
+</ul></li>
+<li class="chapter" data-level="3.13" data-path="Rplots.html"><a href="Rplots.html#pca"><i class="fa fa-check"></i><b>3.13</b> PCA原理解析和图形绘制</a>
+<ul>
+<li class="chapter" data-level="3.13.1" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc"><i class="fa fa-check"></i><b>3.13.1</b> 主成分分析简介</a></li>
+<li class="chapter" data-level="3.13.2" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc1"><i class="fa fa-check"></i><b>3.13.2</b> 主成分分析的意义</a></li>
+<li class="chapter" data-level="3.13.3" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc2"><i class="fa fa-check"></i><b>3.13.3</b> 示例展示原始变量对样品的分类</a></li>
+<li class="chapter" data-level="3.13.4" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc3"><i class="fa fa-check"></i><b>3.13.4</b> PCA的实现原理</a></li>
+<li class="chapter" data-level="3.13.5" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc4"><i class="fa fa-check"></i><b>3.13.5</b> 简单的PCA实现</a></li>
+<li class="chapter" data-level="3.13.6" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc5"><i class="fa fa-check"></i><b>3.13.6</b> PCA结果解释</a></li>
+<li class="chapter" data-level="3.13.7" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc6"><i class="fa fa-check"></i><b>3.13.7</b> PCA应用于测试数据</a></li>
+<li class="chapter" data-level="3.13.8" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc7"><i class="fa fa-check"></i><b>3.13.8</b> PCA注意事项</a></li>
+<li class="chapter" data-level="3.13.9" data-path="Rplots.html"><a href="Rplots.html#pcaintroduc8"><i class="fa fa-check"></i><b>3.13.9</b> 参考资料</a></li>
+</ul></li>
+<li class="chapter" data-level="3.14" data-path="Rplots.html"><a href="Rplots.html#survival"><i class="fa fa-check"></i><b>3.14</b> 生存分析</a>
+<ul>
+<li class="chapter" data-level="3.14.1" data-path="Rplots.html"><a href="Rplots.html#survival1"><i class="fa fa-check"></i><b>3.14.1</b> R做生存分析</a></li>
+</ul></li>
+<li class="chapter" data-level="3.15" data-path="Rplots.html"><a href="Rplots.html#survival2"><i class="fa fa-check"></i><b>3.15</b> 一步作图的优势</a></li>
+<li class="chapter" data-level="3.16" data-path="Rplots.html"><a href="Rplots.html#survival3365"><i class="fa fa-check"></i><b>3.16</b> 不改脚本的热图绘制</a>
+<ul>
+<li class="chapter" data-level="3.16.1" data-path="Rplots.html"><a href="Rplots.html#survival3367"><i class="fa fa-check"></i><b>3.16.1</b> 箱线图 - 一步绘制</a></li>
+<li class="chapter" data-level="3.16.2" data-path="Rplots.html"><a href="Rplots.html#survival3719"><i class="fa fa-check"></i><b>3.16.2</b> 线图 - 一步绘制</a></li>
+<li class="chapter" data-level="3.16.3" data-path="Rplots.html"><a href="Rplots.html#survival4137"><i class="fa fa-check"></i><b>3.16.3</b> 一网打进散点图绘制</a></li>
+</ul></li>
+<li class="chapter" data-level="3.17" data-path="Rplots.html"><a href="Rplots.html#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><i class="fa fa-check"></i><b>3.17</b> 参考资料</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cytoscape.html"><a href="cytoscape.html"><i class="fa fa-check"></i><b>4</b> 网络图</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="cytoscape.html"><a href="cytoscape.html#basic"><i class="fa fa-check"></i><b>4.0.1</b> 基本操作</a></li>
+<li class="chapter" data-level="4.0.2" data-path="cytoscape.html"><a href="cytoscape.html#mirna"><i class="fa fa-check"></i><b>4.0.2</b> miRNA-mRNA调控网络</a></li>
+<li class="chapter" data-level="4.0.3" data-path="cytoscape.html"><a href="cytoscape.html#layout"><i class="fa fa-check"></i><b>4.0.3</b> 不同的布局的调试和修改</a></li>
+<li class="chapter" data-level="4.1" data-path="cytoscape.html"><a href="cytoscape.html#%E5%8F%82%E8%80%83"><i class="fa fa-check"></i><b>4.1</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="AI.html"><a href="AI.html"><i class="fa fa-check"></i><b>5</b> 图形排版</a>
+<ul>
+<li class="chapter" data-level="5.0.1" data-path="AI.html"><a href="AI.html#%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%92%8C%E6%A0%87%E9%87%8F%E5%9B%BE"><i class="fa fa-check"></i><b>5.0.1</b> 矢量图和标量图</a></li>
+<li class="chapter" data-level="5.0.2" data-path="AI.html"><a href="AI.html#%E7%9F%A2%E9%87%8F%E5%9B%BE%E7%9A%84%E5%88%B6%E4%BD%9C"><i class="fa fa-check"></i><b>5.0.2</b> 矢量图的制作</a></li>
+<li class="chapter" data-level="5.0.3" data-path="AI.html"><a href="AI.html#%E7%9F%A2%E9%87%8F%E5%9B%BE%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7"><i class="fa fa-check"></i><b>5.0.3</b> 矢量图编辑工具</a></li>
+<li class="chapter" data-level="5.0.4" data-path="AI.html"><a href="AI.html#%E4%BD%9C%E5%9B%BE%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99"><i class="fa fa-check"></i><b>5.0.4</b> 作图基本原则</a></li>
+<li class="chapter" data-level="5.0.5" data-path="AI.html"><a href="AI.html#%E4%BD%9C%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%A6%81%E7%82%B9%E6%B3%A8%E6%84%8F"><i class="fa fa-check"></i><b>5.0.5</b> 作图中的要点注意</a></li>
+<li class="chapter" data-level="5.0.6" data-path="AI.html"><a href="AI.html#adobe-illustrator%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E6%93%8D%E4%BD%9C%E6%8F%8F%E8%BF%B0"><i class="fa fa-check"></i><b>5.0.6</b> <code>Adobe Illustrator</code>中的基本概念和操作描述</a></li>
+<li class="chapter" data-level="5.0.7" data-path="AI.html"><a href="AI.html#%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>5.0.7</b> 视频教程</a></li>
+<li class="chapter" data-level="5.0.8" data-path="AI.html"><a href="AI.html#%E5%8A%A8%E5%9B%BE%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>5.0.8</b> 动图教程</a></li>
+<li class="chapter" data-level="5.1" data-path="AI.html"><a href="AI.html#%E5%8F%82%E8%80%83-1"><i class="fa fa-check"></i><b>5.1</b> 参考</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="batch.html"><a href="batch.html"><i class="fa fa-check"></i><b>6</b> 高通量数据中批次效应的鉴定和处理</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="batch.html"><a href="batch.html#batch1"><i class="fa fa-check"></i><b>6.1</b> 什么是批次效应？</a></li>
+<li class="chapter" data-level="6.2" data-path="batch.html"><a href="batch.html#batch2"><i class="fa fa-check"></i><b>6.2</b> 批次效应会有什么影响？</a></li>
+<li class="chapter" data-level="6.3" data-path="batch.html"><a href="batch.html#batch3"><i class="fa fa-check"></i><b>6.3</b> 怎么确认数据有无受到批次效应影响</a></li>
+<li class="chapter" data-level="6.4" data-path="batch.html"><a href="batch.html#batch4"><i class="fa fa-check"></i><b>6.4</b> 怎么避免批次效应呢？</a></li>
+<li class="chapter" data-level="6.5" data-path="batch.html"><a href="batch.html#batch5"><i class="fa fa-check"></i><b>6.5</b> 如何在差异基因鉴定过程中移除批次效应</a></li>
+<li class="chapter" data-level="6.6" data-path="batch.html"><a href="batch.html#%E6%A3%80%E6%9F%A5%E6%9C%89%E6%97%A0%E7%BC%BA%E5%A4%B1%E7%9A%84%E5%8C%85%E5%B9%B6%E5%AE%89%E8%A3%85%E5%8A%A0%E8%BD%BD%E6%89%80%E6%9C%89%E5%8C%85"><i class="fa fa-check"></i><b>6.6</b> 检查有无缺失的包并安装，加载所有包</a></li>
+<li class="chapter" data-level="6.7" data-path="batch.html"><a href="batch.html#batch6"><i class="fa fa-check"></i><b>6.7</b> 不考虑批次因素直接进行差异基因分析</a></li>
+<li class="chapter" data-level="6.8" data-path="batch.html"><a href="batch.html#batch7"><i class="fa fa-check"></i><b>6.8</b> 考虑已知的批次因素进行差异基因分析</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="batch.html"><a href="batch.html#batch8"><i class="fa fa-check"></i><b>6.8.1</b> 比较批次校正前后差异基因变化</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="batch.html"><a href="batch.html#batch9"><i class="fa fa-check"></i><b>6.9</b> 批次效应未知时如何判断和在差异基因鉴定过程中移除批次效应</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="batch.html"><a href="batch.html#batch10"><i class="fa fa-check"></i><b>6.9.1</b> 预测混杂因素(cofounding factors)并在差异基因分析中移除这些因素</a></li>
+<li class="chapter" data-level="6.9.2" data-path="batch.html"><a href="batch.html#batch11"><i class="fa fa-check"></i><b>6.9.2</b> 预测可能存在的混杂因素</a></li>
+<li class="chapter" data-level="6.9.3" data-path="batch.html"><a href="batch.html#%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B1%95%E7%A4%BA%E9%A2%84%E6%B5%8B%E5%87%BA%E7%9A%84surrogate-variable%E5%B1%9E%E6%80%A7%E4%B8%8E%E5%B7%B2%E7%9F%A5%E7%9A%84%E6%89%B9%E6%AC%A1%E4%BF%A1%E6%81%AF%E7%9A%84%E5%85%B3%E7%B3%BB"><i class="fa fa-check"></i><b>6.9.3</b> 可视化展示预测出的<code>Surrogate variable</code>属性与已知的批次信息的关系</a></li>
+<li class="chapter" data-level="6.9.4" data-path="batch.html"><a href="batch.html#%E5%9F%BA%E4%BA%8E%E9%A2%84%E6%B5%8B%E5%87%BA%E7%9A%84%E6%B7%B7%E6%9D%82%E5%9B%A0%E7%B4%A0%E5%86%8D%E6%AC%A1%E8%BF%9B%E8%A1%8C%E5%B7%AE%E5%BC%82%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>6.9.4</b> 基于预测出的混杂因素再次进行差异分析</a></li>
+<li class="chapter" data-level="6.9.5" data-path="batch.html"><a href="batch.html#batch12"><i class="fa fa-check"></i><b>6.9.5</b> 比较批次校正前、已知批次校正后和预测的批次校正后差异基因变化</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="batch.html"><a href="batch.html#batch13"><i class="fa fa-check"></i><b>6.10</b> 直接校正表达矩阵</a>
+<ul>
+<li class="chapter" data-level="6.10.1" data-path="batch.html"><a href="batch.html#%E8%AF%BB%E5%85%A5%E6%A0%87%E5%87%86%E5%8C%96%E5%90%8E%E7%9A%84%E8%A1%A8%E8%BE%BE%E7%9F%A9%E9%98%B5%E5%92%8C%E6%A0%B7%E5%93%81%E4%BF%A1%E6%81%AF%E8%A1%A8"><i class="fa fa-check"></i><b>6.10.1</b> 读入标准化后的表达矩阵和样品信息表</a></li>
+<li class="chapter" data-level="6.10.2" data-path="batch.html"><a href="batch.html#batch14"><i class="fa fa-check"></i><b>6.10.2</b> 使用ComBat校正</a></li>
+<li class="chapter" data-level="6.10.3" data-path="batch.html"><a href="batch.html#batch15"><i class="fa fa-check"></i><b>6.10.3</b> 使用limma校正</a></li>
+<li class="chapter" data-level="6.10.4" data-path="batch.html"><a href="batch.html#%E6%9F%A5%E7%9C%8B%E6%A0%A1%E6%AD%A3%E5%AE%8C%E5%90%8E%E5%9F%BA%E5%9B%A0%E7%9A%84%E8%A1%A8%E8%BE%BE%E6%83%85%E5%86%B5"><i class="fa fa-check"></i><b>6.10.4</b> 查看校正完后基因的表达情况</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="questions06.html"><a href="questions06.html"><i class="fa fa-check"></i><b>7</b> 问题答疑</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="questions06.html"><a href="questions06.html#ggplot2_variable_color_saturation"><i class="fa fa-check"></i><b>7.1</b> ggplot2绘图如何根据一个变量即区分颜色又区分深浅？</a></li>
+<li class="chapter" data-level="7.2" data-path="questions06.html"><a href="questions06.html#ggplot2%E7%BB%98%E5%9B%BE%E7%82%B9%E7%9A%84%E5%BD%A2%E7%8A%B6%E4%B8%8D%E5%A4%9F%E7%94%A8%E6%80%8E%E4%B9%88%E5%8A%9E"><i class="fa fa-check"></i><b>7.2</b> ggplot2绘图点的形状不够用怎么办？</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html"><i class="fa fa-check"></i><b>8</b> 推荐一个 R 中很好用的条件判断语句</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#ifelse-%E6%A0%87%E8%AE%B0%E5%B7%AE%E5%BC%82%E5%9F%BA%E5%9B%A0"><i class="fa fa-check"></i><b>8.1</b> ifelse 标记差异基因</a></li>
+<li class="chapter" data-level="8.2" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#dplyrcase-when-%E6%A0%87%E8%AE%B0%E5%B7%AE%E5%BC%82%E5%9F%BA%E5%9B%A0"><i class="fa fa-check"></i><b>8.2</b> dplyr::case-when 标记差异基因</a></li>
+<li class="chapter" data-level="8.3" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#dplyrif_else-%E4%BC%9A%E6%9B%B4%E5%BF%AB%E4%B8%80%E7%82%B9"><i class="fa fa-check"></i><b>8.3</b> dplyr::if_else 会更快一点</a></li>
+<li class="chapter" data-level="8.4" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#case-when%E5%8F%AA%E4%BF%9D%E7%95%99%E5%B7%AE%E5%BC%82%E5%9F%BA%E5%9B%A0%E7%9A%84%E5%90%8D%E5%AD%97"><i class="fa fa-check"></i><b>8.4</b> case-when只保留差异基因的名字</a></li>
+<li class="chapter" data-level="8.5" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#case-when%E6%AF%8F%E9%9A%94-1-%E4%B8%AA%E5%9F%BA%E5%9B%A0%E4%BF%9D%E7%95%99-1-%E4%B8%AA"><i class="fa fa-check"></i><b>8.5</b> case-when每隔 1 个基因保留 1 个</a></li>
+<li class="chapter" data-level="8.6" data-path="推荐一个-r-中很好用的条件判断语句.html"><a href="推荐一个-r-中很好用的条件判断语句.html#dplyrif_else%E9%80%9F%E5%BA%A6%E6%9C%80%E5%BF%AB"><i class="fa fa-check"></i><b>8.6</b> <code>dplyr::if_else</code>速度最快！</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="visual1.html"><a href="visual1.html"><i class="fa fa-check"></i><b>9</b> 易生信-数据可视化</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="visual1.html"><a href="visual1.html#visual2"><i class="fa fa-check"></i><b>9.1</b> 加载需要的包</a></li>
+<li class="chapter" data-level="9.2" data-path="visual1.html"><a href="visual1.html#visual3"><i class="fa fa-check"></i><b>9.2</b> 读入数据</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="visual1.html"><a href="visual1.html#visual4"><i class="fa fa-check"></i><b>9.2.1</b> Duplicate row names</a></li>
+<li class="chapter" data-level="9.2.2" data-path="visual1.html"><a href="visual1.html#visual15"><i class="fa fa-check"></i><b>9.2.2</b> 行名唯一化处理</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="visual1.html"><a href="visual1.html#visual5"><i class="fa fa-check"></i><b>9.3</b> 热图绘制</a></li>
+<li class="chapter" data-level="9.4" data-path="visual1.html"><a href="visual1.html#visual7"><i class="fa fa-check"></i><b>9.4</b> 箱线图和统计比较</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="visual1.html"><a href="visual1.html#visual8"><i class="fa fa-check"></i><b>9.4.1</b> 单基因箱线图</a></li>
+<li class="chapter" data-level="9.4.2" data-path="visual1.html"><a href="visual1.html#visual9"><i class="fa fa-check"></i><b>9.4.2</b> 多基因箱线图 (combine)</a></li>
+<li class="chapter" data-level="9.4.3" data-path="visual1.html"><a href="visual1.html#visual10"><i class="fa fa-check"></i><b>9.4.3</b> 多基因箱线图 (merge)</a></li>
+<li class="chapter" data-level="9.4.4" data-path="visual1.html"><a href="visual1.html#visual11"><i class="fa fa-check"></i><b>9.4.4</b> 数据对数转换后绘制箱线图</a></li>
+<li class="chapter" data-level="9.4.5" data-path="visual1.html"><a href="visual1.html#visual12"><i class="fa fa-check"></i><b>9.4.5</b> 用ggplot2实现ggpubr</a></li>
+<li class="chapter" data-level="9.4.6" data-path="visual1.html"><a href="visual1.html#visual13"><i class="fa fa-check"></i><b>9.4.6</b> 配色</a></li>
+<li class="chapter" data-level="9.4.7" data-path="visual1.html"><a href="visual1.html#visual14"><i class="fa fa-check"></i><b>9.4.7</b> 箱线图加统计分析</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="visual1.html"><a href="visual1.html#visual151"><i class="fa fa-check"></i><b>9.5</b> 通路内基因的比较</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="visual1.html"><a href="visual1.html#visual161"><i class="fa fa-check"></i><b>9.5.1</b> 密度图</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="visual1.html"><a href="visual1.html#visual171"><i class="fa fa-check"></i><b>9.6</b> ggstatsplot绘图和统计分析</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="visual1.html"><a href="visual1.html#visual162"><i class="fa fa-check"></i><b>9.6.1</b> 散点图</a></li>
+<li class="chapter" data-level="9.6.2" data-path="visual1.html"><a href="visual1.html#visual172"><i class="fa fa-check"></i><b>9.6.2</b> 相关性图</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="imageGP.html"><a href="imageGP.html"><i class="fa fa-check"></i><b>10</b> 高颜值免费在线绘图（提供绘图源码）</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="imageGP.html"><a href="imageGP.html#imagegpbasic"><i class="fa fa-check"></i><b>10.1</b> 高颜值免费在线绘图基础版视频</a></li>
+<li class="chapter" data-level="10.2" data-path="imageGP.html"><a href="imageGP.html#imagepbetter"><i class="fa fa-check"></i><b>10.2</b> 高颜值免费在线绘图进阶版视频</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ref.html"><a href="ref.html"><i class="fa fa-check"></i><b>11</b> 参考</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ref.html"><a href="ref.html#illumina%E6%B5%8B%E5%BA%8F%E5%BA%94%E7%94%A8%E6%89%8B%E5%86%8C"><i class="fa fa-check"></i><b>11.1</b> Illumina测序应用手册</a></li>
+<li class="chapter" data-level="11.2" data-path="ref.html"><a href="ref.html#%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>11.2</b> 系列教程</a></li>
+<li class="chapter" data-level="11.3" data-path="ref.html"><a href="ref.html#%E8%9B%8B%E7%99%BD%E8%B4%A8%E7%BB%84%E5%AD%A6%E7%A0%94%E7%A9%B6"><i class="fa fa-check"></i><b>11.3</b> 蛋白质组学研究</a></li>
+<li class="chapter" data-level="11.4" data-path="ref.html"><a href="ref.html#%E8%BD%AC%E5%BD%95%E7%BB%84%E7%A0%94%E7%A9%B6"><i class="fa fa-check"></i><b>11.4</b> 转录组研究</a></li>
+<li class="chapter" data-level="11.5" data-path="ref.html"><a href="ref.html#%E5%8D%95%E7%BB%86%E8%83%9E%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>11.5</b> 单细胞系列教程</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="ref.html"><a href="ref.html#%E7%BB%8F%E5%85%B8%E7%BB%BC%E8%BF%B0"><i class="fa fa-check"></i><b>11.5.1</b> 经典综述</a></li>
+<li class="chapter" data-level="11.5.2" data-path="ref.html"><a href="ref.html#%E6%96%87%E7%AB%A0%E8%A7%A3%E8%AF%BB"><i class="fa fa-check"></i><b>11.5.2</b> 文章解读</a></li>
+<li class="chapter" data-level="11.5.3" data-path="ref.html"><a href="ref.html#%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B-1"><i class="fa fa-check"></i><b>11.5.3</b> 系列教程</a></li>
+<li class="chapter" data-level="11.5.4" data-path="ref.html"><a href="ref.html#%E7%89%B9%E8%89%B2%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>11.5.4</b> 特色分析</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="ref.html"><a href="ref.html#geotcga%E6%95%B0%E6%8D%AE"><i class="fa fa-check"></i><b>11.6</b> GEO/TCGA数据</a></li>
+<li class="chapter" data-level="11.7" data-path="ref.html"><a href="ref.html#%E6%89%A9%E5%A2%9E%E5%AD%90%E4%B8%89%E6%AD%A5%E6%9B%B2"><i class="fa fa-check"></i><b>11.7</b> 扩增子三步曲</a></li>
+<li class="chapter" data-level="11.8" data-path="ref.html"><a href="ref.html#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%95%99%E7%A8%8B"><i class="fa fa-check"></i><b>11.8</b> 宏基因组教程</a></li>
+<li class="chapter" data-level="11.9" data-path="ref.html"><a href="ref.html#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90%E4%B8%93%E9%A2%98"><i class="fa fa-check"></i><b>11.9</b> 宏基因组分析专题</a></li>
+<li class="chapter" data-level="11.10" data-path="ref.html"><a href="ref.html#chip-seq%E4%B8%93%E9%A2%98"><i class="fa fa-check"></i><b>11.10</b> ChIP-seq专题</a></li>
+<li class="chapter" data-level="11.11" data-path="ref.html"><a href="ref.html#linux-%E5%85%A8%E4%BB%8B%E7%BB%8D"><i class="fa fa-check"></i><b>11.11</b> Linux 全介绍</a></li>
+<li class="chapter" data-level="11.12" data-path="ref.html"><a href="ref.html#circos%E7%B3%BB%E5%88%97"><i class="fa fa-check"></i><b>11.12</b> CIRCOS系列</a></li>
+<li class="chapter" data-level="11.13" data-path="ref.html"><a href="ref.html#r%E7%BB%9F%E8%AE%A1%E5%92%8C%E4%BD%9C%E5%9B%BE"><i class="fa fa-check"></i><b>11.13</b> R统计和作图</a></li>
+<li class="chapter" data-level="11.14" data-path="ref.html"><a href="ref.html#ngs%E5%9F%BA%E7%A1%80%E5%92%8C%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8"><i class="fa fa-check"></i><b>11.14</b> NGS基础和软件应用</a></li>
+<li class="chapter" data-level="11.15" data-path="ref.html"><a href="ref.html#%E7%94%9F%E4%BF%A1%E5%AE%9D%E5%85%B8%E4%B9%8B%E5%82%BB%E7%93%9C%E5%BC%8F"><i class="fa fa-check"></i><b>11.15</b> 生信宝典之傻瓜式</a></li>
+<li class="chapter" data-level="11.16" data-path="ref.html"><a href="ref.html#python"><i class="fa fa-check"></i><b>11.16</b> Python</a></li>
+<li class="chapter" data-level="11.17" data-path="ref.html"><a href="ref.html#cytoscape%E7%BD%91%E7%BB%9C%E5%9B%BE"><i class="fa fa-check"></i><b>11.17</b> Cytoscape网络图</a></li>
+<li class="chapter" data-level="11.18" data-path="ref.html"><a href="ref.html#%E5%88%86%E5%AD%90%E5%AF%B9%E6%8E%A5"><i class="fa fa-check"></i><b>11.18</b> 分子对接</a></li>
+<li class="chapter" data-level="11.19" data-path="ref.html"><a href="ref.html#%E6%96%87%E7%8C%AE%E7%B2%BE%E8%AF%BB"><i class="fa fa-check"></i><b>11.19</b> 文献精读</a></li>
+<li class="chapter" data-level="11.20" data-path="ref.html"><a href="ref.html#%E7%9A%84%E9%AB%98%E9%98%85%E8%AF%BB%E6%96%87%E7%AB%A0%E5%90%88%E9%9B%86"><i class="fa fa-check"></i><b>11.20</b> 2019的高阅读文章合集</a></li>
+<li class="chapter" data-level="11.21" data-path="ref.html"><a href="ref.html#%E7%B2%BE%E9%80%89%E6%96%87%E7%AB%A0%E6%8E%A8%E8%8D%90"><i class="fa fa-check"></i><b>11.21</b> 精选文章推荐</a></li>
+<li class="chapter" data-level="11.22" data-path="ref.html"><a href="ref.html#%E7%A7%91%E7%A0%94%E7%BB%8F%E9%AA%8C"><i class="fa fa-check"></i><b>11.22</b> 科研经验</a></li>
+<li class="chapter" data-level="11.23" data-path="ref.html"><a href="ref.html#%E8%BD%AF%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93"><i class="fa fa-check"></i><b>11.23</b> 软件和数据库</a></li>
+<li class="chapter" data-level="11.24" data-path="ref.html"><a href="ref.html#%E6%89%A9%E5%A2%9E%E5%AD%90%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>11.24</b> 扩增子分析</a></li>
+<li class="chapter" data-level="11.25" data-path="ref.html"><a href="ref.html#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>11.25</b> 宏基因组分析</a></li>
+<li class="chapter" data-level="11.26" data-path="ref.html"><a href="ref.html#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%8A%80%E6%9C%AF"><i class="fa fa-check"></i><b>11.26</b> 实验设计与技术</a></li>
+<li class="chapter" data-level="11.27" data-path="ref.html"><a href="ref.html#%E6%96%87%E7%8C%AE%E7%B2%BE%E8%AF%BB-1"><i class="fa fa-check"></i><b>11.27</b> 文献精读</a></li>
+<li class="chapter" data-level="11.28" data-path="ref.html"><a href="ref.html#%E7%A7%91%E6%99%AE%E8%A7%86%E9%A2%91%E5%AF%93%E6%95%99%E4%BA%8E%E4%B9%90"><i class="fa fa-check"></i><b>11.28</b> 科普视频*寓教于乐</a></li>
+<li class="chapter" data-level="11.29" data-path="ref.html"><a href="ref.html#%E7%B3%BB%E5%88%97%E5%AE%A3%E4%BC%A0"><i class="fa fa-check"></i><b>11.29</b> 系列宣传</a></li>
+<li class="chapter" data-level="11.30" data-path="ref.html"><a href="ref.html#%E6%B0%B8%E4%B9%85%E9%93%BE%E6%8E%A5"><i class="fa fa-check"></i><b>11.30</b> 永久链接</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://www.bic.ac.cn">Hello</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Cytoscape AI生信作图分析教程</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visual1" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> 易生信-数据可视化<a href="visual1.html#visual1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="visual2" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> 加载需要的包<a href="visual1.html#visual2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="visual1.html#cb758-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb758-2"><a href="visual1.html#cb758-2" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb758-3"><a href="visual1.html#cb758-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb758-4"><a href="visual1.html#cb758-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb758-5"><a href="visual1.html#cb758-5" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb758-6"><a href="visual1.html#cb758-6" tabindex="-1"></a><span class="fu">library</span>(ggstatsplot)</span></code></pre></div>
+<pre><code>## You can cite this package as:
+##      Patil, I. (2021). Visualizations with statistical details: The &#39;ggstatsplot&#39; approach.
+##      Journal of Open Source Software, 6(61), 3167, doi:10.21105/joss.03167</code></pre>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="visual1.html#cb760-1" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span></code></pre></div>
+</div>
+<div id="visual3" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> 读入数据<a href="visual1.html#visual3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="visual4" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Duplicate row names<a href="visual1.html#visual4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="visual1.html#cb761-1" tabindex="-1"></a>expr <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;analysis.simplier.DESeq2.normalized.symbol.txt&quot;</span>, </span>
+<span id="cb761-2"><a href="visual1.html#cb761-2" tabindex="-1"></a>                   <span class="at">row.names=</span><span class="dv">1</span>, <span class="at">header=</span>T, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
+</div>
+<div id="visual15" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> 行名唯一化处理<a href="visual1.html#visual15" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>这里使用<code>make.names</code>转换行名为唯一，实际需要先弄清楚为什么会有重复名字。</p>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="visual1.html#cb762-1" tabindex="-1"></a>expr <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;analysis.simplier.DESeq2.normalized.symbol.txt&quot;</span>, </span>
+<span id="cb762-2"><a href="visual1.html#cb762-2" tabindex="-1"></a>                   <span class="at">row.names=</span><span class="cn">NULL</span>, <span class="at">header=</span>T, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb762-3"><a href="visual1.html#cb762-3" tabindex="-1"></a><span class="fu">head</span>(expr)</span></code></pre></div>
+<pre><code>##       id untrt_N61311 untrt_N052611 untrt_N080611 untrt_N061011 trt_N61311
+## 1    FN1    245667.66      427435.1     221687.51      371144.2  240187.24
+## 2    DCN    212953.14      360796.2     258977.30      408573.1  210002.18
+## 3  CEMIP     40996.34      137783.1      53813.92       91066.8   62301.12
+## 4 CCDC80    137229.15      232772.2      86258.13      212237.3  136730.76
+## 5 IGFBP5     77812.65      288609.2     210628.87      168067.4   96021.74
+## 6 COL1A1    146450.41      127367.3     152281.50      140861.1   62358.64
+##   trt_N052611 trt_N080611 trt_N061011
+## 1   450103.21   280226.19   376518.23
+## 2   316009.14   225547.39   393843.74
+## 3   223111.85   212724.84   157919.47
+## 4   226070.89   124634.56   236237.81
+## 5   217439.21   162677.38   168387.36
+## 6    53800.47    69160.97    51044.06</code></pre>
+<p>有哪些基因名是重复出现的？</p>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="visual1.html#cb764-1" tabindex="-1"></a>expr<span class="sc">$</span>id[<span class="fu">duplicated</span>(expr<span class="sc">$</span>id)]</span></code></pre></div>
+<pre><code>##   [1] &quot;MATR3&quot;      &quot;PKD1P1&quot;     &quot;HSPA14&quot;     &quot;OR7E47P&quot;    &quot;POLR2J3&quot;   
+##   [6] &quot;ATXN7&quot;      &quot;TMSB15B&quot;    &quot;LINC-PINT&quot;  &quot;TBCE&quot;       &quot;SNX29P2&quot;   
+##  [11] &quot;SCO2&quot;       &quot;POLR2J4&quot;    &quot;CCDC39&quot;     &quot;RGS5&quot;       &quot;BMS1P21&quot;   
+##  [16] &quot;RF00017&quot;    &quot;GOLGA8M&quot;    &quot;RF00017&quot;    &quot;DNAJC9-AS1&quot; &quot;CYB561D2&quot;  
+##  [21] &quot;RF00017&quot;    &quot;IPO5P1&quot;     &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [26] &quot;SPATA13&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [31] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [36] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [41] &quot;RF00019&quot;    &quot;RF00019&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [46] &quot;RF00019&quot;    &quot;BMS1P4&quot;     &quot;RF00019&quot;    &quot;RF00019&quot;    &quot;RF00017&quot;   
+##  [51] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [56] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [61] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00019&quot;    &quot;RF00017&quot;   
+##  [66] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00019&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [71] &quot;LINC01238&quot;  &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [76] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [81] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF02271&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [86] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;LINC01297&quot;  &quot;RF00019&quot;   
+##  [91] &quot;RF00017&quot;    &quot;RF00012&quot;    &quot;RF00019&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+##  [96] &quot;RF00019&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;ZNF503&quot;    
+## [101] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+## [106] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF02271&quot;    &quot;RF00019&quot;   
+## [111] &quot;RF00019&quot;    &quot;RF00017&quot;    &quot;RF00019&quot;    &quot;RF02271&quot;    &quot;RF00017&quot;   
+## [116] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00019&quot;    &quot;RF00019&quot;   
+## [121] &quot;RF00017&quot;    &quot;RF00019&quot;    &quot;ITFG2-AS1&quot;  &quot;RF00019&quot;    &quot;RF00019&quot;   
+## [126] &quot;RF00017&quot;    &quot;RF00019&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+## [131] &quot;RF00019&quot;    &quot;RF00017&quot;    &quot;RF00012&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+## [136] &quot;RAET1E-AS1&quot; &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+## [141] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00012&quot;   
+## [146] &quot;RF02271&quot;    &quot;RF00019&quot;    &quot;LINC01422&quot;  &quot;RF02271&quot;    &quot;RF00017&quot;   
+## [151] &quot;RF00019&quot;    &quot;RF00019&quot;    &quot;RF00019&quot;    &quot;RF00019&quot;    &quot;RF00017&quot;   
+## [156] &quot;LINC01481&quot;  &quot;RF00017&quot;    &quot;SNHG28&quot;     &quot;RF00019&quot;    &quot;RF00019&quot;   
+## [161] &quot;RF00019&quot;    &quot;RF00019&quot;    &quot;LINC00484&quot;  &quot;LINC00941&quot;  &quot;ALG1L9P&quot;   
+## [166] &quot;RF00017&quot;    &quot;DUXAP8&quot;     &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;   
+## [171] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RMRP&quot;       &quot;RF00017&quot;   
+## [176] &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;RF00017&quot;    &quot;DIABLO&quot;</code></pre>
+<p>名字唯一化处理</p>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="visual1.html#cb766-1" tabindex="-1"></a><span class="fu">make.names</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;b&#39;</span>), <span class="at">unique=</span>T)</span></code></pre></div>
+<pre><code>## [1] &quot;a&quot;   &quot;a.1&quot; &quot;b&quot;   &quot;b.1&quot; &quot;b.2&quot;</code></pre>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="visual1.html#cb768-1" tabindex="-1"></a>expr_names <span class="ot">&lt;-</span> <span class="fu">make.names</span>(expr<span class="sc">$</span>id, <span class="at">unique =</span> T)</span>
+<span id="cb768-2"><a href="visual1.html#cb768-2" tabindex="-1"></a><span class="fu">rownames</span>(expr) <span class="ot">&lt;-</span> expr_names</span>
+<span id="cb768-3"><a href="visual1.html#cb768-3" tabindex="-1"></a>expr <span class="ot">&lt;-</span> expr[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb768-4"><a href="visual1.html#cb768-4" tabindex="-1"></a><span class="fu">head</span>(expr)</span></code></pre></div>
+<pre><code>##        untrt_N61311 untrt_N052611 untrt_N080611 untrt_N061011 trt_N61311
+## FN1       245667.66      427435.1     221687.51      371144.2  240187.24
+## DCN       212953.14      360796.2     258977.30      408573.1  210002.18
+## CEMIP      40996.34      137783.1      53813.92       91066.8   62301.12
+## CCDC80    137229.15      232772.2      86258.13      212237.3  136730.76
+## IGFBP5     77812.65      288609.2     210628.87      168067.4   96021.74
+## COL1A1    146450.41      127367.3     152281.50      140861.1   62358.64
+##        trt_N052611 trt_N080611 trt_N061011
+## FN1      450103.21   280226.19   376518.23
+## DCN      316009.14   225547.39   393843.74
+## CEMIP    223111.85   212724.84   157919.47
+## CCDC80   226070.89   124634.56   236237.81
+## IGFBP5   217439.21   162677.38   168387.36
+## COL1A1    53800.47    69160.97    51044.06</code></pre>
+</div>
+</div>
+<div id="visual5" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> 热图绘制<a href="visual1.html#visual5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="visual1.html#cb770-1" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb770-2"><a href="visual1.html#cb770-2" tabindex="-1"></a>top6 <span class="ot">&lt;-</span> <span class="fu">head</span>(expr)</span>
+<span id="cb770-3"><a href="visual1.html#cb770-3" tabindex="-1"></a><span class="fu">pheatmap</span>(top6)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-370-1.png" width="100%" style="display: block; margin: auto;" />
+### 提取差异基因绘制热图 {#visual6}</p>
+<p>读入差异基因列表</p>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="visual1.html#cb771-1" tabindex="-1"></a>de_gene <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;analysis.DESeq2.all.DE.symbol&quot;</span>, <span class="at">row.names=</span><span class="cn">NULL</span>, <span class="at">header=</span>F, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb771-2"><a href="visual1.html#cb771-2" tabindex="-1"></a><span class="fu">head</span>(de_gene)</span></code></pre></div>
+<pre><code>##        V1                     V2
+## 1 ARHGEF2 untrt._higherThan_.trt
+## 2  KCTD12 untrt._higherThan_.trt
+## 3  SLC6A9 untrt._higherThan_.trt
+## 4  GXYLT2 untrt._higherThan_.trt
+## 5   RAB7B untrt._higherThan_.trt
+## 6   NEK10 untrt._higherThan_.trt</code></pre>
+<p>提取Top3 差异的基因</p>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="visual1.html#cb773-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb773-2"><a href="visual1.html#cb773-2" tabindex="-1"></a>top6_de_gene <span class="ot">&lt;-</span> de_gene <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(V2) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb773-3"><a href="visual1.html#cb773-3" tabindex="-1"></a>top6 <span class="ot">&lt;-</span> expr[<span class="fu">which</span>(<span class="fu">rownames</span>(expr) <span class="sc">%in%</span> top6_de_gene<span class="sc">$</span>V1),]</span>
+<span id="cb773-4"><a href="visual1.html#cb773-4" tabindex="-1"></a><span class="fu">head</span>(top6)</span></code></pre></div>
+<pre><code>##         untrt_N61311 untrt_N052611 untrt_N080611 untrt_N061011 trt_N61311
+## KCTD12    4700.79369     3978.0401    4416.15169    4792.34174  936.69481
+## MAOA       438.54451      452.9934     516.63033     258.73279 4628.00860
+## ARHGEF2   3025.62334     3105.7830    3094.51304    2909.99043 1395.39850
+## SPARCL1     58.15705      102.5827      80.00997      82.59042 2220.50867
+## PER1       170.61639      156.3692     194.97497     123.47689 1728.38117
+## SLC6A9     360.66314      413.8797     365.47650     443.71982   63.90538
+##         trt_N052611 trt_N080611 trt_N061011
+## KCTD12     633.4462   979.77576   641.49582
+## MAOA      4429.7201  4629.66529  3778.17351
+## ARHGEF2   1441.9916  1464.59769  1501.51509
+## SPARCL1   1750.9879  1374.90745  2194.58930
+## PER1      1230.2575  1120.00650  1333.91208
+## SLC6A9      56.8962    86.82929    95.33916</code></pre>
+<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="visual1.html#cb775-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;sampleFile&quot;</span>, <span class="at">header=</span>T, <span class="at">row.names=</span><span class="dv">1</span>)</span>
+<span id="cb775-2"><a href="visual1.html#cb775-2" tabindex="-1"></a><span class="fu">pheatmap</span>(top6, <span class="at">annotation_col =</span> metadata)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-373-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>按行标准化</p>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="visual1.html#cb776-1" tabindex="-1"></a><span class="fu">pheatmap</span>(top6, <span class="at">annotation_col =</span> metadata, <span class="at">scale=</span><span class="st">&quot;row&quot;</span>, <span class="at">cluster_cols =</span> F)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-374-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual7" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> 箱线图和统计比较<a href="visual1.html#visual7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="visual1.html#cb777-1" tabindex="-1"></a><span class="fu">head</span>(top6)</span></code></pre></div>
+<pre><code>##         untrt_N61311 untrt_N052611 untrt_N080611 untrt_N061011 trt_N61311
+## KCTD12    4700.79369     3978.0401    4416.15169    4792.34174  936.69481
+## MAOA       438.54451      452.9934     516.63033     258.73279 4628.00860
+## ARHGEF2   3025.62334     3105.7830    3094.51304    2909.99043 1395.39850
+## SPARCL1     58.15705      102.5827      80.00997      82.59042 2220.50867
+## PER1       170.61639      156.3692     194.97497     123.47689 1728.38117
+## SLC6A9     360.66314      413.8797     365.47650     443.71982   63.90538
+##         trt_N052611 trt_N080611 trt_N061011
+## KCTD12     633.4462   979.77576   641.49582
+## MAOA      4429.7201  4629.66529  3778.17351
+## ARHGEF2   1441.9916  1464.59769  1501.51509
+## SPARCL1   1750.9879  1374.90745  2194.58930
+## PER1      1230.2575  1120.00650  1333.91208
+## SLC6A9      56.8962    86.82929    95.33916</code></pre>
+<p>矩阵转置</p>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="visual1.html#cb779-1" tabindex="-1"></a>top6_t <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(top6)) </span>
+<span id="cb779-2"><a href="visual1.html#cb779-2" tabindex="-1"></a>top6_t</span></code></pre></div>
+<pre><code>##                  KCTD12      MAOA  ARHGEF2    SPARCL1      PER1    SLC6A9
+## untrt_N61311  4700.7937  438.5445 3025.623   58.15705  170.6164 360.66314
+## untrt_N052611 3978.0401  452.9934 3105.783  102.58269  156.3692 413.87971
+## untrt_N080611 4416.1517  516.6303 3094.513   80.00997  194.9750 365.47650
+## untrt_N061011 4792.3417  258.7328 2909.990   82.59042  123.4769 443.71982
+## trt_N61311     936.6948 4628.0086 1395.398 2220.50867 1728.3812  63.90538
+## trt_N052611    633.4462 4429.7201 1441.992 1750.98786 1230.2575  56.89620
+## trt_N080611    979.7758 4629.6653 1464.598 1374.90745 1120.0065  86.82929
+## trt_N061011    641.4958 3778.1735 1501.515 2194.58930 1333.9121  95.33916</code></pre>
+<p>与样本属性信息合并</p>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="visual1.html#cb781-1" tabindex="-1"></a>top6_t_with_group <span class="ot">&lt;-</span> <span class="fu">merge</span>(metadata, top6_t,<span class="at">by=</span><span class="dv">0</span>) </span>
+<span id="cb781-2"><a href="visual1.html#cb781-2" tabindex="-1"></a><span class="fu">head</span>(top6_t_with_group)</span></code></pre></div>
+<pre><code>##       Row.names conditions individual    KCTD12      MAOA  ARHGEF2    SPARCL1
+## 1   trt_N052611        trt    N052611  633.4462 4429.7201 1441.992 1750.98786
+## 2   trt_N061011        trt    N061011  641.4958 3778.1735 1501.515 2194.58930
+## 3   trt_N080611        trt    N080611  979.7758 4629.6653 1464.598 1374.90745
+## 4    trt_N61311        trt     N61311  936.6948 4628.0086 1395.398 2220.50867
+## 5 untrt_N052611      untrt    N052611 3978.0401  452.9934 3105.783  102.58269
+## 6 untrt_N061011      untrt    N061011 4792.3417  258.7328 2909.990   82.59042
+##        PER1    SLC6A9
+## 1 1230.2575  56.89620
+## 2 1333.9121  95.33916
+## 3 1120.0065  86.82929
+## 4 1728.3812  63.90538
+## 5  156.3692 413.87971
+## 6  123.4769 443.71982</code></pre>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="visual1.html#cb783-1" tabindex="-1"></a><span class="fu">colnames</span>(top6_t_with_group)[<span class="dv">1</span>] <span class="ot">=</span> <span class="st">&quot;Sample&quot;</span></span>
+<span id="cb783-2"><a href="visual1.html#cb783-2" tabindex="-1"></a><span class="fu">head</span>(top6_t_with_group)</span></code></pre></div>
+<pre><code>##          Sample conditions individual    KCTD12      MAOA  ARHGEF2    SPARCL1
+## 1   trt_N052611        trt    N052611  633.4462 4429.7201 1441.992 1750.98786
+## 2   trt_N061011        trt    N061011  641.4958 3778.1735 1501.515 2194.58930
+## 3   trt_N080611        trt    N080611  979.7758 4629.6653 1464.598 1374.90745
+## 4    trt_N61311        trt     N61311  936.6948 4628.0086 1395.398 2220.50867
+## 5 untrt_N052611      untrt    N052611 3978.0401  452.9934 3105.783  102.58269
+## 6 untrt_N061011      untrt    N061011 4792.3417  258.7328 2909.990   82.59042
+##        PER1    SLC6A9
+## 1 1230.2575  56.89620
+## 2 1333.9121  95.33916
+## 3 1120.0065  86.82929
+## 4 1728.3812  63.90538
+## 5  156.3692 413.87971
+## 6  123.4769 443.71982</code></pre>
+<div id="visual8" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> 单基因箱线图<a href="visual1.html#visual8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="visual1.html#cb785-1" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb785-2"><a href="visual1.html#cb785-2" tabindex="-1"></a></span>
+<span id="cb785-3"><a href="visual1.html#cb785-3" tabindex="-1"></a><span class="fu">ggboxplot</span>(top6_t_with_group, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="st">&quot;KCTD12&quot;</span>,</span>
+<span id="cb785-4"><a href="visual1.html#cb785-4" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">&quot;KCTD12&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>,</span>
+<span id="cb785-5"><a href="visual1.html#cb785-5" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>)</span>
+<span id="cb785-6"><a href="visual1.html#cb785-6" tabindex="-1"></a><span class="co"># palette</span></span>
+<span id="cb785-7"><a href="visual1.html#cb785-7" tabindex="-1"></a><span class="co"># npg, lancet, </span></span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-379-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual9" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> 多基因箱线图 (combine)<a href="visual1.html#visual9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="visual1.html#cb786-1" tabindex="-1"></a><span class="fu">ggboxplot</span>(top6_t_with_group, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;KCTD12&quot;</span>,<span class="st">&quot;MAOA&quot;</span>,<span class="st">&quot;PER1&quot;</span>,<span class="st">&quot;SLC6A9&quot;</span>),</span>
+<span id="cb786-2"><a href="visual1.html#cb786-2" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>, <span class="at">combine=</span>T,</span>
+<span id="cb786-3"><a href="visual1.html#cb786-3" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-380-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual10" class="section level3 hasAnchor" number="9.4.3">
+<h3><span class="header-section-number">9.4.3</span> 多基因箱线图 (merge)<a href="visual1.html#visual10" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="visual1.html#cb787-1" tabindex="-1"></a><span class="fu">ggboxplot</span>(top6_t_with_group, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;KCTD12&quot;</span>,<span class="st">&quot;MAOA&quot;</span>,<span class="st">&quot;PER1&quot;</span>,<span class="st">&quot;SLC6A9&quot;</span>),</span>
+<span id="cb787-2"><a href="visual1.html#cb787-2" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>, <span class="at">merge=</span><span class="st">&quot;flip&quot;</span>,</span>
+<span id="cb787-3"><a href="visual1.html#cb787-3" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;nature&quot;</span>)</span></code></pre></div>
+<pre><code>## Ignoring unknown labels:
+## • fill : &quot;&quot;
+## • linetype : &quot;&quot;
+## • shape : &quot;&quot;</code></pre>
+<p><img src="R_course_files/figure-html/unnamed-chunk-381-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual11" class="section level3 hasAnchor" number="9.4.4">
+<h3><span class="header-section-number">9.4.4</span> 数据对数转换后绘制箱线图<a href="visual1.html#visual11" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="visual1.html#cb789-1" tabindex="-1"></a>top6_t_with_group_log <span class="ot">=</span>  top6_t_with_group <span class="sc">%&gt;%</span></span>
+<span id="cb789-2"><a href="visual1.html#cb789-2" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_if</span>(is.numeric, log1p) <span class="sc">%&gt;%</span></span>
+<span id="cb789-3"><a href="visual1.html#cb789-3" tabindex="-1"></a>  as.data.frame</span>
+<span id="cb789-4"><a href="visual1.html#cb789-4" tabindex="-1"></a><span class="fu">head</span>(top6_t_with_group_log)</span></code></pre></div>
+<pre><code>##          Sample conditions individual   KCTD12     MAOA  ARHGEF2  SPARCL1
+## 1   trt_N052611        trt    N052611 6.452752 8.396317 7.274474 7.468506
+## 2   trt_N061011        trt    N061011 6.465360 8.237261 7.314896 7.694206
+## 3   trt_N080611        trt    N080611 6.888344 8.440456 7.290018 7.226869
+## 4    trt_N61311        trt     N61311 6.843425 8.440098 7.241652 7.705942
+## 5 untrt_N052611      untrt    N052611 8.288796 6.118083 8.041343 4.640370
+## 6 untrt_N061011      untrt    N061011 8.474983 5.559653 7.976249 4.425929
+##       PER1   SLC6A9
+## 1 7.115791 4.058652
+## 2 7.196621 4.567875
+## 3 7.021982 4.475395
+## 4 7.455519 4.172930
+## 5 5.058595 6.027989
+## 6 4.824120 6.097444</code></pre>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="visual1.html#cb791-1" tabindex="-1"></a><span class="fu">ggboxplot</span>(top6_t_with_group_log, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;KCTD12&quot;</span>,<span class="st">&quot;MAOA&quot;</span>,<span class="st">&quot;PER1&quot;</span>,<span class="st">&quot;SLC6A9&quot;</span>),</span>
+<span id="cb791-2"><a href="visual1.html#cb791-2" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>, <span class="at">merge=</span><span class="st">&quot;flip&quot;</span>,</span>
+<span id="cb791-3"><a href="visual1.html#cb791-3" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;Set3&quot;</span>)</span></code></pre></div>
+<pre><code>## Ignoring unknown labels:
+## • colour : &quot;&quot;
+## • linetype : &quot;&quot;
+## • shape : &quot;&quot;</code></pre>
+<p><img src="R_course_files/figure-html/unnamed-chunk-383-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual12" class="section level3 hasAnchor" number="9.4.5">
+<h3><span class="header-section-number">9.4.5</span> 用ggplot2实现ggpubr<a href="visual1.html#visual12" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="visual1.html#cb793-1" tabindex="-1"></a><span class="fu">head</span>(top6_t_with_group)</span></code></pre></div>
+<pre><code>##          Sample conditions individual    KCTD12      MAOA  ARHGEF2    SPARCL1
+## 1   trt_N052611        trt    N052611  633.4462 4429.7201 1441.992 1750.98786
+## 2   trt_N061011        trt    N061011  641.4958 3778.1735 1501.515 2194.58930
+## 3   trt_N080611        trt    N080611  979.7758 4629.6653 1464.598 1374.90745
+## 4    trt_N61311        trt     N61311  936.6948 4628.0086 1395.398 2220.50867
+## 5 untrt_N052611      untrt    N052611 3978.0401  452.9934 3105.783  102.58269
+## 6 untrt_N061011      untrt    N061011 4792.3417  258.7328 2909.990   82.59042
+##        PER1    SLC6A9
+## 1 1230.2575  56.89620
+## 2 1333.9121  95.33916
+## 3 1120.0065  86.82929
+## 4 1728.3812  63.90538
+## 5  156.3692 413.87971
+## 6  123.4769 443.71982</code></pre>
+<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="visual1.html#cb795-1" tabindex="-1"></a>top6_t_with_group_melt <span class="ot">&lt;-</span> <span class="fu">gather</span>(top6_t_with_group, <span class="at">key=</span><span class="st">&quot;Gene&quot;</span>, </span>
+<span id="cb795-2"><a href="visual1.html#cb795-2" tabindex="-1"></a>                                 <span class="at">value=</span><span class="st">&quot;Expr&quot;</span>, <span class="sc">-</span>conditions, <span class="sc">-</span>Sample)</span>
+<span id="cb795-3"><a href="visual1.html#cb795-3" tabindex="-1"></a>top6_t_with_group_melt</span></code></pre></div>
+<pre><code>##           Sample conditions       Gene             Expr
+## 1    trt_N052611        trt individual          N052611
+## 2    trt_N061011        trt individual          N061011
+## 3    trt_N080611        trt individual          N080611
+## 4     trt_N61311        trt individual           N61311
+## 5  untrt_N052611      untrt individual          N052611
+## 6  untrt_N061011      untrt individual          N061011
+## 7  untrt_N080611      untrt individual          N080611
+## 8   untrt_N61311      untrt individual           N61311
+## 9    trt_N052611        trt     KCTD12 633.446156631623
+## 10   trt_N061011        trt     KCTD12 641.495823400197
+## 11   trt_N080611        trt     KCTD12 979.775760302651
+## 12    trt_N61311        trt     KCTD12  936.69481220158
+## 13 untrt_N052611      untrt     KCTD12 3978.04010747298
+## 14 untrt_N061011      untrt     KCTD12 4792.34174092359
+## 15 untrt_N080611      untrt     KCTD12  4416.1516874711
+## 16  untrt_N61311      untrt     KCTD12 4700.79369380424
+## 17   trt_N052611        trt       MAOA 4429.72011060544
+## 18   trt_N061011        trt       MAOA 3778.17351003238
+## 19   trt_N080611        trt       MAOA 4629.66529040409
+## 20    trt_N61311        trt       MAOA 4628.00860200842
+## 21 untrt_N052611      untrt       MAOA 452.993366254371
+## 22 untrt_N061011      untrt       MAOA 258.732786794907
+## 23 untrt_N080611      untrt       MAOA 516.630329311547
+## 24  untrt_N61311      untrt       MAOA 438.544507027083
+## 25   trt_N052611        trt    ARHGEF2 1441.99162090614
+## 26   trt_N061011        trt    ARHGEF2 1501.51509498614
+## 27   trt_N080611        trt    ARHGEF2 1464.59768716888
+## 28    trt_N61311        trt    ARHGEF2 1395.39849893799
+## 29 untrt_N052611      untrt    ARHGEF2 3105.78298812572
+## 30 untrt_N061011      untrt    ARHGEF2 2909.99043109019
+## 31 untrt_N080611      untrt    ARHGEF2 3094.51304122032
+## 32  untrt_N61311      untrt    ARHGEF2  3025.6233363497
+## 33   trt_N052611        trt    SPARCL1 1750.98785915805
+## 34   trt_N061011        trt    SPARCL1 2194.58930391866
+## 35   trt_N080611        trt    SPARCL1  1374.9074458069
+## 36    trt_N61311        trt    SPARCL1 2220.50866953382
+## 37 untrt_N052611      untrt    SPARCL1 102.582688954068
+## 38 untrt_N061011      untrt    SPARCL1 82.5904194503166
+## 39 untrt_N080611      untrt    SPARCL1 80.0099713726754
+## 40  untrt_N61311      untrt    SPARCL1 58.1570455959873
+## 41   trt_N052611        trt       PER1 1230.25754726245
+## 42   trt_N061011        trt       PER1 1333.91208461272
+## 43   trt_N080611        trt       PER1 1120.00649866401
+## 44    trt_N61311        trt       PER1 1728.38116769035
+## 45 untrt_N052611      untrt       PER1 156.369203700759
+## 46 untrt_N061011      untrt       PER1 123.476891690872
+## 47 untrt_N080611      untrt       PER1 194.974974658647
+## 48  untrt_N61311      untrt       PER1 170.616393438453
+## 49   trt_N052611        trt     SLC6A9 56.8961953886688
+## 50   trt_N061011        trt     SLC6A9 95.3391636485024
+## 51   trt_N080611        trt     SLC6A9  86.829285341317
+## 52    trt_N61311        trt     SLC6A9  63.905375488457
+## 53 untrt_N052611      untrt     SLC6A9  413.87970872618
+## 54 untrt_N061011      untrt     SLC6A9 443.719821991366
+## 55 untrt_N080611      untrt     SLC6A9 365.476499952657
+## 56  untrt_N61311      untrt     SLC6A9 360.663136119816</code></pre>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="visual1.html#cb797-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb797-2"><a href="visual1.html#cb797-2" tabindex="-1"></a><span class="fu">ggplot</span>(top6_t_with_group_melt, <span class="fu">aes</span>(<span class="at">x=</span>Gene, <span class="at">y=</span>Expr)) <span class="sc">+</span> </span>
+<span id="cb797-3"><a href="visual1.html#cb797-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>conditions)) <span class="sc">+</span> <span class="fu">theme_classic</span>() </span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-386-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual13" class="section level3 hasAnchor" number="9.4.6">
+<h3><span class="header-section-number">9.4.6</span> 配色<a href="visual1.html#visual13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>序列型颜色板适用于从低到高排序明显的数据，浅色数字小，深色数字大。</p>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="visual1.html#cb798-1" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb798-2"><a href="visual1.html#cb798-2" tabindex="-1"></a><span class="fu">display.brewer.all</span>(<span class="at">type =</span> <span class="st">&quot;seq&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-387-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>离散型颜色板适合带“正、负”的，对极值和中间值比较注重的数据。</p>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="visual1.html#cb799-1" tabindex="-1"></a><span class="fu">display.brewer.all</span>(<span class="at">type =</span> <span class="st">&quot;div&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-388-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>分类型颜色板比较适合区分分类型的数据。</p>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="visual1.html#cb800-1" tabindex="-1"></a><span class="fu">display.brewer.all</span>(<span class="at">type =</span> <span class="st">&quot;qual&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-389-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual14" class="section level3 hasAnchor" number="9.4.7">
+<h3><span class="header-section-number">9.4.7</span> 箱线图加统计分析<a href="visual1.html#visual14" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="visual1.html#cb801-1" tabindex="-1"></a>my_comparisons <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;trt&quot;</span>, <span class="st">&quot;untrt&quot;</span>))</span>
+<span id="cb801-2"><a href="visual1.html#cb801-2" tabindex="-1"></a><span class="fu">ggboxplot</span>(top6_t_with_group, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="st">&quot;PER1&quot;</span>,</span>
+<span id="cb801-3"><a href="visual1.html#cb801-3" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">&quot;PER1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>,</span>
+<span id="cb801-4"><a href="visual1.html#cb801-4" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;jitter&quot;</span>,                               <span class="co"># Add jittered points</span></span>
+<span id="cb801-5"><a href="visual1.html#cb801-5" tabindex="-1"></a>          <span class="co">#add = &quot;dotplot&quot;,</span></span>
+<span id="cb801-6"><a href="visual1.html#cb801-6" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="sc">+</span></span>
+<span id="cb801-7"><a href="visual1.html#cb801-7" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_comparisons)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-390-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>标记点来源的样本</p>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="visual1.html#cb802-1" tabindex="-1"></a>my_comparisons <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;trt&quot;</span>, <span class="st">&quot;untrt&quot;</span>))</span>
+<span id="cb802-2"><a href="visual1.html#cb802-2" tabindex="-1"></a><span class="fu">ggboxplot</span>(top6_t_with_group, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="st">&quot;PER1&quot;</span>,</span>
+<span id="cb802-3"><a href="visual1.html#cb802-3" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">&quot;PER1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>,</span>
+<span id="cb802-4"><a href="visual1.html#cb802-4" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;jitter&quot;</span>,                               <span class="co"># Add jittered points</span></span>
+<span id="cb802-5"><a href="visual1.html#cb802-5" tabindex="-1"></a>          <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">jitter =</span> <span class="fl">0.2</span>),  <span class="co"># Point size and the amount of jittering</span></span>
+<span id="cb802-6"><a href="visual1.html#cb802-6" tabindex="-1"></a>          <span class="at">label =</span> <span class="st">&quot;Sample&quot;</span>,                <span class="co"># column containing point labels</span></span>
+<span id="cb802-7"><a href="visual1.html#cb802-7" tabindex="-1"></a>          <span class="at">label.select =</span> <span class="fu">list</span>(<span class="at">top.up =</span> <span class="dv">2</span>, <span class="at">top.down =</span> <span class="dv">2</span>),<span class="co"># Select some labels to display</span></span>
+<span id="cb802-8"><a href="visual1.html#cb802-8" tabindex="-1"></a>          <span class="at">font.label =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>), <span class="co"># label font</span></span>
+<span id="cb802-9"><a href="visual1.html#cb802-9" tabindex="-1"></a>          <span class="at">repel =</span> <span class="cn">TRUE</span>,                                 <span class="co"># Avoid label text overplotting</span></span>
+<span id="cb802-10"><a href="visual1.html#cb802-10" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="sc">+</span></span>
+<span id="cb802-11"><a href="visual1.html#cb802-11" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_comparisons)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-391-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>修改统计检验方法</p>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="visual1.html#cb803-1" tabindex="-1"></a>my_comparisons <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;trt&quot;</span>, <span class="st">&quot;untrt&quot;</span>))</span>
+<span id="cb803-2"><a href="visual1.html#cb803-2" tabindex="-1"></a><span class="fu">ggboxplot</span>(top6_t_with_group_log, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="st">&quot;PER1&quot;</span>,</span>
+<span id="cb803-3"><a href="visual1.html#cb803-3" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">&quot;PER1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>,</span>
+<span id="cb803-4"><a href="visual1.html#cb803-4" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;jitter&quot;</span>,                               <span class="co"># Add jittered points</span></span>
+<span id="cb803-5"><a href="visual1.html#cb803-5" tabindex="-1"></a>          <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">jitter =</span> <span class="fl">0.2</span>),  <span class="co"># Point size and the amount of jittering</span></span>
+<span id="cb803-6"><a href="visual1.html#cb803-6" tabindex="-1"></a>          <span class="at">label =</span> <span class="st">&quot;Sample&quot;</span>,                <span class="co"># column containing point labels</span></span>
+<span id="cb803-7"><a href="visual1.html#cb803-7" tabindex="-1"></a>          <span class="at">label.select =</span> <span class="fu">list</span>(<span class="at">top.up =</span> <span class="dv">2</span>, <span class="at">top.down =</span> <span class="dv">2</span>),<span class="co"># Select some labels to display</span></span>
+<span id="cb803-8"><a href="visual1.html#cb803-8" tabindex="-1"></a>          <span class="at">font.label =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>), <span class="co"># label font</span></span>
+<span id="cb803-9"><a href="visual1.html#cb803-9" tabindex="-1"></a>          <span class="at">repel =</span> <span class="cn">TRUE</span>,                                 <span class="co"># Avoid label text overplotting</span></span>
+<span id="cb803-10"><a href="visual1.html#cb803-10" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;Paired&quot;</span>) <span class="sc">+</span></span>
+<span id="cb803-11"><a href="visual1.html#cb803-11" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_comparisons, <span class="at">method =</span> <span class="st">&quot;t.test&quot;</span>, <span class="at">paired =</span> T)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-392-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>小提琴图</p>
+<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="visual1.html#cb804-1" tabindex="-1"></a><span class="fu">ggviolin</span>(top6_t_with_group, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;KCTD12&quot;</span>,<span class="st">&quot;MAOA&quot;</span>),</span>
+<span id="cb804-2"><a href="visual1.html#cb804-2" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>, <span class="at">merge=</span><span class="st">&quot;flip&quot;</span>,</span>
+<span id="cb804-3"><a href="visual1.html#cb804-3" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb804-4"><a href="visual1.html#cb804-4" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;boxplot&quot;</span></span>
+<span id="cb804-5"><a href="visual1.html#cb804-5" tabindex="-1"></a>          <span class="co"># add = &quot;median_iqr&quot;</span></span>
+<span id="cb804-6"><a href="visual1.html#cb804-6" tabindex="-1"></a>         )</span></code></pre></div>
+<pre><code>## Ignoring unknown labels:
+## • fill : &quot;&quot;
+## • linetype : &quot;&quot;
+## • shape : &quot;&quot;</code></pre>
+<p><img src="R_course_files/figure-html/unnamed-chunk-393-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>点带图（适合数据比较多）</p>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="visual1.html#cb806-1" tabindex="-1"></a><span class="fu">ggstripchart</span>(top6_t_with_group, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;KCTD12&quot;</span>,<span class="st">&quot;MAOA&quot;</span>),</span>
+<span id="cb806-2"><a href="visual1.html#cb806-2" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>, <span class="at">combine=</span>T,</span>
+<span id="cb806-3"><a href="visual1.html#cb806-3" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb806-4"><a href="visual1.html#cb806-4" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">jitter =</span> <span class="fl">0.2</span>,</span>
+<span id="cb806-5"><a href="visual1.html#cb806-5" tabindex="-1"></a>          <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>),</span>
+<span id="cb806-6"><a href="visual1.html#cb806-6" tabindex="-1"></a>          <span class="co"># add = &quot;boxplot&quot;</span></span>
+<span id="cb806-7"><a href="visual1.html#cb806-7" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;median_iqr&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-394-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="visual151" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> 通路内基因的比较<a href="visual1.html#visual151" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="visual1.html#cb807-1" tabindex="-1"></a>pathway <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;h.all.v6.2.symbols.gmt.forGO&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">row.names=</span><span class="cn">NULL</span>, <span class="at">header=</span>T)</span>
+<span id="cb807-2"><a href="visual1.html#cb807-2" tabindex="-1"></a><span class="fu">head</span>(pathway)</span></code></pre></div>
+<pre><code>##                                ont    gene
+## 1 HALLMARK_TNFA_SIGNALING_VIA_NFKB    JUNB
+## 2 HALLMARK_TNFA_SIGNALING_VIA_NFKB   CXCL2
+## 3 HALLMARK_TNFA_SIGNALING_VIA_NFKB    ATF3
+## 4 HALLMARK_TNFA_SIGNALING_VIA_NFKB  NFKBIA
+## 5 HALLMARK_TNFA_SIGNALING_VIA_NFKB TNFAIP3
+## 6 HALLMARK_TNFA_SIGNALING_VIA_NFKB   PTGS2</code></pre>
+<p>通路提取</p>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="visual1.html#cb809-1" tabindex="-1"></a><span class="co"># HALLMARK_HYPOXIA, HALLMARK_DNA_REPAIR, HALLMARK_P53_PATHWAY</span></span>
+<span id="cb809-2"><a href="visual1.html#cb809-2" tabindex="-1"></a></span>
+<span id="cb809-3"><a href="visual1.html#cb809-3" tabindex="-1"></a>target_pathway <span class="ot">&lt;-</span> pathway[pathway<span class="sc">$</span>ont <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;HALLMARK_HYPOXIA&quot;</span>, </span>
+<span id="cb809-4"><a href="visual1.html#cb809-4" tabindex="-1"></a>                                             <span class="st">&quot;HALLMARK_DNA_REPAIR&quot;</span>, <span class="st">&quot;HALLMARK_P53_PATHWAY&quot;</span>),]</span>
+<span id="cb809-5"><a href="visual1.html#cb809-5" tabindex="-1"></a></span>
+<span id="cb809-6"><a href="visual1.html#cb809-6" tabindex="-1"></a>target_pathway <span class="ot">&lt;-</span> <span class="fu">droplevels.data.frame</span>(target_pathway)</span>
+<span id="cb809-7"><a href="visual1.html#cb809-7" tabindex="-1"></a></span>
+<span id="cb809-8"><a href="visual1.html#cb809-8" tabindex="-1"></a><span class="fu">summary</span>(target_pathway)</span></code></pre></div>
+<pre><code>##      ont                gene          
+##  Length:550         Length:550        
+##  Class :character   Class :character  
+##  Mode  :character   Mode  :character</code></pre>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="visual1.html#cb811-1" tabindex="-1"></a><span class="fu">head</span>(target_pathway)</span></code></pre></div>
+<pre><code>##                  ont  gene
+## 201 HALLMARK_HYPOXIA  PGK1
+## 202 HALLMARK_HYPOXIA  PDK1
+## 203 HALLMARK_HYPOXIA  GBE1
+## 204 HALLMARK_HYPOXIA  PFKL
+## 205 HALLMARK_HYPOXIA ALDOA
+## 206 HALLMARK_HYPOXIA  ENO2</code></pre>
+<p>表达矩阵提取</p>
+<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="visual1.html#cb813-1" tabindex="-1"></a>expr_with_gene <span class="ot">&lt;-</span> expr</span>
+<span id="cb813-2"><a href="visual1.html#cb813-2" tabindex="-1"></a>expr_with_gene<span class="sc">$</span>gene <span class="ot">&lt;-</span> <span class="fu">rownames</span>(expr_with_gene)</span>
+<span id="cb813-3"><a href="visual1.html#cb813-3" tabindex="-1"></a>target_pathway_with_expr <span class="ot">&lt;-</span> <span class="fu">left_join</span>(target_pathway, expr_with_gene)</span></code></pre></div>
+<pre><code>## Joining with `by = join_by(gene)`</code></pre>
+<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="visual1.html#cb815-1" tabindex="-1"></a><span class="fu">summary</span>(target_pathway_with_expr)</span></code></pre></div>
+<pre><code>##      ont                gene            untrt_N61311      untrt_N052611     
+##  Length:550         Length:550         Min.   :     0.0   Min.   :     0.0  
+##  Class :character   Class :character   1st Qu.:   254.2   1st Qu.:   240.8  
+##  Mode  :character   Mode  :character   Median :   781.3   Median :   784.1  
+##                                        Mean   :  2528.6   Mean   :  2895.1  
+##                                        3rd Qu.:  1852.4   3rd Qu.:  1727.2  
+##                                        Max.   :212953.1   Max.   :360796.2  
+##                                        NA&#39;s   :36         NA&#39;s   :36        
+##  untrt_N080611      untrt_N061011        trt_N61311        trt_N052611      
+##  Min.   :     0.0   Min.   :     0.0   Min.   :     0.0   Min.   :     0.0  
+##  1st Qu.:   235.0   1st Qu.:   237.9   1st Qu.:   248.2   1st Qu.:   211.0  
+##  Median :   734.9   Median :   764.2   Median :   766.6   Median :   723.2  
+##  Mean   :  2549.2   Mean   :  2864.9   Mean   :  2531.8   Mean   :  2783.3  
+##  3rd Qu.:  1932.4   3rd Qu.:  1870.0   3rd Qu.:  1872.4   3rd Qu.:  1832.2  
+##  Max.   :258977.3   Max.   :408573.1   Max.   :210002.2   Max.   :316009.1  
+##  NA&#39;s   :36         NA&#39;s   :36         NA&#39;s   :36         NA&#39;s   :36        
+##   trt_N080611        trt_N061011      
+##  Min.   :     0.0   Min.   :     0.0  
+##  1st Qu.:   250.6   1st Qu.:   227.9  
+##  Median :   739.3   Median :   746.0  
+##  Mean   :  2840.3   Mean   :  3043.6  
+##  3rd Qu.:  1825.8   3rd Qu.:  1925.1  
+##  Max.   :225547.4   Max.   :393843.7  
+##  NA&#39;s   :36         NA&#39;s   :36</code></pre>
+<p>移除通路中未检测到表达的基因</p>
+<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="visual1.html#cb817-1" tabindex="-1"></a>target_pathway_with_expr <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(target_pathway_with_expr)</span>
+<span id="cb817-2"><a href="visual1.html#cb817-2" tabindex="-1"></a><span class="fu">summary</span>(target_pathway_with_expr)</span></code></pre></div>
+<pre><code>##      ont                gene            untrt_N61311      untrt_N052611     
+##  Length:514         Length:514         Min.   :     0.0   Min.   :     0.0  
+##  Class :character   Class :character   1st Qu.:   254.2   1st Qu.:   240.8  
+##  Mode  :character   Mode  :character   Median :   781.3   Median :   784.1  
+##                                        Mean   :  2528.6   Mean   :  2895.1  
+##                                        3rd Qu.:  1852.4   3rd Qu.:  1727.2  
+##                                        Max.   :212953.1   Max.   :360796.2  
+##  untrt_N080611      untrt_N061011        trt_N61311        trt_N052611      
+##  Min.   :     0.0   Min.   :     0.0   Min.   :     0.0   Min.   :     0.0  
+##  1st Qu.:   235.0   1st Qu.:   237.9   1st Qu.:   248.2   1st Qu.:   211.0  
+##  Median :   734.9   Median :   764.2   Median :   766.6   Median :   723.2  
+##  Mean   :  2549.2   Mean   :  2864.9   Mean   :  2531.8   Mean   :  2783.3  
+##  3rd Qu.:  1932.4   3rd Qu.:  1870.0   3rd Qu.:  1872.4   3rd Qu.:  1832.2  
+##  Max.   :258977.3   Max.   :408573.1   Max.   :210002.2   Max.   :316009.1  
+##   trt_N080611        trt_N061011      
+##  Min.   :     0.0   Min.   :     0.0  
+##  1st Qu.:   250.6   1st Qu.:   227.9  
+##  Median :   739.3   Median :   746.0  
+##  Mean   :  2840.3   Mean   :  3043.6  
+##  3rd Qu.:  1825.8   3rd Qu.:  1925.1  
+##  Max.   :225547.4   Max.   :393843.7</code></pre>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="visual1.html#cb819-1" tabindex="-1"></a><span class="fu">head</span>(target_pathway_with_expr)</span></code></pre></div>
+<pre><code>##                ont  gene untrt_N61311 untrt_N052611 untrt_N080611 untrt_N061011
+## 1 HALLMARK_HYPOXIA  PGK1     7567.398     7893.2150     6254.5945      5529.122
+## 2 HALLMARK_HYPOXIA  PDK1     1009.850     1042.4868      735.9359       673.208
+## 3 HALLMARK_HYPOXIA  GBE1     3859.557     1494.4120     3803.5627      3295.191
+## 4 HALLMARK_HYPOXIA  PFKL     3581.499     3018.0675     2789.4430      3084.570
+## 5 HALLMARK_HYPOXIA ALDOA    19139.085    19587.3216    18089.5116     15519.899
+## 6 HALLMARK_HYPOXIA  ENO2     1964.796      979.5255     1041.4660      1288.837
+##   trt_N61311 trt_N052611 trt_N080611 trt_N061011
+## 1  7595.0408   6969.6128   15011.823   6076.4392
+## 2   419.6273    365.0062    1056.622    383.6163
+## 3  4769.5464   2359.7150    4759.809   4296.5471
+## 4  2867.2464   2599.5095    4399.403   3090.6701
+## 5 16388.1123  13949.5659   22630.701  14374.3437
+## 6  1303.5671    766.9436    1473.336    892.4621</code></pre>
+<p>转换宽矩阵为长矩阵</p>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="visual1.html#cb821-1" tabindex="-1"></a>target_pathway_with_expr_long <span class="ot">&lt;-</span> target_pathway_with_expr <span class="sc">%&gt;%</span> </span>
+<span id="cb821-2"><a href="visual1.html#cb821-2" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key=</span><span class="st">&quot;Sample&quot;</span>, <span class="at">value=</span><span class="st">&quot;Expr&quot;</span>, <span class="sc">-</span>ont, <span class="sc">-</span>gene)</span>
+<span id="cb821-3"><a href="visual1.html#cb821-3" tabindex="-1"></a></span>
+<span id="cb821-4"><a href="visual1.html#cb821-4" tabindex="-1"></a><span class="fu">head</span>(target_pathway_with_expr_long)</span></code></pre></div>
+<pre><code>##                ont  gene       Sample      Expr
+## 1 HALLMARK_HYPOXIA  PGK1 untrt_N61311  7567.398
+## 2 HALLMARK_HYPOXIA  PDK1 untrt_N61311  1009.850
+## 3 HALLMARK_HYPOXIA  GBE1 untrt_N61311  3859.557
+## 4 HALLMARK_HYPOXIA  PFKL untrt_N61311  3581.499
+## 5 HALLMARK_HYPOXIA ALDOA untrt_N61311 19139.085
+## 6 HALLMARK_HYPOXIA  ENO2 untrt_N61311  1964.796</code></pre>
+<p>合并样本信息</p>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="visual1.html#cb823-1" tabindex="-1"></a>metadata<span class="sc">$</span>Sample <span class="ot">&lt;-</span> <span class="fu">rownames</span>(metadata)</span>
+<span id="cb823-2"><a href="visual1.html#cb823-2" tabindex="-1"></a>target_pathway_with_expr_conditions_long <span class="ot">&lt;-</span> target_pathway_with_expr_long <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(metadata, <span class="at">by=</span><span class="st">&quot;Sample&quot;</span>)</span>
+<span id="cb823-3"><a href="visual1.html#cb823-3" tabindex="-1"></a></span>
+<span id="cb823-4"><a href="visual1.html#cb823-4" tabindex="-1"></a><span class="fu">head</span>(target_pathway_with_expr_conditions_long)</span></code></pre></div>
+<pre><code>##                ont  gene       Sample      Expr conditions individual
+## 1 HALLMARK_HYPOXIA  PGK1 untrt_N61311  7567.398      untrt     N61311
+## 2 HALLMARK_HYPOXIA  PDK1 untrt_N61311  1009.850      untrt     N61311
+## 3 HALLMARK_HYPOXIA  GBE1 untrt_N61311  3859.557      untrt     N61311
+## 4 HALLMARK_HYPOXIA  PFKL untrt_N61311  3581.499      untrt     N61311
+## 5 HALLMARK_HYPOXIA ALDOA untrt_N61311 19139.085      untrt     N61311
+## 6 HALLMARK_HYPOXIA  ENO2 untrt_N61311  1964.796      untrt     N61311</code></pre>
+<p>再次画点带图</p>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="visual1.html#cb825-1" tabindex="-1"></a><span class="fu">ggstripchart</span>(target_pathway_with_expr_conditions_long, <span class="at">x =</span> <span class="st">&quot;ont&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Expr&quot;</span>,</span>
+<span id="cb825-2"><a href="visual1.html#cb825-2" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>, <span class="at">combine=</span>T,</span>
+<span id="cb825-3"><a href="visual1.html#cb825-3" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb825-4"><a href="visual1.html#cb825-4" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">jitter =</span> <span class="fl">0.2</span>,</span>
+<span id="cb825-5"><a href="visual1.html#cb825-5" tabindex="-1"></a>          <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>),</span>
+<span id="cb825-6"><a href="visual1.html#cb825-6" tabindex="-1"></a>          <span class="co"># add = &quot;boxplot&quot;</span></span>
+<span id="cb825-7"><a href="visual1.html#cb825-7" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;median_iqr&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-401-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>表达数据log转换</p>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="visual1.html#cb826-1" tabindex="-1"></a>target_pathway_with_expr_conditions_long<span class="sc">$</span>logExpr <span class="ot">&lt;-</span> <span class="fu">log2</span>(target_pathway_with_expr_conditions_long<span class="sc">$</span>Expr <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb826-2"><a href="visual1.html#cb826-2" tabindex="-1"></a><span class="fu">ggstripchart</span>(target_pathway_with_expr_conditions_long, <span class="at">x =</span> <span class="st">&quot;ont&quot;</span>, <span class="at">y =</span> <span class="st">&quot;logExpr&quot;</span>,</span>
+<span id="cb826-3"><a href="visual1.html#cb826-3" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>, <span class="at">combine=</span>T,</span>
+<span id="cb826-4"><a href="visual1.html#cb826-4" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb826-5"><a href="visual1.html#cb826-5" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">jitter =</span> <span class="fl">0.2</span>,</span>
+<span id="cb826-6"><a href="visual1.html#cb826-6" tabindex="-1"></a>          <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>),</span>
+<span id="cb826-7"><a href="visual1.html#cb826-7" tabindex="-1"></a>          <span class="co"># add = &quot;boxplot&quot;</span></span>
+<span id="cb826-8"><a href="visual1.html#cb826-8" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;median_iqr&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-402-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="visual1.html#cb827-1" tabindex="-1"></a><span class="fu">head</span>(target_pathway_with_expr_conditions_long)</span></code></pre></div>
+<pre><code>##                ont  gene       Sample      Expr conditions individual   logExpr
+## 1 HALLMARK_HYPOXIA  PGK1 untrt_N61311  7567.398      untrt     N61311 12.885772
+## 2 HALLMARK_HYPOXIA  PDK1 untrt_N61311  1009.850      untrt     N61311  9.981353
+## 3 HALLMARK_HYPOXIA  GBE1 untrt_N61311  3859.557      untrt     N61311 11.914593
+## 4 HALLMARK_HYPOXIA  PFKL untrt_N61311  3581.499      untrt     N61311 11.806750
+## 5 HALLMARK_HYPOXIA ALDOA untrt_N61311 19139.085      untrt     N61311 14.224310
+## 6 HALLMARK_HYPOXIA  ENO2 untrt_N61311  1964.796      untrt     N61311 10.940898</code></pre>
+<p>提取P53通路进行后续分析</p>
+<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="visual1.html#cb829-1" tabindex="-1"></a>HALLMARK_P53_PATHWAY <span class="ot">=</span> target_pathway_with_expr_conditions_long[target_pathway_with_expr_conditions_long<span class="sc">$</span>ont<span class="sc">==</span><span class="st">&quot;HALLMARK_P53_PATHWAY&quot;</span>,]</span>
+<span id="cb829-2"><a href="visual1.html#cb829-2" tabindex="-1"></a><span class="fu">ggstripchart</span>(HALLMARK_P53_PATHWAY, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="st">&quot;logExpr&quot;</span>,</span>
+<span id="cb829-3"><a href="visual1.html#cb829-3" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;HALLMARK_P53_PATHWAY&quot;</span>,</span>
+<span id="cb829-4"><a href="visual1.html#cb829-4" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>,</span>
+<span id="cb829-5"><a href="visual1.html#cb829-5" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb829-6"><a href="visual1.html#cb829-6" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">jitter =</span> <span class="fl">0.2</span>,</span>
+<span id="cb829-7"><a href="visual1.html#cb829-7" tabindex="-1"></a>          <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>),</span>
+<span id="cb829-8"><a href="visual1.html#cb829-8" tabindex="-1"></a>          <span class="co"># add = &quot;boxplot&quot;</span></span>
+<span id="cb829-9"><a href="visual1.html#cb829-9" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;median_iqr&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-404-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="visual1.html#cb830-1" tabindex="-1"></a><span class="fu">ggdotplot</span>(HALLMARK_P53_PATHWAY, <span class="at">x =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">y =</span> <span class="st">&quot;logExpr&quot;</span>,</span>
+<span id="cb830-2"><a href="visual1.html#cb830-2" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;HALLMARK_P53_PATHWAY&quot;</span>,</span>
+<span id="cb830-3"><a href="visual1.html#cb830-3" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Expression&quot;</span>,</span>
+<span id="cb830-4"><a href="visual1.html#cb830-4" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span>, </span>
+<span id="cb830-5"><a href="visual1.html#cb830-5" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb830-6"><a href="visual1.html#cb830-6" tabindex="-1"></a>          <span class="at">binwidth =</span> <span class="fl">0.1</span>,</span>
+<span id="cb830-7"><a href="visual1.html#cb830-7" tabindex="-1"></a>          <span class="at">add.params =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="fl">0.9</span>),</span>
+<span id="cb830-8"><a href="visual1.html#cb830-8" tabindex="-1"></a>          <span class="co"># add = &quot;boxplot&quot;</span></span>
+<span id="cb830-9"><a href="visual1.html#cb830-9" tabindex="-1"></a>          <span class="at">add =</span> <span class="st">&quot;median_iqr&quot;</span>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-405-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div id="visual161" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> 密度图<a href="visual1.html#visual161" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="visual1.html#cb831-1" tabindex="-1"></a><span class="fu">ggdensity</span>(HALLMARK_P53_PATHWAY,</span>
+<span id="cb831-2"><a href="visual1.html#cb831-2" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;logExpr&quot;</span>,</span>
+<span id="cb831-3"><a href="visual1.html#cb831-3" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;..density..&quot;</span>,</span>
+<span id="cb831-4"><a href="visual1.html#cb831-4" tabindex="-1"></a>       <span class="at">combine =</span> <span class="cn">TRUE</span>,                  <span class="co"># Combine the 3 plots</span></span>
+<span id="cb831-5"><a href="visual1.html#cb831-5" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;Expression&quot;</span>, </span>
+<span id="cb831-6"><a href="visual1.html#cb831-6" tabindex="-1"></a>       <span class="at">add =</span> <span class="st">&quot;median&quot;</span>,                  <span class="co"># Add median line. </span></span>
+<span id="cb831-7"><a href="visual1.html#cb831-7" tabindex="-1"></a>       <span class="at">rug =</span> <span class="cn">TRUE</span>,                      <span class="co"># Add marginal rug</span></span>
+<span id="cb831-8"><a href="visual1.html#cb831-8" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;conditions&quot;</span>, </span>
+<span id="cb831-9"><a href="visual1.html#cb831-9" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;conditions&quot;</span>,</span>
+<span id="cb831-10"><a href="visual1.html#cb831-10" tabindex="-1"></a>       <span class="at">palette =</span> <span class="st">&quot;jco&quot;</span></span>
+<span id="cb831-11"><a href="visual1.html#cb831-11" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-406-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="visual1.html#cb832-1" tabindex="-1"></a><span class="fu">head</span>(top6_t_with_group)</span></code></pre></div>
+<pre><code>##          Sample conditions individual    KCTD12      MAOA  ARHGEF2    SPARCL1
+## 1   trt_N052611        trt    N052611  633.4462 4429.7201 1441.992 1750.98786
+## 2   trt_N061011        trt    N061011  641.4958 3778.1735 1501.515 2194.58930
+## 3   trt_N080611        trt    N080611  979.7758 4629.6653 1464.598 1374.90745
+## 4    trt_N61311        trt     N61311  936.6948 4628.0086 1395.398 2220.50867
+## 5 untrt_N052611      untrt    N052611 3978.0401  452.9934 3105.783  102.58269
+## 6 untrt_N061011      untrt    N061011 4792.3417  258.7328 2909.990   82.59042
+##        PER1    SLC6A9
+## 1 1230.2575  56.89620
+## 2 1333.9121  95.33916
+## 3 1120.0065  86.82929
+## 4 1728.3812  63.90538
+## 5  156.3692 413.87971
+## 6  123.4769 443.71982</code></pre>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="visual1.html#cb834-1" tabindex="-1"></a>top6_t_with_group_long <span class="ot">=</span> top6_t_with_group <span class="sc">%&gt;%</span> </span>
+<span id="cb834-2"><a href="visual1.html#cb834-2" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key=</span><span class="st">&quot;Gene&quot;</span>, <span class="at">value=</span><span class="st">&quot;Expr&quot;</span>, <span class="sc">-</span>conditions, <span class="sc">-</span>Sample, <span class="sc">-</span>individual)</span>
+<span id="cb834-3"><a href="visual1.html#cb834-3" tabindex="-1"></a>top6_t_with_group_long<span class="sc">$</span>conditions <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(top6_t_with_group_long<span class="sc">$</span>conditions)</span>
+<span id="cb834-4"><a href="visual1.html#cb834-4" tabindex="-1"></a><span class="fu">head</span>(top6_t_with_group_long)</span></code></pre></div>
+<pre><code>##          Sample conditions individual   Gene      Expr
+## 1   trt_N052611        trt    N052611 KCTD12  633.4462
+## 2   trt_N061011        trt    N061011 KCTD12  641.4958
+## 3   trt_N080611        trt    N080611 KCTD12  979.7758
+## 4    trt_N61311        trt     N61311 KCTD12  936.6948
+## 5 untrt_N052611      untrt    N052611 KCTD12 3978.0401
+## 6 untrt_N061011      untrt    N061011 KCTD12 4792.3417</code></pre>
+</div>
+</div>
+<div id="visual171" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> ggstatsplot绘图和统计分析<a href="visual1.html#visual171" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>箱线图</p>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="visual1.html#cb836-1" tabindex="-1"></a><span class="fu">library</span>(ggstatsplot)</span>
+<span id="cb836-2"><a href="visual1.html#cb836-2" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">ggwithinstats</span>(</span>
+<span id="cb836-3"><a href="visual1.html#cb836-3" tabindex="-1"></a>  <span class="at">data =</span> top6_t_with_group,</span>
+<span id="cb836-4"><a href="visual1.html#cb836-4" tabindex="-1"></a>  <span class="at">x =</span> conditions,</span>
+<span id="cb836-5"><a href="visual1.html#cb836-5" tabindex="-1"></a>  <span class="at">y =</span> PER1,</span>
+<span id="cb836-6"><a href="visual1.html#cb836-6" tabindex="-1"></a>  <span class="at">sort =</span> <span class="st">&quot;descending&quot;</span>, <span class="co"># ordering groups along the x-axis based on</span></span>
+<span id="cb836-7"><a href="visual1.html#cb836-7" tabindex="-1"></a>  <span class="at">sort.fun =</span> median, <span class="co"># values of `y` variable</span></span>
+<span id="cb836-8"><a href="visual1.html#cb836-8" tabindex="-1"></a>  <span class="at">pairwise.comparisons =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb836-9"><a href="visual1.html#cb836-9" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">&quot;s&quot;</span>,</span>
+<span id="cb836-10"><a href="visual1.html#cb836-10" tabindex="-1"></a>  <span class="at">pairwise.annotation =</span> <span class="st">&quot;p&quot;</span>,</span>
+<span id="cb836-11"><a href="visual1.html#cb836-11" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;PER1&quot;</span>,</span>
+<span id="cb836-12"><a href="visual1.html#cb836-12" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">&quot;PER1 compare&quot;</span>,</span>
+<span id="cb836-13"><a href="visual1.html#cb836-13" tabindex="-1"></a>  <span class="at">ggstatsplot.layer =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb836-14"><a href="visual1.html#cb836-14" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb836-15"><a href="visual1.html#cb836-15" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-409-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="visual1.html#cb837-1" tabindex="-1"></a><span class="fu">head</span>(target_pathway_with_expr_conditions_long)</span></code></pre></div>
+<pre><code>##                ont  gene       Sample      Expr conditions individual   logExpr
+## 1 HALLMARK_HYPOXIA  PGK1 untrt_N61311  7567.398      untrt     N61311 12.885772
+## 2 HALLMARK_HYPOXIA  PDK1 untrt_N61311  1009.850      untrt     N61311  9.981353
+## 3 HALLMARK_HYPOXIA  GBE1 untrt_N61311  3859.557      untrt     N61311 11.914593
+## 4 HALLMARK_HYPOXIA  PFKL untrt_N61311  3581.499      untrt     N61311 11.806750
+## 5 HALLMARK_HYPOXIA ALDOA untrt_N61311 19139.085      untrt     N61311 14.224310
+## 6 HALLMARK_HYPOXIA  ENO2 untrt_N61311  1964.796      untrt     N61311 10.940898</code></pre>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="visual1.html#cb839-1" tabindex="-1"></a><span class="fu">head</span>(HALLMARK_P53_PATHWAY)</span></code></pre></div>
+<pre><code>##                      ont   gene       Sample       Expr conditions individual
+## 322 HALLMARK_P53_PATHWAY CDKN1A untrt_N61311 14406.1316      untrt     N61311
+## 323 HALLMARK_P53_PATHWAY   BTG2 untrt_N61311  1163.7198      untrt     N61311
+## 324 HALLMARK_P53_PATHWAY   MDM2 untrt_N61311  3614.5324      untrt     N61311
+## 325 HALLMARK_P53_PATHWAY  CCNG1 untrt_N61311  5749.1367      untrt     N61311
+## 326 HALLMARK_P53_PATHWAY    FAS untrt_N61311  1029.4007      untrt     N61311
+## 327 HALLMARK_P53_PATHWAY   TOB1 untrt_N61311   829.7721      untrt     N61311
+##       logExpr
+## 322 13.814496
+## 323 10.185767
+## 324 11.819992
+## 325 12.489381
+## 326 10.008990
+## 327  9.698309</code></pre>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="visual1.html#cb841-1" tabindex="-1"></a><span class="fu">library</span>(ggstatsplot)</span>
+<span id="cb841-2"><a href="visual1.html#cb841-2" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">ggwithinstats</span>(</span>
+<span id="cb841-3"><a href="visual1.html#cb841-3" tabindex="-1"></a>  <span class="at">data =</span> HALLMARK_P53_PATHWAY,</span>
+<span id="cb841-4"><a href="visual1.html#cb841-4" tabindex="-1"></a>  <span class="at">x =</span> conditions,</span>
+<span id="cb841-5"><a href="visual1.html#cb841-5" tabindex="-1"></a>  <span class="at">y =</span> logExpr,</span>
+<span id="cb841-6"><a href="visual1.html#cb841-6" tabindex="-1"></a>  <span class="at">sort =</span> <span class="st">&quot;descending&quot;</span>, <span class="co"># ordering groups along the x-axis based on</span></span>
+<span id="cb841-7"><a href="visual1.html#cb841-7" tabindex="-1"></a>  <span class="at">sort.fun =</span> median, <span class="co"># values of `y` variable</span></span>
+<span id="cb841-8"><a href="visual1.html#cb841-8" tabindex="-1"></a>  <span class="at">pairwise.comparisons =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb841-9"><a href="visual1.html#cb841-9" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">&quot;s&quot;</span>,</span>
+<span id="cb841-10"><a href="visual1.html#cb841-10" tabindex="-1"></a>  <span class="at">pairwise.annotation =</span> <span class="st">&quot;p&quot;</span>,</span>
+<span id="cb841-11"><a href="visual1.html#cb841-11" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;HALLMARK_P53_PATHWAY&quot;</span>,</span>
+<span id="cb841-12"><a href="visual1.html#cb841-12" tabindex="-1"></a>  <span class="at">path.point =</span> F,</span>
+<span id="cb841-13"><a href="visual1.html#cb841-13" tabindex="-1"></a>  <span class="at">ggtheme =</span> ggthemes<span class="sc">::</span><span class="fu">theme_fivethirtyeight</span>(),</span>
+<span id="cb841-14"><a href="visual1.html#cb841-14" tabindex="-1"></a>  <span class="at">ggstatsplot.layer =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb841-15"><a href="visual1.html#cb841-15" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb841-16"><a href="visual1.html#cb841-16" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-412-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="visual1.html#cb842-1" tabindex="-1"></a><span class="fu">library</span>(ggstatsplot)</span>
+<span id="cb842-2"><a href="visual1.html#cb842-2" tabindex="-1"></a></span>
+<span id="cb842-3"><a href="visual1.html#cb842-3" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">grouped_ggwithinstats</span>(</span>
+<span id="cb842-4"><a href="visual1.html#cb842-4" tabindex="-1"></a>  <span class="at">data =</span> target_pathway_with_expr_conditions_long,</span>
+<span id="cb842-5"><a href="visual1.html#cb842-5" tabindex="-1"></a>  <span class="at">x =</span> conditions,</span>
+<span id="cb842-6"><a href="visual1.html#cb842-6" tabindex="-1"></a>  <span class="at">y =</span> logExpr,</span>
+<span id="cb842-7"><a href="visual1.html#cb842-7" tabindex="-1"></a>  <span class="at">grouping.var =</span> ont,</span>
+<span id="cb842-8"><a href="visual1.html#cb842-8" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;Condition&quot;</span>,</span>
+<span id="cb842-9"><a href="visual1.html#cb842-9" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;CEMIP expression&quot;</span>,</span>
+<span id="cb842-10"><a href="visual1.html#cb842-10" tabindex="-1"></a>  <span class="at">path.point =</span> F,</span>
+<span id="cb842-11"><a href="visual1.html#cb842-11" tabindex="-1"></a>  <span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>, <span class="co"># R color brewer</span></span>
+<span id="cb842-12"><a href="visual1.html#cb842-12" tabindex="-1"></a>  <span class="at">ggstatsplot.layer =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb842-13"><a href="visual1.html#cb842-13" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb842-14"><a href="visual1.html#cb842-14" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-413-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="visual1.html#cb843-1" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">grouped_ggwithinstats</span>(</span>
+<span id="cb843-2"><a href="visual1.html#cb843-2" tabindex="-1"></a>  <span class="at">data =</span> top6_t_with_group_long,</span>
+<span id="cb843-3"><a href="visual1.html#cb843-3" tabindex="-1"></a>  <span class="at">x =</span> conditions,</span>
+<span id="cb843-4"><a href="visual1.html#cb843-4" tabindex="-1"></a>  <span class="at">y =</span> Expr,</span>
+<span id="cb843-5"><a href="visual1.html#cb843-5" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;Condition&quot;</span>,</span>
+<span id="cb843-6"><a href="visual1.html#cb843-6" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;CEMIP expression&quot;</span>,</span>
+<span id="cb843-7"><a href="visual1.html#cb843-7" tabindex="-1"></a>  <span class="at">grouping.var =</span> Gene,</span>
+<span id="cb843-8"><a href="visual1.html#cb843-8" tabindex="-1"></a>  <span class="at">ggstatsplot.layer =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb843-9"><a href="visual1.html#cb843-9" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb843-10"><a href="visual1.html#cb843-10" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-414-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="visual1.html#cb844-1" tabindex="-1"></a><span class="fu">head</span>(expr)</span></code></pre></div>
+<pre><code>##        untrt_N61311 untrt_N052611 untrt_N080611 untrt_N061011 trt_N61311
+## FN1       245667.66      427435.1     221687.51      371144.2  240187.24
+## DCN       212953.14      360796.2     258977.30      408573.1  210002.18
+## CEMIP      40996.34      137783.1      53813.92       91066.8   62301.12
+## CCDC80    137229.15      232772.2      86258.13      212237.3  136730.76
+## IGFBP5     77812.65      288609.2     210628.87      168067.4   96021.74
+## COL1A1    146450.41      127367.3     152281.50      140861.1   62358.64
+##        trt_N052611 trt_N080611 trt_N061011
+## FN1      450103.21   280226.19   376518.23
+## DCN      316009.14   225547.39   393843.74
+## CEMIP    223111.85   212724.84   157919.47
+## CCDC80   226070.89   124634.56   236237.81
+## IGFBP5   217439.21   162677.38   168387.36
+## COL1A1    53800.47    69160.97    51044.06</code></pre>
+<div id="visual162" class="section level3 hasAnchor" number="9.6.1">
+<h3><span class="header-section-number">9.6.1</span> 散点图<a href="visual1.html#visual162" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="visual1.html#cb846-1" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">ggscatterstats</span>(</span>
+<span id="cb846-2"><a href="visual1.html#cb846-2" tabindex="-1"></a>  <span class="at">data =</span> expr,</span>
+<span id="cb846-3"><a href="visual1.html#cb846-3" tabindex="-1"></a>  <span class="at">x =</span> untrt_N61311,</span>
+<span id="cb846-4"><a href="visual1.html#cb846-4" tabindex="-1"></a>  <span class="at">y =</span> untrt_N052611,</span>
+<span id="cb846-5"><a href="visual1.html#cb846-5" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;untrt_N61311&quot;</span>,</span>
+<span id="cb846-6"><a href="visual1.html#cb846-6" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;untrt_N052611&quot;</span>,</span>
+<span id="cb846-7"><a href="visual1.html#cb846-7" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;Sample correlation&quot;</span>,</span>
+<span id="cb846-8"><a href="visual1.html#cb846-8" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb846-9"><a href="visual1.html#cb846-9" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## `stat_xsidebin()` using `bins = 30`.
+## Pick better value `binwidth`.
+## `stat_ysidebin()` using `bins = 30`.
+## Pick better value `binwidth`.</code></pre>
+<p><img src="R_course_files/figure-html/unnamed-chunk-416-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="visual1.html#cb848-1" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">ggscatterstats</span>(</span>
+<span id="cb848-2"><a href="visual1.html#cb848-2" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">log2</span>(expr<span class="sc">+</span><span class="dv">1</span>),</span>
+<span id="cb848-3"><a href="visual1.html#cb848-3" tabindex="-1"></a>  <span class="at">x =</span> untrt_N61311,</span>
+<span id="cb848-4"><a href="visual1.html#cb848-4" tabindex="-1"></a>  <span class="at">y =</span> trt_N61311,</span>
+<span id="cb848-5"><a href="visual1.html#cb848-5" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;untrt_N61311&quot;</span>,</span>
+<span id="cb848-6"><a href="visual1.html#cb848-6" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;trt_N61311&quot;</span>,</span>
+<span id="cb848-7"><a href="visual1.html#cb848-7" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;Sample correlation&quot;</span>,</span>
+<span id="cb848-8"><a href="visual1.html#cb848-8" tabindex="-1"></a>  <span class="co">#marginal.type = &quot;density&quot;, # type of marginal distribution to be displayed</span></span>
+<span id="cb848-9"><a href="visual1.html#cb848-9" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb848-10"><a href="visual1.html#cb848-10" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## `stat_xsidebin()` using `bins = 30`.
+## Pick better value `binwidth`.
+## `stat_ysidebin()` using `bins = 30`.
+## Pick better value `binwidth`.</code></pre>
+<p><img src="R_course_files/figure-html/unnamed-chunk-417-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual172" class="section level3 hasAnchor" number="9.6.2">
+<h3><span class="header-section-number">9.6.2</span> 相关性图<a href="visual1.html#visual172" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="visual18" class="section level4 hasAnchor" number="9.6.2.1">
+<h4><span class="header-section-number">9.6.2.1</span> 基因共表达<a href="visual1.html#visual18" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="visual1.html#cb850-1" tabindex="-1"></a>gene_cor <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">t</span>(top6))</span>
+<span id="cb850-2"><a href="visual1.html#cb850-2" tabindex="-1"></a></span>
+<span id="cb850-3"><a href="visual1.html#cb850-3" tabindex="-1"></a><span class="fu">head</span>(gene_cor)</span></code></pre></div>
+<pre><code>##             KCTD12       MAOA    ARHGEF2    SPARCL1       PER1     SLC6A9
+## KCTD12   1.0000000 -0.9792624  0.9799663 -0.9619660 -0.9529732  0.9772852
+## MAOA    -0.9792624  1.0000000 -0.9897706  0.9406196  0.9614877 -0.9871408
+## ARHGEF2  0.9799663 -0.9897706  1.0000000 -0.9628750 -0.9660416  0.9791535
+## SPARCL1 -0.9619660  0.9406196 -0.9628750  1.0000000  0.9853858 -0.9510121
+## PER1    -0.9529732  0.9614877 -0.9660416  0.9853858  1.0000000 -0.9615253
+## SLC6A9   0.9772852 -0.9871408  0.9791535 -0.9510121 -0.9615253  1.0000000</code></pre>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="visual1.html#cb852-1" tabindex="-1"></a><span class="fu">pheatmap</span>(gene_cor)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-419-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="visual1.html#cb853-1" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(top6_t))</span></code></pre></div>
+<pre><code>##         KCTD12  MAOA ARHGEF2 SPARCL1  PER1 SLC6A9
+## KCTD12    1.00 -0.98    0.98   -0.96 -0.95   0.98
+## MAOA     -0.98  1.00   -0.99    0.94  0.96  -0.99
+## ARHGEF2   0.98 -0.99    1.00   -0.96 -0.97   0.98
+## SPARCL1  -0.96  0.94   -0.96    1.00  0.99  -0.95
+## PER1     -0.95  0.96   -0.97    0.99  1.00  -0.96
+## SLC6A9    0.98 -0.99    0.98   -0.95 -0.96   1.00
+## 
+## n= 8 
+## 
+## 
+## P
+##         KCTD12 MAOA  ARHGEF2 SPARCL1 PER1  SLC6A9
+## KCTD12         0e+00 0e+00   1e-04   3e-04 0e+00 
+## MAOA    0e+00        0e+00   5e-04   1e-04 0e+00 
+## ARHGEF2 0e+00  0e+00         1e-04   0e+00 0e+00 
+## SPARCL1 1e-04  5e-04 1e-04           0e+00 3e-04 
+## PER1    3e-04  1e-04 0e+00   0e+00         1e-04 
+## SLC6A9  0e+00  0e+00 0e+00   3e-04   1e-04</code></pre>
+<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="visual1.html#cb855-1" tabindex="-1"></a><span class="fu">head</span>(top6_t)</span></code></pre></div>
+<pre><code>##                  KCTD12      MAOA  ARHGEF2    SPARCL1      PER1    SLC6A9
+## untrt_N61311  4700.7937  438.5445 3025.623   58.15705  170.6164 360.66314
+## untrt_N052611 3978.0401  452.9934 3105.783  102.58269  156.3692 413.87971
+## untrt_N080611 4416.1517  516.6303 3094.513   80.00997  194.9750 365.47650
+## untrt_N061011 4792.3417  258.7328 2909.990   82.59042  123.4769 443.71982
+## trt_N61311     936.6948 4628.0086 1395.398 2220.50867 1728.3812  63.90538
+## trt_N052611    633.4462 4429.7201 1441.992 1750.98786 1230.2575  56.89620</code></pre>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="visual1.html#cb857-1" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">ggcorrmat</span>(</span>
+<span id="cb857-2"><a href="visual1.html#cb857-2" tabindex="-1"></a>  <span class="at">data =</span> top6_t,</span>
+<span id="cb857-3"><a href="visual1.html#cb857-3" tabindex="-1"></a>  <span class="at">corr.method =</span> <span class="st">&quot;robust&quot;</span>, <span class="co"># correlation method</span></span>
+<span id="cb857-4"><a href="visual1.html#cb857-4" tabindex="-1"></a>  <span class="at">sig.level =</span> <span class="fl">0.0001</span>, <span class="co"># threshold of significance</span></span>
+<span id="cb857-5"><a href="visual1.html#cb857-5" tabindex="-1"></a>  <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>, <span class="co"># p-value adjustment method for multiple comparisons</span></span>
+<span id="cb857-6"><a href="visual1.html#cb857-6" tabindex="-1"></a>  <span class="co"># cor.vars = c(sleep_rem, awake:bodywt), # a range of variables can be selected</span></span>
+<span id="cb857-7"><a href="visual1.html#cb857-7" tabindex="-1"></a>  <span class="co"># cor.vars.names = c(</span></span>
+<span id="cb857-8"><a href="visual1.html#cb857-8" tabindex="-1"></a>  <span class="co">#   &quot;REM sleep&quot;, # variable names</span></span>
+<span id="cb857-9"><a href="visual1.html#cb857-9" tabindex="-1"></a>  <span class="co">#   &quot;time awake&quot;,</span></span>
+<span id="cb857-10"><a href="visual1.html#cb857-10" tabindex="-1"></a>  <span class="co">#   &quot;brain weight&quot;,</span></span>
+<span id="cb857-11"><a href="visual1.html#cb857-11" tabindex="-1"></a>  <span class="co">#   &quot;body weight&quot;</span></span>
+<span id="cb857-12"><a href="visual1.html#cb857-12" tabindex="-1"></a>  <span class="co"># ),</span></span>
+<span id="cb857-13"><a href="visual1.html#cb857-13" tabindex="-1"></a>  <span class="at">matrix.type =</span> <span class="st">&quot;upper&quot;</span>, <span class="co"># type of visualization matrix</span></span>
+<span id="cb857-14"><a href="visual1.html#cb857-14" tabindex="-1"></a>  <span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>,</span>
+<span id="cb857-15"><a href="visual1.html#cb857-15" tabindex="-1"></a>  <span class="co">#colors = c(&quot;#B2182B&quot;, &quot;white&quot;, &quot;#4D4D4D&quot;),</span></span>
+<span id="cb857-16"><a href="visual1.html#cb857-16" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">&quot;Correlalogram for mammals sleep dataset&quot;</span>,</span>
+<span id="cb857-17"><a href="visual1.html#cb857-17" tabindex="-1"></a>  <span class="at">subtitle =</span> <span class="st">&quot;sleep units: hours; weight units: kilograms&quot;</span></span>
+<span id="cb857-18"><a href="visual1.html#cb857-18" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-422-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visual19" class="section level4 hasAnchor" number="9.6.2.2">
+<h4><span class="header-section-number">9.6.2.2</span> 样品相关性<a href="visual1.html#visual19" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="visual1.html#cb858-1" tabindex="-1"></a>top100 <span class="ot">&lt;-</span> <span class="fu">head</span>(expr,<span class="dv">100</span>)</span>
+<span id="cb858-2"><a href="visual1.html#cb858-2" tabindex="-1"></a>ggstatsplot<span class="sc">::</span><span class="fu">ggcorrmat</span>(</span>
+<span id="cb858-3"><a href="visual1.html#cb858-3" tabindex="-1"></a>  <span class="at">data =</span> top100,</span>
+<span id="cb858-4"><a href="visual1.html#cb858-4" tabindex="-1"></a>  <span class="at">corr.method =</span> <span class="st">&quot;robust&quot;</span>, <span class="co"># correlation method</span></span>
+<span id="cb858-5"><a href="visual1.html#cb858-5" tabindex="-1"></a>  <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="co"># threshold of significance</span></span>
+<span id="cb858-6"><a href="visual1.html#cb858-6" tabindex="-1"></a>  <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>, <span class="co"># p-value adjustment method for multiple comparisons</span></span>
+<span id="cb858-7"><a href="visual1.html#cb858-7" tabindex="-1"></a>  <span class="co"># cor.vars = c(sleep_rem, awake:bodywt), # a range of variables can be selected</span></span>
+<span id="cb858-8"><a href="visual1.html#cb858-8" tabindex="-1"></a>  <span class="co"># cor.vars.names = c(</span></span>
+<span id="cb858-9"><a href="visual1.html#cb858-9" tabindex="-1"></a>  <span class="co">#   &quot;REM sleep&quot;, # variable names</span></span>
+<span id="cb858-10"><a href="visual1.html#cb858-10" tabindex="-1"></a>  <span class="co">#   &quot;time awake&quot;,</span></span>
+<span id="cb858-11"><a href="visual1.html#cb858-11" tabindex="-1"></a>  <span class="co">#   &quot;brain weight&quot;,</span></span>
+<span id="cb858-12"><a href="visual1.html#cb858-12" tabindex="-1"></a>  <span class="co">#   &quot;body weight&quot;</span></span>
+<span id="cb858-13"><a href="visual1.html#cb858-13" tabindex="-1"></a>  <span class="co"># ),</span></span>
+<span id="cb858-14"><a href="visual1.html#cb858-14" tabindex="-1"></a>  <span class="at">matrix.type =</span> <span class="st">&quot;upper&quot;</span>, <span class="co"># type of visualization matrix</span></span>
+<span id="cb858-15"><a href="visual1.html#cb858-15" tabindex="-1"></a>  <span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span></span>
+<span id="cb858-16"><a href="visual1.html#cb858-16" tabindex="-1"></a>  <span class="co">#colors = c(&quot;#B2182B&quot;, &quot;white&quot;, &quot;#4D4D4D&quot;),</span></span>
+<span id="cb858-17"><a href="visual1.html#cb858-17" tabindex="-1"></a></span>
+<span id="cb858-18"><a href="visual1.html#cb858-18" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="R_course_files/figure-html/unnamed-chunk-423-1.png" width="100%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="推荐一个-r-中很好用的条件判断语句.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="imageGP.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Tong-Chen/Bioinfo_course_R/edit/master/06-Visualization.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["R_course.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -44,7 +44,8 @@ ifelse(res_output$padj<=padj_thresh & res_output$log2FoldChange<=(-1)*(log2FC), 
 
 ```{r}
 library(dplyr)
-res_output %>% mutate(level = case_when(
+
+res_output %>% dplyr::mutate(level = case_when(
   (padj<=padj_thresh) & (log2FoldChange>=log2FC) ~ paste(groupA,"UP"),
   (padj<=padj_thresh) & (log2FoldChange<=(-1)*log2FC) ~ paste(groupB, "UP"),
   TRUE ~ "NoDiff"
@@ -56,7 +57,7 @@ res_output %>% mutate(level = case_when(
 速度快一点，但可读性弱了一些。
 
 ```{r}
-res_output %>% mutate(level = 
+res_output %>% dplyr::mutate(level = 
 if_else(res_output$padj<=padj_thresh & res_output$log2FoldChange>=log2FC, paste(groupA,"UP"),
 if_else(res_output$padj<=padj_thresh & res_output$log2FoldChange<=(-1)*(log2FC), paste(groupB,"UP"),
        "NoDiff"))) 
@@ -66,7 +67,7 @@ if_else(res_output$padj<=padj_thresh & res_output$log2FoldChange<=(-1)*(log2FC),
 
 ```{r}
 library(dplyr)
-res_output %>% mutate(diff_gene = case_when(
+res_output %>% dplyr::mutate(diff_gene = case_when(
   (padj<=padj_thresh) & (log2FoldChange>=log2FC) ~ Gene,
   (padj<=padj_thresh) & (log2FoldChange<=(-1)*log2FC) ~ Gene,
   TRUE ~ ""
@@ -79,7 +80,7 @@ res_output %>% mutate(diff_gene = case_when(
 
 ```{r}
 library(dplyr)
-res_output %>% mutate(rank=1:n(),
+res_output %>% dplyr::mutate(rank=1:n(),
                        keep_gene = case_when(
   rank %% 2 == 1 ~ Gene,
   TRUE ~ ""

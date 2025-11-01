@@ -1,5 +1,10 @@
 # 高颜值免费在线绘图（提供绘图源码） {#imageGP}
 
+* ImageGP 1.0 <https://www.bic.ac.cn/ImageGP>
+
+* ImageGP 2.0 <https://www.bic.ac.cn/BIC>
+
+* 视频教程 <https://space.bilibili.com/362709786/lists/5849058?type=season>
 
 
 ## 高颜值免费在线绘图基础版视频 {#imagegpbasic}

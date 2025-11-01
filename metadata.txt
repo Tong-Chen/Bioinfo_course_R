@@ -1,0 +1,9 @@
+Samp	conditions	individual
+untrt_N61311	untrt	N61311
+untrt_N052611	untrt	N052611
+untrt_N080611	untrt	N080611
+untrt_N061011	untrt	N061011
+trt_N61311	trt	N61311
+trt_N052611	trt	N052611
+trt_N080611	trt	N080611
+trt_N061011	trt	N061011

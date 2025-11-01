@@ -975,7 +975,7 @@ knitr::include_graphics("images/boxplot_4.png")
 #A;4;6;7;5;8;6;3.2;5.2;5.6;3.6;7.6;4.8;2;4;3;2;4;2.5
 #B;6;8;9;7;10;8;5.2;7.2;7.6;5.6;9.6;6.8;4;6;5;4;6;4.5"
 
-profile_text <- read.table("data/boxplot_singleGene.data", header=T, row.names=1, quote="", 
+profile_text <- read.table("data/boxplot_singleGene.data.txt", header=T, row.names=1, quote="", 
 		sep="\t", check.names=F)
 
 data_m = data.frame(t(profile_text['A',]))
@@ -1340,16 +1340,16 @@ plot_grid(p1,p2, labels=c("A","B"), ncol=2, nrow=1)
 
 ```{r}
 volcano = "id;log2FoldChange;padj;significant;label
-E00007;4.28238;0;EHBIO_UP;A
+E00007;4.28238;0;Samp_UP;A
 E00008;-1.1036;0.476466843393901;Unchanged;-
 E00009;-0.274368;1;Unchanged;-
-E00010;4.62347;7.37606076333335e-103;EHBIO_UP;-
+E00010;4.62347;7.37606076333335e-103;Samp_UP;-
 E00012;0.973987;0.482982440163204;Unchanged;-
 E00017;-1.30205;0.000555693857439792;Baodian_UP;B
 E00024;0.617636;2.78047837287061e-13;Unchanged;-
-E00033;1.48669;2.56000581595275e-60;EHBIO_UP;-
+E00033;1.48669;2.56000581595275e-60;Samp_UP;-
 E00034;-0.783716;0.00341521725291801;Unchanged;-
-E00036;2.01592;6.03136656016401e-06;EHBIO_UP;C
+E00036;2.01592;6.03136656016401e-06;Samp_UP;C
 E00040;-1.89657;4.73663890849056e-21;Baodian_UP;-
 E00041;-0.268168;0.563429434558031;Unchanged;-
 E00042;0.0861048;0.367700939634328;Unchanged;-
@@ -1453,10 +1453,10 @@ summary(volcanoData)
 
 ```{r}
 fastqc<-"ID;GC_quality;Base_quality
-ehbio_1_1;PASS;PASS
-ehbio_1_2;PASS;PASS
-ehbio_2_1;WARN;PASS
-ehbio_2_2;WARN;PASS
+Samp_1_1;PASS;PASS
+Samp_1_2;PASS;PASS
+Samp_2_1;WARN;PASS
+Samp_2_2;WARN;PASS
 Other_1_1;FAIL;FAIL
 Other_1_2;FAIL;FAIL"
 
@@ -1494,7 +1494,7 @@ p
 
 功能富集分析用来展示某一组基因(一般是单个样品上调或下调的基因)倾向参与哪些功能调控通路，对从整体理解变化了的基因的功能和潜在的调控意义具有指导作用，也是文章发表中一个有意义的美图。通常会用柱状图、泡泡图和热图进行展示。热图的画法之前已经介绍过，这次介绍下富集分析泡泡图, 其展示的信息是最为全面的，也是比较抓人眼球的。
 
-假设有这么一个富集分析结果矩阵 (文件名为GOenrichement.xls) 存储了EHBIO样品和Baodian样品中各自上调的基因富集的通路。
+假设有这么一个富集分析结果矩阵 (文件名为GOenrichement.xls) 存储了Samp样品和Baodian样品中各自上调的基因富集的通路。
 
 http://omicslab.genetics.ac.cn/GOEAST
 
@@ -1502,24 +1502,24 @@ http://omicslab.genetics.ac.cn/GOEAST
 * GeneRatio 为对应通路差异基因占总差异基因的比例，本列可以用分数或小数表示，都可以处理。
 * qvalue 表示对应通路富集的显著性程度，可以是log处理过的，也可以是原始的。
 * Count 为对应通路差异基因数目。 
-* Type 这个矩阵合并了EHBIO样品和Baodian样品中各自上调的基因富集的通路，用Type列做区分。如果只有一个样品可不要。
+* Type 这个矩阵合并了Samp样品和Baodian样品中各自上调的基因富集的通路，用Type列做区分。如果只有一个样品可不要。
 
 
 ```
 Description	GeneRatio	qvalue	Count	Type
-ERBB signaling pathway	7/320	0.001836081	7	EHBIO_up
-regulation of ERBB signaling pathway	5/320	0.003886659	5	EHBIO_up
-negative regulation of cell cycle G1/S phase transition	4/320	0.016153254	4	EHBIO_up
-Wnt signaling pathway	13/320	0.01680096	13	EHBIO_up
-cell-cell signaling by wnt	13/320	0.0171473	13	EHBIO_up
-negative regulation of cell cycle process	8/320	0.019453085	8	EHBIO_up
-extrinsic apoptotic signaling pathway	9/320	0.024164034	9	EHBIO_up
-positive regulation of extrinsic apoptotic signaling pathway	4/320	0.025708228	4	EHBIO_up
-cell cycle G1/S phase transition	7/320	0.035797856	7	EHBIO_up
-negative regulation of apoptotic signaling pathway	8/320	0.038684745	8	EHBIO_up
-regulation of Notch signaling pathway	4/320	0.041592045	4	EHBIO_up
-regulation of cell cycle G1/S phase transition	5/320	0.047407619	5	EHBIO_up
-negative regulation of BMP signaling pathway	3/320	0.049460847	3	EHBIO_up
+ERBB signaling pathway	7/320	0.001836081	7	Samp_up
+regulation of ERBB signaling pathway	5/320	0.003886659	5	Samp_up
+negative regulation of cell cycle G1/S phase transition	4/320	0.016153254	4	Samp_up
+Wnt signaling pathway	13/320	0.01680096	13	Samp_up
+cell-cell signaling by wnt	13/320	0.0171473	13	Samp_up
+negative regulation of cell cycle process	8/320	0.019453085	8	Samp_up
+extrinsic apoptotic signaling pathway	9/320	0.024164034	9	Samp_up
+positive regulation of extrinsic apoptotic signaling pathway	4/320	0.025708228	4	Samp_up
+cell cycle G1/S phase transition	7/320	0.035797856	7	Samp_up
+negative regulation of apoptotic signaling pathway	8/320	0.038684745	8	Samp_up
+regulation of Notch signaling pathway	4/320	0.041592045	4	Samp_up
+regulation of cell cycle G1/S phase transition	5/320	0.047407619	5	Samp_up
+negative regulation of BMP signaling pathway	3/320	0.049460847	3	Samp_up
 regulation of ERK1 and ERK2 cascade	14/342	0.000629602	14	Baodian_up
 positive regulation of cell adhesion	17/342	0.000827275	17	Baodian_up
 ERK1 and ERK2 cascade	14/342	0.001086508	14	Baodian_up
@@ -1679,7 +1679,7 @@ p <- p + theme(	panel.grid = element_blank(), panel.border=element_blank(),
 	)
 
 
-#ggsave(p, filename="GOenrichement.ehbio.xls.scatterplot.dv.pdf", dpi=300, width=uwid,
+#ggsave(p, filename="GOenrichement.Samp.xls.scatterplot.dv.pdf", dpi=300, width=uwid,
 #height=vhig, units=c("cm"))
 p
 ```
@@ -1783,7 +1783,7 @@ p <- p + theme(	panel.grid = element_blank(), panel.border=element_blank(),
 p
 ```
 
-通过这张图解释下，富集分析的结果怎么解读。富集分析实际是查找哪些通路里面包含的差异基因占总差异基因的比例显著高于通路中总基因占所有已经注释的基因的比例。这一显著性通常用多重假设检验矫正过的`pvalue`(又称qvalue, FDR或p.adjust)来表示。在图中体现为点的颜色。从绿到红富集显著性逐渐增高。点的大小表示对应通路中包含的差异基因的数目。点的形状代表了不同类型的基因，如EHBIO中上调的基因和Baodian中上调的基因。横轴表示对应通路包含的差异基因占总的差异基因的比例, 本图中最高不过5%, 这个值越大说明通路被影响的越多。
+通过这张图解释下，富集分析的结果怎么解读。富集分析实际是查找哪些通路里面包含的差异基因占总差异基因的比例显著高于通路中总基因占所有已经注释的基因的比例。这一显著性通常用多重假设检验矫正过的`pvalue`(又称qvalue, FDR或p.adjust)来表示。在图中体现为点的颜色。从绿到红富集显著性逐渐增高。点的大小表示对应通路中包含的差异基因的数目。点的形状代表了不同类型的基因，如Samp中上调的基因和Baodian中上调的基因。横轴表示对应通路包含的差异基因占总的差异基因的比例, 本图中最高不过5%, 这个值越大说明通路被影响的越多。
 
 
 ## 韦恩图 {#venn}
@@ -1806,7 +1806,7 @@ color_v <- c("dodgerblue", "goldenrod1", "darkorange1")
 label_size = 1
 margin = 0.1
 p <- venn.diagram( 
-	x = list(ehbio1=list1, ehbio2=list2, ehbio3=list3),
+	x = list(Samp1=list1, Samp2=list2, Samp3=list3),
 	filename = NULL, col = "black", lwd = 1, 
 	fill = color_v, alpha = 0.50, main="", 
 	label.col = c("black"), cex = 1, fontfamily = "Helvetica",
@@ -1823,34 +1823,34 @@ grid.draw(p)
 假设有这么一个矩阵，第一列为不同集合中的ID，第二列为集合的名字，无标题行，存储为`venn.txt`。
 
 ```
-a	ehbio1
-b	ehbio1
-c	ehbio1
-d	ehbio1
-e	ehbio1
-f	ehbio1
-g	ehbio1
-h	ehbio2
-i	ehbio2
-j	ehbio2
-k	ehbio2
-e	ehbio2
-f	ehbio2
-g	ehbio2
-a	ehbio3
-b	ehbio3
-h	ehbio3
-j	ehbio3
-i	ehbio3
-f	ehbio3
-g	ehbio3
-a	ehbio4
-b	ehbio4
-h	ehbio4
-d	ehbio5
-e	ehbio5
-y	ehbio5
-x	ehbio5
+a	Samp1
+b	Samp1
+c	Samp1
+d	Samp1
+e	Samp1
+f	Samp1
+g	Samp1
+h	Samp2
+i	Samp2
+j	Samp2
+k	Samp2
+e	Samp2
+f	Samp2
+g	Samp2
+a	Samp3
+b	Samp3
+h	Samp3
+j	Samp3
+i	Samp3
+f	Samp3
+g	Samp3
+a	Samp4
+b	Samp4
+h	Samp4
+d	Samp5
+e	Samp5
+y	Samp5
+x	Samp5
 ```
 
 ```{r}
@@ -1862,19 +1862,19 @@ data <- read.table(file="data/venn.txt", sep="\t", quote="")
 
 num <- 0
 
-ehbio1 <- data[grepl("\\<ehbio1\\>",data[,2]),1]
+Samp1 <- data[grepl("\\<Samp1\\>",data[,2]),1]
 num <- num + 1
 
-ehbio2 <- data[grepl("\\<ehbio2\\>",data[,2]),1]
+Samp2 <- data[grepl("\\<Samp2\\>",data[,2]),1]
 num <- num + 1
 
-ehbio3 <- data[grepl("\\<ehbio3\\>",data[,2]),1]
+Samp3 <- data[grepl("\\<Samp3\\>",data[,2]),1]
 num <- num + 1
 
-ehbio4 <- data[grepl("\\<ehbio4\\>",data[,2]),1]
+Samp4 <- data[grepl("\\<Samp4\\>",data[,2]),1]
 num <- num + 1
 
-ehbio5 <- data[grepl("\\<ehbio5\\>",data[,2]),1]
+Samp5 <- data[grepl("\\<Samp5\\>",data[,2]),1]
 num <- num + 1
 
 color_v <- c("dodgerblue", "goldenrod1", "darkorange1", "seagreen3", "orchid3")[1:num]
@@ -1884,9 +1884,9 @@ color_v <- c("dodgerblue", "goldenrod1", "darkorange1", "seagreen3", "orchid3")[
 label_size = 0.8
 margin = 0.3
 p <- venn.diagram( 
-	x = list(ehbio1=ehbio1, ehbio4=ehbio4,
-	ehbio5=ehbio5, ehbio2=ehbio2,
-	ehbio3=ehbio3),
+	x = list(Samp1=Samp1, Samp4=Samp4,
+	Samp5=Samp5, Samp2=Samp2,
+	Samp3=Samp3),
 	filename = NULL, col = "black", lwd = 1, 
 	fill = color_v,
 	alpha = 0.50, main="", 
@@ -1910,7 +1910,7 @@ grid.draw(p)
 测试数据，存储为`upsetview.txt` （第一行为集合的名，每个集合一列；每一行为一个ID，如果对应ID出现在这个集合则标记1，否则标记0）：
 
 ```bash
-pattern	ehbio1	ehbio2	ehbio3	ehbio4	ehbio5
+pattern	Samp1	Samp2	Samp3	Samp4	Samp5
 a	1	0	1	1	0
 b	1	0	1	1	0
 c	1	0	0	0	0
@@ -2298,9 +2298,9 @@ geom_text(family=font_name)
 假如需要合并`FZSTK.TTF` (windows下获取)和`Schoolbell-Regular.ttf` (谷歌下载)，这两个都是手写字体。按如下，把字体文件和程序脚本`mergefont.pe`放在同一目录下，运行`fontforge -script mergefont.pe`即可获得合并后的字体`FZ_School.ttf`。
 
 ```
-ct@ehbio $ ls
+ct@Samp $ ls
 FZSTK.TTF mergefont.pe Schoolbell-Regular.ttf
-ct@ehbio $ cat mergefont.pe
+ct@Samp $ cat mergefont.pe
 Open("FZSTK.TTF")
 SelectAll()
 ScaleToEm(1024)
@@ -2317,8 +2317,8 @@ SetFontNames("FZ_School", "FZST", "Schoolbel", "Regular", "")
 Generate("FZ_School.ttf", "", 0x14)
 Close()
 
-ct@ehbio $ fontforge -script mergefont.pe
-ct@ehbio $ ls
+ct@Samp $ fontforge -script mergefont.pe
+ct@Samp $ ls
 FZ_School.ttf FZSTK.TTF mergefont.pe Schoolbell-Regular.ttf
 ```
 
@@ -2552,7 +2552,7 @@ legend("top", legend=levels(data3$Group), col=colorl, pch=16, xpd=T, horiz=T)
 data4 <- read.table("data/HiSeq301-RSEM-linear_values.txt", header=T, row.names=1,sep="\t")
 dim(data4)
 library(useful)
-kable(corner(data4,r=15,c=8), booktabs=T, caption="Gene expression matrix")
+knitr::kable(corner(data4,r=15,c=8), booktabs=T, caption="Gene expression matrix")
 ```
 
 我们筛选变异系数最大的3个基因。在这之前我们先剔除在少于5个样品中表达的基因和少于1000个表达的基因样品 （这里我们把表达值不小于1的基因视为表达的基因），并把所有基因根据其在不同样品中表达值的变异系数排序。
@@ -3307,7 +3307,7 @@ ggsurvplot(fit, conf.int=F,risk.table=T, risk.table.col="strata", pval=T)
 
 获取地址 <https://github.com/Tong-Chen/s-plot>.
 
-在线绘图 <http://www.ehbio.com/ImageGP/>
+在线绘图 <http://www.Samp.com/ImageGP/>
 
 `s-plot`可以绘制的图的类型还有一些，列举如下；
 
@@ -3394,7 +3394,7 @@ write.table(col_anno, file="heatmap_col_anno.xls", sep="\t", row.names=T,
 # -d：指定是否计算Z-score，<none> (否), <row> (按行算), <col> (按列算)
 # -P: 行注释文件
 # -Q: 列注释文件
-ct@ehbio:~/$ sp_pheatmap.sh -f heatmap_data.xls -d row -P heatmap_row_anno.xls \
+ct@Samp:~/$ sp_pheatmap.sh -f heatmap_data.xls -d row -P heatmap_row_anno.xls \
 		-Q heatmap_col_anno.xls
 ```
 
@@ -3411,7 +3411,7 @@ knitr::include_graphics("images/pheatmap_6.png")
 # -Q: 列注释文件
 # -u: 设置宽度，单位是inch
 # -v: 设置高度，单位是inch
-ct@ehbio:~/$ sp_pheatmap.sh -f heatmap_data.xls -d row -P heatmap_row_anno.xls \
+ct@Samp:~/$ sp_pheatmap.sh -f heatmap_data.xls -d row -P heatmap_row_anno.xls \
 		-Q heatmap_col_anno.xls -u 8 -v 12
 ```
 
@@ -3427,7 +3427,7 @@ knitr::include_graphics("images/pheatmap_7.png")
 # -T: 指定给定的颜色的类型；如果给的是vector (如下面的例子), 则-T需要指定为vector; 
 #     否则结果会很怪异，只有俩颜色。
 # -t: 指定图形的题目，注意引号的使用；参数中包含空格或特殊字符等都要用引号引起来作为一个整体。
-ct@ehbio:~/$ sp_pheatmap.sh -f heatmap_data.xls -d row -P heatmap_row_anno.xls \
+ct@Samp:~/$ sp_pheatmap.sh -f heatmap_data.xls -d row -P heatmap_row_anno.xls \
 	-Q heatmap_col_anno.xls -u 8 -v 12 -A 0 -C 'c("white", "blue")' -T vector \
 	-t "Heatmap of gene expression profile" 
 ```
@@ -3873,7 +3873,7 @@ knitr::include_graphics("images/line_13.png")
 完整参数列表如下：
 
 ```bash
-ct@ehbio:~ $sp_lines.sh
+ct@Samp:~ $sp_lines.sh
 
 ***CREATED BY Chen Tong (chentong_biology@163.com)***
 

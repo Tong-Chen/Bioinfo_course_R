@@ -2,3 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
+result
+*.pdf
+_bookdown_files
+*.log
+R_course_cache
+R_course_files
+
+

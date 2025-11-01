@@ -30,7 +30,7 @@ library(Hmisc)
 
 
 ```{r, eval=F}
-expr <- read.table("ehbio.simplier.DESeq2.normalized.symbol.txt", 
+expr <- read.table("analysis.simplier.DESeq2.normalized.symbol.txt", 
                    row.names=1, header=T, sep="\t")
 ```
 
@@ -39,7 +39,7 @@ expr <- read.table("ehbio.simplier.DESeq2.normalized.symbol.txt",
 这里使用`make.names`转换行名为唯一，实际需要先弄清楚为什么会有重复名字。
 
 ```{r}
-expr <- read.table("ehbio.simplier.DESeq2.normalized.symbol.txt", 
+expr <- read.table("analysis.simplier.DESeq2.normalized.symbol.txt", 
                    row.names=NULL, header=T, sep="\t")
 head(expr)
 ```
@@ -75,7 +75,7 @@ pheatmap(top6)
 读入差异基因列表
 
 ```{r}
-de_gene <- read.table("ehbio.DESeq2.all.DE.symbol", row.names=NULL, header=F, sep="\t")
+de_gene <- read.table("analysis.DESeq2.all.DE.symbol", row.names=NULL, header=F, sep="\t")
 head(de_gene)
 ```
 
@@ -276,7 +276,7 @@ ggstripchart(top6_t_with_group, x = "conditions", y = c("KCTD12","MAOA"),
           add = "median_iqr")
 ```
 
-## 通路内基因的比较 {#visual15}
+## 通路内基因的比较 {#visual151}
 
 ```{r}
 pathway <- read.table("h.all.v6.2.symbols.gmt.forGO", sep="\t", row.names=NULL, header=T)
@@ -391,7 +391,7 @@ ggdotplot(HALLMARK_P53_PATHWAY, x = "conditions", y = "logExpr",
           add = "median_iqr")
 ```
 
-### 密度图 {#visual16}
+### 密度图 {#visual161}
 
 ```{r}
 ggdensity(HALLMARK_P53_PATHWAY,
@@ -418,7 +418,7 @@ top6_t_with_group_long$conditions <- as.factor(top6_t_with_group_long$conditions
 head(top6_t_with_group_long)
 ```
 
-## ggstatsplot绘图和统计分析 {#visual17}
+## ggstatsplot绘图和统计分析 {#visual171}
 
 箱线图
 
@@ -507,7 +507,7 @@ ggstatsplot::grouped_ggwithinstats(
 head(expr)
 ```
 
-### 散点图 {#visual16}
+### 散点图 {#visual162}
 
 ```{r}
 ggstatsplot::ggscatterstats(
@@ -535,7 +535,7 @@ ggstatsplot::ggscatterstats(
 )
 ```
 
-### 相关性图 {#visual17}
+### 相关性图 {#visual172}
 
 #### 基因共表达 {#visual18}
 
